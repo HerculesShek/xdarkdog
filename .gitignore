@@ -1,0 +1,21 @@
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# .settings
+.settings
+
+.classpath
+.project
+
+WebRoot/META-INF/MANIFEST.MF
+
+
+
+
