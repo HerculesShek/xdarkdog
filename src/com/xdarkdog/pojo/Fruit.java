@@ -1,8 +1,10 @@
 package com.xdarkdog.pojo;
 
+import com.alibaba.fastjson.JSON;
+
 public class Fruit {
 	private int id;
-	private String name;
+	private String name="";
 	private double price; // 在售价格
 	private int points;
 	private int communityid;
@@ -10,10 +12,10 @@ public class Fruit {
 	private double display_price; // 展示价格
 	private int hot_tag;
 	private int commend_tag;
-	private String remark; // 简介
-	private String introduce; // 详细介绍
-	private int hitcount; // 点击次数
-	private String photots;
+	private String remark=""; // 简介
+	private String introduce=""; // 详细介绍
+	private int hitcount = 0; // 点击次数
+	private String photos="";
 
 	public int getId() {
 		return id;
@@ -111,18 +113,22 @@ public class Fruit {
 		this.hitcount = hitcount;
 	}
 
-	public String getPhotots() {
-		return photots;
+	
+
+	public String getPhotos() {
+		return photos;
 	}
 
-	public void setPhotots(String photots) {
-		this.photots = photots;
+	public void setPhotos(String photos) {
+		this.photos = photos;
 	}
+
+	
 
 	public Fruit(int id, String name, double price, int points,
 			int communityid, double original_price, double display_price,
 			int hot_tag, int commend_tag, String remark, String introduce,
-			int hitcount, String photots) {
+			int hitcount, String photos) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -136,7 +142,7 @@ public class Fruit {
 		this.remark = remark;
 		this.introduce = introduce;
 		this.hitcount = hitcount;
-		this.photots = photots;
+		this.photos = photos;
 	}
 
 	public Fruit() {
@@ -150,7 +156,7 @@ public class Fruit {
 				+ ", original_price=" + original_price + ", display_price="
 				+ display_price + ", hot_tag=" + hot_tag + ", commend_tag="
 				+ commend_tag + ", remark=" + remark + ", introduce="
-				+ introduce + ", hitcount=" + hitcount + ", photots=" + photots
+				+ introduce + ", hitcount=" + hitcount + ", photos=" + photos
 				+ "]";
 	}
 
@@ -171,7 +177,7 @@ public class Fruit {
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		temp = Double.doubleToLongBits(original_price);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + ((photots == null) ? 0 : photots.hashCode());
+		result = prime * result + ((photos == null) ? 0 : photos.hashCode());
 		result = prime * result + points;
 		temp = Double.doubleToLongBits(price);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -214,10 +220,10 @@ public class Fruit {
 		if (Double.doubleToLongBits(original_price) != Double
 				.doubleToLongBits(other.original_price))
 			return false;
-		if (photots == null) {
-			if (other.photots != null)
+		if (photos == null) {
+			if (other.photos != null)
 				return false;
-		} else if (!photots.equals(other.photots))
+		} else if (!photos.equals(other.photos))
 			return false;
 		if (points != other.points)
 			return false;
@@ -232,4 +238,7 @@ public class Fruit {
 		return true;
 	}
 
+	public static void main(String[] args) {
+		System.out.println(JSON.toJSONString(new Fruit()));
+	}
 }

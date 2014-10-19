@@ -26,7 +26,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		<td>可获得积分</td>
   		<td>是否热卖</td>
   		<td>是否推荐</td>
-  		<td>小图</td>
+  		<td>图片</td>
   	</tr>
     <%
     	if(fruits != null && fruits.size()>0){
@@ -38,9 +38,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     			out.println("<td>"+(f.getHot_tag()==1?"是":"否")+"</td>");
     			out.println("<td>"+(f.getCommend_tag()==1?"是":"否")+"</td>");
     			out.println("<td>");
-    			String small_pic_urls = f.getSmall_pic_url();
-    			if(small_pic_urls != null){
-    				String[] pics = small_pic_urls.split(";");
+    			String photos = f.getPhotos();
+    			if(photos != null){
+    				String[] pics = photos.split(",");
     				if(pics.length>0){
     					for(String s : pics){
     						out.println(" <img  src=\""+s+"\" width=\"40px\" height=\"35px\">");

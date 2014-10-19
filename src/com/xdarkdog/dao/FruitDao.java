@@ -26,8 +26,7 @@ public class FruitDao extends DaoSupport{
 				+ "`commend_tag`, "
 				+ "`remark`, "
 				+ "`introduce`, "
-				+ "`small_pic_url`, "
-				+ "`big_pic_url`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+				+ "`photos`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 		Object[] params = {f.getName(),
 				f.getPrice(),
 				f.getPoints(),
@@ -38,7 +37,7 @@ public class FruitDao extends DaoSupport{
 				f.getCommend_tag(),
 				f.getRemark(),
 				f.getIntroduce(),
-				f.getPhotots()};
+				f.getPhotos()};
 		int affects = execOther(sql, params);
 		return affects;
 	}

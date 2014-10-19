@@ -30,25 +30,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		<td>社区管理</td>
   	</tr>
     <%
-    	List<Community>	comms = (List<Community>)request.getAttribute("comms");
-    	if(comms != null && comms.size()>0){
-    		for(Community c : comms){
-    			out.print("<tr>");
-    			out.println("<td>"+c.getFruit_shop_name()+"</td>");
-    			out.println("<td>"+c.getComm_name()+"</td>");
-    			out.println("<td>"+c.getFruit_shop_owner()+"</td>");
-    			out.println("<td>"+c.getOwner_phone()+"</td>");
-    			out.println("<td>"+c.getLocation()+"</td>");
-    			out.println("<td>"+c.getLat()+"</td>");
-    			out.println("<td>"+c.getLon()+"</td>");
-    			out.println("<td>"+c.getPhotos()+"</td>");
-    			out.println("<td><a href=\"/xdarkdog/servlet/comm.do?method=showcomm&id="+c.getId()+"\">修改</a>");
-    			out.println("<a href=\"/xdarkdog/servlet/comm.do?method=removecomm&id="+c.getId()+"\">删除</a>");
-    			out.println("<a href=\"/xdarkdog/servlet/comm.do?method=managerfruits&id="+c.getId()+"\">水果管理</a></td>");
-    			out.println();
-    			out.print("</tr>");
+    List<Community>	comms = (List<Community>)request.getAttribute("comms");
+    if(comms != null && comms.size()>0){
+    	for(Community c : comms){
+    		out.print("<tr>");
+    		out.println("<td>"+c.getFruit_shop_name()+"</td>");
+    		out.println("<td>"+c.getComm_name()+"</td>");
+    		out.println("<td>"+c.getFruit_shop_owner()+"</td>");
+    		out.println("<td>"+c.getOwner_phone()+"</td>");
+    		out.println("<td>"+c.getLocation()+"</td>");
+    		out.println("<td>"+c.getLat()+"</td>");
+    		out.println("<td>"+c.getLon()+"</td>");
+    		out.println("<td>");
+    		String photosStr = c.getPhotos();
+    		if(photosStr!=null && !"".equals(photosStr)){
+    			for(String s:photosStr.split(",")){
+    				out.println("<img  src=\""+s+"\" width=\"40px\" height=\"35px\">");
+    			}
     		}
+    		out.print("</td>");	
+    		out.println("");
+    		out.println("<td><a href=\"/xdarkdog/servlet/comm.do?method=showcomm&id="+c.getId()+"\">修改</a>");
+    		out.println("<a href=\"/xdarkdog/servlet/comm.do?method=removecomm&id="+c.getId()+"\">删除</a>");
+    		out.println("<a href=\"/xdarkdog/servlet/comm.do?method=managerfruits&id="+c.getId()+"\">水果管理</a></td>");
+    		out.println();
+    		out.print("</tr>");
     	}
+    }
     %>
     </table>
   </body>

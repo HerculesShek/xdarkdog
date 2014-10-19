@@ -44,12 +44,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	</tr>
     <c:forEach var="comm" items="${pb.data}">
     	<tr>
-    		<td>${comm.name}</td>
+    		<td>${comm.comm_name}</td>
 	  		<td>${comm.location}</td>
 	  		<td>${comm.lat }</td>
 	  		<td>${comm.lon }</td>
-	  		<td>${comm.small_pic_url}</td>
-	  		<td>${comm.big_pic_url}</td>
+	  		<td>${comm.photos}</td>
 	  		<td>
 				<a href="/xdarkdog/servlet/comm.do?method=showcomm&id=${comm.id }">修改</a>
 				<a href="/xdarkdog/servlet/comm.do?method=removecomm&id=${comm.id }">删除</a>

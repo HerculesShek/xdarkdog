@@ -14,23 +14,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
 	<script type="text/javascript">
-	function addSmall(){
-		var td = $("small_pic");
+	function addMore(){
+		var td = $("imgs");
 		var input  = document.createElement("input");
 		input.type="file";
-		input.name="small_pic_url";
+		input.name="photos";
 		td.appendChild(document.createElement("br"));
 		td.appendChild(input);
 	}
 	
-	function addBig(){
-		var td = $("big_pic");
-		var input  = document.createElement("input");
-		input.type="file";
-		input.name="big_pic_url";
-		td.appendChild(document.createElement("br"));
-		td.appendChild(input);
-	}
 	function $(id){
 		return document.getElementById(id);
 	}
@@ -81,14 +73,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		<td><textarea cols="23" rows="4" name="introduce"></textarea></td>
     	</tr>
     	<tr>
-    		<td>水果小照片：</td>
-    		<td id="small_pic" bgcolor="gray"><input type="file" name="small_pic_url"></td>
-    		<td><input type="button" value="再来一张" onclick="addSmall()"></td>
-    	</tr>
-    	<tr>
-    		<td>水果大照片：</td>
-    		<td id="big_pic"><input type="file" name="big_pic_url"></td>
-    		<td><input type="button" value="再来一张" onclick="addBig()"></td>
+    		<td>水果图片：</td>
+    		<td id="imgs" bgcolor="gray"><input type="file" name="photos"></td>
+    		<td><input type="button" value="再来一张" onclick="addMore()"></td>
     	</tr>
     	<tr><td colspan="2" align="center"><input type="submit" value="添加水果"></td></tr>
     	</table>

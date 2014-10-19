@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -58,7 +57,6 @@ public class FormUtil {
 	 * @return Object 该方法可以完成文件上传操作（包括多文件上传），能接收表单中所有大部分控件注册信息 ，并封装成Bean
 	 *         返回实例对象，完成填充 POJO 层的操作。
 	 */
-	@SuppressWarnings({ "unchecked" })
 	// TODO 把这个方法封装为增加和更新同时能够处理的
 	public Object getInstanceByAdvanceForm(HttpServletRequest request, 
 										   List<FileItem> files,
@@ -83,14 +81,21 @@ public class FormUtil {
 					// 可以在此处 标记断点，来测试一下上传文件的类型
 					// item.getName() 在这里则是上传的文件的名字，没有任何的路径信息
 					String filename = item.getName();
+					
 					if (filename !=null && !filename.equals("") && ArrayUtils.contains(ALLOW_TYPE, item.getContentType())) {
 						System.out.println("上传的文件的名字是->"+filename);
-						File filet2erver = new File(request.getServletContext().getRealPath(filePath), filename);
-						item.write(filet2erver);
+						// 对文件的名字做一些处理
+						if (filename.length() > 40) {
+							filename = filename.substring(0, 40);
+						}
+						String now = String.valueOf(System.currentTimeMillis());
+						filename = now.substring(now.length() - 6,	now.length() - 1)+filename;
+						File file2server = new File(request.getServletContext().getRealPath(filePath), filename);
+						item.write(file2server);
 						String file2db = request.getContextPath()
-								+ File.separator
+								+ "/"
 								+ filePath
-								+ File.separator
+								+ "/"
 								+ filename;
 						components.put(item.getFieldName(), file2db);
 						System.out.println("存入数据库的文件路径是："+file2db);

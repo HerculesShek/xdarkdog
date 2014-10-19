@@ -26,9 +26,9 @@ public class CommunityDao extends DaoSupport {
 	public List<Community> getAllCommunitiesByKey(String key){
 		List<Community> comms = null;
 		
-		if(key != null){
+		if (key != null) {
 			String sql = "select * from `ddcommunity`.`tbl_community` where name like ?";
-			Object[] params = {"%"+key+"%"};
+			Object[] params = { "%" + key + "%" };
 			comms = executeQuery(sql, Community.class, params);
 		} else {
 			String sql = "select * from `ddcommunity`.`tbl_community`";

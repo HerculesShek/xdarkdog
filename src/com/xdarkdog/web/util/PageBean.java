@@ -3,14 +3,12 @@ package com.xdarkdog.web.util;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @SuppressWarnings("rawtypes")
 public class PageBean {
 	private int totalRows; // 总记录数
 	private int totalPages; // 总页数
 	private int currentPage; // 当前页
 	private int pageSize; // 每页多少条
-
 	private List data = new ArrayList(); // 记录 ( 数据 )
 
 	public int getTotalRows() {
