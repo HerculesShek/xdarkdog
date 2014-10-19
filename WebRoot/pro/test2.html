@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>当前位置精确定位</title>
+<!-- 页面布局样式 -->
+<link rel="stylesheet" type="text/css" href="http://developer.amap.com/Public/css/demo.Default.css" /> 
+<script language="javascript" src="http://webapi.amap.com/maps?v=1.3&key=您申请的key值"></script>
+<script language="javascript">
+var mapObj,toolBar,locationInfo;
+
+//初始化地图对象，加载地图
+function mapInit(){
+	mapObj = new AMap.Map("iCenter");
+	//地图中添加地图操作ToolBar插件
+	mapObj.plugin(["AMap.ToolBar"],function(){		
+		toolBar = new AMap.ToolBar(); //设置地位标记为自定义标记
+		mapObj.addControl(toolBar);		
+		AMap.event.addListener(toolBar,'location',function callback(e){	
+			locationInfo = e.lnglat;	
+			showLocationInfo();		
+		});
+		toolBar.doLocation();
+	});
+}
+	
+//获取定位位置信息
+function showLocationInfo()
+{
+	var locationX = locationInfo.lng; //定位坐标经度值
+	var locationY = locationInfo.lat; //定位坐标纬度值
+	document.getElementById('info').innerHTML = "定位点坐标：("+locationX+","+locationY+")";
+}
+</script>
+</head>
+<body onLoad="mapInit()">
+	<div id="iCenter" ></div>
+	<div style="padding:2px 0px 0px 5px;font-size:12px">  
+		<input type="button" value="开始定位" onClick="javascript:toolBar.doLocation()"/>  
+		<input type="button" value="显示位置信息" onClick="javascript:showLocationInfo()"/> 
+		<div id="info" style="margin-top:10px;margin-left:10px;height:30px"></div>
+         <div style="color: #C0C0C0">不支持IE9以下版本</div>
+	</div>
+</body>
+</html>						
+
+			

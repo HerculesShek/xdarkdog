@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	 <meta name="viewport" content="width = device-width; initial-scale=1">
+	<title>H5地理位置Demo</title>
+          <script src="http://api.map.baidu.com/api?v=1.3" type="text/javascript"></script>
+          <script type="text/javascript" src="js/convertor.js"></script>
+      </head>
+     <body>
+         <div id="map" style="width:600px; height:500px">
+         </div>
+     </body>
+     <script type="text/javascript">
+         if (window.navigator.geolocation) {
+             var options = {
+                 enableHighAccuracy: true,
+             };
+             window.navigator.geolocation.getCurrentPosition(handleSuccess, handleError, {timeout:10000});
+         } else {
+             alert("浏览器不支持html5来获取地理位置信息");
+         }
+         
+         function handleSuccess(position){
+             // 获取到当前位置经纬度  本例中是chrome浏览器取到的是google地图中的经纬度
+             var lng = position.coords.longitude;
+             var lat = position.coords.latitude;
+             // 调用百度地图api显示
+            // var map = new BMap.Map("map");
+             var ggPoint = new BMap.Point(lng, lat);
+             // 将google地图中的经纬度转化为百度地图的经纬度
+             BMap.Convertor.translate(ggPoint, 2, function(point){
+                 var marker = new BMap.Marker(point);
+                 alert(point.lng + "," + point.lat);
+                 //map.addOverlay(marker);
+                 //map.centerAndZoom(point, 15);
+             });
+             
+             // var f = new BMap.Point(120.15897,30.19395);
+             //BMap.Convertor.translate(f, 2, function(point){
+              //   var marker = new BMap.Marker(point);
+              //   map.addOverlay(marker);
+              //   map.centerAndZoom(point, 15);
+             //});
+         }
+         
+         function handleError(error){
+			switch(error.code) 
+    {
+    case error.PERMISSION_DENIED:
+       alert("User denied the request for Geolocation.");
+      break;
+    case error.POSITION_UNAVAILABLE:
+       alert("Location information is unavailable.");
+      break;
+    case error.TIMEOUT:
+      alert("The request to get user location timed out.");
+      break;
+    case error.UNKNOWN_ERROR:
+       alert("An unknown error occurred.");
+      break;
+    }
+		 }
+     </script>
+ </html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="keywords" content="嘿狗社区
+" />
+<meta name="description" content="嘿狗社区。" />
+<title>嘿狗社区服务平台</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0">
+<link type="text/css" rel="stylesheet" href="../../css/common.css" />
+<script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.cookie.js"></script>
+<script type="text/javascript" src="../../js/fastclick.min.js"></script>
+<script type="text/javascript" src="../../js/base.js"></script>
+<script>
+    //fastclick初始化
+    window.addEventListener('load', function () {
+        FastClick.attach(document.body);
+    }, false);
+</script>
+<link type="text/css" rel="stylesheet" href="../../css/member.css" />
+<link rel="Stylesheet" href="../../css/jquery.autocomplete.css" />
+<script type="text/javascript" src="../../js/jquery.autocomplete.min.js"></script>
+</head>
+
+<body>
+<div class="container">
+  <div class="header"> <a href="index.html" class="left linkAct"><img class="m-t-4" src="../../images/arrow-left.png" width="30"/></a>
+    <h2>新增地址</h2>
+  </div>
+  <div class="content">
+    <div class="addr-wrap">
+      <div style="width:60%; float:left;">
+        <div class="input-box">
+          <input type="hidden" name="id" value="">
+          <input type="text" class="input name" value="" name="contact"/>
+          <p>真实姓名</p>
+        </div>
+      </div>
+      <div class="gender-box">
+        <div class="addr-gender-box">
+          <select class="addr-gender-select select" name="contact_sex" id="addr-gender-select">
+            <option selected value="0">女士</option>
+            <option  value="1">男士</option>
+          </select>
+          <!-- 
+			    	<label for="gender1" class="linkAct">
+				        <input type="radio" class="addr-gender-radio" name="contact_sex" checked id="gender1" value="0"/><span>女士</span>
+				        <b id="cashier-icon1" class="on"></b>
+				    </label>
+			    	<label for="gender0" class="linkAct">
+				        <input type="radio" class="addr-gender-radio" name="contact_sex"  id="gender0" value="1"/><span>男士</span>
+				        <b id="cashier-icon2" ></b>
+				    </label>
+				     --> 
+        </div>
+      </div>
+      <div class="clr"></div>
+      <div class="input-box">
+        <input type="tel" class="input phonenum" name="contactTel" value=""/>
+        <p>手机号码</p>
+      </div>
+      <div class="input-box" style="border:0;">
+        <input name="city" checked type="radio" style="display:none;" id="city1"/>
+        <input type="tel" class="input" disabled="disabled" value="杭州滨江"/>
+      </div>
+      <div class="input-box">
+        <input class="input address-c" id="keyword" value=""/>
+        <p>写字楼/小区名称</p>
+        <input type="hidden" class="community_id" name="community_id" id="zh_community" value=""/>
+      </div>
+      <p class="addr-tips-tel">没有找到地址？<a href="tel:13806101602" class="org">致电客服开通吧！</a></p>
+      <div class="input-box">
+        <input class="input detail-address" name="addr" value=""/>
+        <p>地址补充信息</p>
+      </div>
+      <div class="input-box">
+        <input type="button" class="button btn-org m-btn-success" value="提交"/>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script type="text/javascript">
+$(function(){
+	$(".input").each(function() {
+		if($(this).val() != ""){
+			$(this).next("p").hide();
+		}
+	})
+	$(".addr-gender-radio").change(function() {
+		$(".addr-gender-radio").each(function() {
+			if($(this).attr("checked") == "checked"){
+				$(this).parents("label").find("b").attr("class","on");
+			}else{
+				$(this).parents("label").find("b").attr("class","");
+			}
+		})
+	})
+	$reg1 = /^1\d{10}$/;//手机验证
+	$reg2 = /^[\u4E00-\u9FA5\uf900-\ufa2d\w\.\s]{2,12}$/;//真实姓名验证
+	var name = $('input[name="contact"]');//真实姓名
+	var tel = $('input[name="contactTel"]');//手机号码
+	var community = $('.address-c');//写字楼/小区名称
+	var addr = $('input[name="addr"]');//补充地址
+	//表单验证
+	$(".m-btn-success").click(
+		function() {
+			//验证真实姓名
+			if(name.val() == ""){
+				alert("请输入真实姓名");
+				return false;
+			}else{
+				if(!$reg2.test(name.val())){
+					alert("真实姓名输入有误！格式为2到12位中英文字符");
+					return false;
+				}
+			}
+			//手机号码验证
+			if(tel.val() == ""){
+				alert("请输入手机号码");
+				return false;
+			}else{
+				if(!$reg1.test(tel.val())){
+					alert("请输入正确的手机号码");
+					return false;
+				}
+			}
+			//写字楼/小区验证
+			if(!testAddr()){
+				alert("您填写的地址可能暂时没有开通");
+				return false;
+			}
+			//补充地址验证
+			if(addr.val() == ""){
+				alert("请补充地址信息");
+				return false;
+			}
+
+			
+			//表单提交
+			$.ajax({
+				url:"/haosi/index.php/weixin/addr/updateAddr.html",
+				type:"post",
+				dataType:"json",
+				data:{id:$("input[name='id']").val(),community_id:$("input[name='community_id']").val(),addr:$("input[name='addr']").val(),contact:$("input[name='contact']").val(),contactTel:$("input[name='contactTel']").val(),contact_sex:$("#addr-gender-select option:selected").val()},
+				success:function(json) {
+					if(json.status == 1){
+						window.location.href="/haosi/index.php/weixin/addr/index.html";
+					}else{
+						alert(json.info);
+					}
+				}
+			})
+			
+			
+		}
+	)
+	
+	//修改的时候回调显示地址
+	if("" != ""){
+    	$('#keyword').val("()");
+    	$('#zh_community').attr("ref","()");
+    }
+
+	$(".input").each(function() {
+		if($(this).val() != ""){
+			$(this).next("p").hide();
+		}else{
+			$(this).next("p").show();
+		}
+	})
+    
+	$(".input").bind('input propertychange', function() {
+		if($(this).val() != ""){
+			$(this).next("p").hide();
+		}else{
+			$(this).next("p").show();
+		}
+	})
+	
+	//表单获得焦点提示信息
+	$(".input").focus(
+		function() {
+			$(this).parents(".input-box").attr("class","input-box-on");
+		}
+	)
+	//表单失去焦点提示信息
+	$(".input").blur(
+		function() {
+			$(this).parents(".input-box-on").attr("class","input-box");
+		}
+	)
+		
+	//验证配送路名/小区名是否正确
+	function testAddr() {
+		if($("#keyword").val() == $("#zh_community").attr("ref")){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	var email = [ {high_rise:'Link A', street:'/page1'}, {high_rise:'Link B', street: '/page2'} ];
+	//自动完成
+    $(function() {
+        var $addrParams = new Array();
+    	$.getJSON("/haosi/Login/checkAddr", function (data) {
+			var datas = eval(data);
+           	$('#keyword').autocomplete(datas, {//"/haosi/index.php/weixin/addr/checkAddr"
+         	max: 3,    //列表里的条目数
+         	minChars: 0,    //自动完成激活之前填入的最小字符
+         	scrollHeight: 300,   //提示的高度，溢出显示滚动条
+         	matchContains: true,    //包含匹配，就是data参数里的数据，是否只要包含文本框里的数据就显示
+         	autoFill: false,    //自动填充
+         	autoFocus:true, // 是否自动填充.
+         	matchSubset:true,　　　   //是否启用缓存
+         	selectFirst:true,
+         	formatItem: function(row, i, max) {
+				return row.high_rise + '(' + row.street + ')';
+         	},
+			formatMatch: function(row, i, max) {
+            	return row.high_rise + '(' + row.street + ')' + row.pinyin;
+         	},
+         	formatResult: function(row) {
+             	$addrParams.push(row.high_rise + '(' + row.street + ')');
+             	return row.high_rise + '(' + row.street + ')';
+         	}
+     		}).result(function(event, row, formatted) {
+     			$("#zh_community").attr("ref",row.high_rise + '(' + row.street + ')');
+     			$("#zh_community").val(row.id);//匹配成功把值赋值到隐藏域
+	    	});
+		});
+	})
+
+})
+</script>
+</html>

@@ -6,6 +6,7 @@ public class Fruit {
 	private int id;
 	private String name="";
 	private double price; // 在售价格
+	private String measurement_type;
 	private int points;
 	private int communityid;
 	private double original_price; // 进货价
@@ -16,6 +17,14 @@ public class Fruit {
 	private String introduce=""; // 详细介绍
 	private int hitcount = 0; // 点击次数
 	private String photos="";
+
+	public String getMeasurement_type() {
+		return measurement_type;
+	}
+
+	public void setMeasurement_type(String measurement_type) {
+		this.measurement_type = measurement_type;
+	}
 
 	public int getId() {
 		return id;
@@ -113,8 +122,6 @@ public class Fruit {
 		this.hitcount = hitcount;
 	}
 
-	
-
 	public String getPhotos() {
 		return photos;
 	}
@@ -123,16 +130,16 @@ public class Fruit {
 		this.photos = photos;
 	}
 
-	
 
-	public Fruit(int id, String name, double price, int points,
-			int communityid, double original_price, double display_price,
-			int hot_tag, int commend_tag, String remark, String introduce,
-			int hitcount, String photos) {
+	public Fruit(int id, String name, double price, String measurement_type,
+			int points, int communityid, double original_price,
+			double display_price, int hot_tag, int commend_tag, String remark,
+			String introduce, int hitcount, String photos) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.price = price;
+		this.measurement_type = measurement_type;
 		this.points = points;
 		this.communityid = communityid;
 		this.original_price = original_price;
@@ -150,17 +157,6 @@ public class Fruit {
 	}
 
 	@Override
-	public String toString() {
-		return "Fruit [id=" + id + ", name=" + name + ", price=" + price
-				+ ", points=" + points + ", communityid=" + communityid
-				+ ", original_price=" + original_price + ", display_price="
-				+ display_price + ", hot_tag=" + hot_tag + ", commend_tag="
-				+ commend_tag + ", remark=" + remark + ", introduce="
-				+ introduce + ", hitcount=" + hitcount + ", photos=" + photos
-				+ "]";
-	}
-
-	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -174,6 +170,9 @@ public class Fruit {
 		result = prime * result + id;
 		result = prime * result
 				+ ((introduce == null) ? 0 : introduce.hashCode());
+		result = prime
+				* result
+				+ ((measurement_type == null) ? 0 : measurement_type.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		temp = Double.doubleToLongBits(original_price);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -212,6 +211,11 @@ public class Fruit {
 				return false;
 		} else if (!introduce.equals(other.introduce))
 			return false;
+		if (measurement_type == null) {
+			if (other.measurement_type != null)
+				return false;
+		} else if (!measurement_type.equals(other.measurement_type))
+			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
@@ -236,6 +240,17 @@ public class Fruit {
 		} else if (!remark.equals(other.remark))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Fruit [id=" + id + ", name=" + name + ", price=" + price
+				+ ", measurement_type=" + measurement_type + ", points="
+				+ points + ", communityid=" + communityid + ", original_price="
+				+ original_price + ", display_price=" + display_price
+				+ ", hot_tag=" + hot_tag + ", commend_tag=" + commend_tag
+				+ ", remark=" + remark + ", introduce=" + introduce
+				+ ", hitcount=" + hitcount + ", photos=" + photos + "]";
 	}
 
 	public static void main(String[] args) {

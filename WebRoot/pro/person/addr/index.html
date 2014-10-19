@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="keywords" content="嘿狗社区
+" />
+<meta name="description" content="嘿狗社区。" />
+<title>嘿狗社区服务平台</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0">
+<link type="text/css" rel="stylesheet" href="../../css/common.css" />
+<script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.cookie.js"></script>
+<script type="text/javascript" src="../../js/fastclick.min.js"></script>
+<script type="text/javascript" src="../../js/base.js"></script>
+<script>
+    //fastclick初始化
+    window.addEventListener('load', function () {
+        FastClick.attach(document.body);
+    }, false);
+</script>
+<link type="text/css" rel="stylesheet" href="../../css/member.css" />
+</head>
+
+<body>
+<div class="container">
+  <div class="header" id="header1" style="display:none;"> <a href="javascript:void(0)" class="left linkAct ok-icon"><font>完成</font></a>
+    <h2>配送地址</h2>
+    <a href="/haosi/index.php/weixin/addr/operateAddr.html" class="right linkAct"><img src="../../images/plus-icon.png" width="27"/></a> </div>
+  <div class="header" id="header2"> <a href="/haosi/index.php/weixin/person/index.html" class="left linkAct"><img class="m-t-4" src="../../images/arrow-left.png" width="30"/></a>
+    <h2>配送地址</h2>
+    <a href="/haosi/index.php/weixin/addr/operateAddr.html" class="right linkAct"><img src="../../images/plus-icon.png" width="27"/></a> </div>
+  <div class="content">
+    <div class="addr-box">
+      <div class="addr-icon-btn"> <a href="javascript:void(0)" onclick="return yesno(1355)" class="right linkAct member-del"><img src="../../images/waste-gray.png" height="20"/></a> <a href="/haosi/index.php/weixin/addr/operateAddr/id/1355" class="right linkAct member-modify"><img src="../../images/modify-icon.png" height="20"/></a> </div>
+      <div class="addr-info-box linkAct" onclick="window.open('/haosi/index.php/weixin/addr/setAddrMain/id/1355','_self')">
+        <div class="addr-default-icon" > <img src="../../images/success-icon.png" height="20"/> </div>
+        <div class="addr-name-tel-box">
+          <p class="addr-name-tel"><span>魏帅</span><em>18222891890</em></p>
+          <div class="clr"></div>
+          <p class="addr-text-box">杭州市滨江区钱江·彩虹城西南门（滨盛路）无</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script type="text/javascript">
+function yesno(data) {
+	if(confirm("是否删除?")){
+  		$.ajax({
+			url:"/haosi/index.php/weixin/addr/delAddr.html",
+			type:"post",
+			dataType:'json',
+			data:{id:data},
+			success:function(json){
+				if(json.status == 1){
+					window.location.href="/haosi/index.php/weixin/addr/index.html";
+				}else{
+					alert(json.info);
+				}
+			},
+			error:function(json){
+				alert("服务器穿越了~ 再试试看");
+			}
+  	  	})
+	}else
+   		return false;
+	}
+$(".back-icon").click(function() {
+	window.parent.closeIframe();
+})
+$(".ok-icon").click(function() {
+	window.parent.refreshAddrIframe();
+})
+$(document).ready(function(){
+	var temp = window.parent.testAddr();
+	if(temp ==1){
+		$("#header2").hide();
+		$("#header1").show();
+	}else{
+		$("#header1").hide();
+		$("#header2").show();
+	}
+	$('body,html').animate({
+		scrollTop: 0
+	},300);
+})
+</script>
+</html>

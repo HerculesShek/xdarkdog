@@ -89,7 +89,7 @@ public class FormUtil {
 							filename = filename.substring(0, 40);
 						}
 						String now = String.valueOf(System.currentTimeMillis());
-						filename = now.substring(now.length() - 6,	now.length() - 1)+filename;
+						filename = now.substring(now.length() - 12,	now.length() - 1)+filename;
 						File file2server = new File(request.getServletContext().getRealPath(filePath), filename);
 						item.write(file2server);
 						String file2db = request.getContextPath()

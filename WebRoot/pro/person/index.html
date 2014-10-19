@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="keywords" content="嘿狗社区
+" />
+<meta name="description" content="嘿狗社区。" />
+<title>嘿狗社区服务平台</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0">
+<link type="text/css" rel="stylesheet" href="../css/common.css" />
+<script type="text/javascript" src="../js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="../js/jquery.cookie.js"></script>
+<script type="text/javascript" src="../js/fastclick.min.js"></script>
+<script type="text/javascript" src="../js/base.js"></script>
+<script>
+    //fastclick初始化
+    window.addEventListener('load', function () {
+        FastClick.attach(document.body);
+    }, false);
+</script>
+<link type="text/css" rel="stylesheet" href="../css/member.css" />
+</head>
+
+<body>
+<div class="container">
+  <div class="header"> <a href="../index.html" class="left linkAct"><img class="m-t-4" src="../images/arrow-left.png" width="30"/></a>
+    <h2>个人中心</h2>
+  </div>
+  <div class="content">
+    <div class="person-welcome">您好，caterwei</div>
+    <div class="clr"></div>
+    <div class="person-center-wrap"> <a href="./order/index.html" class="person-center-box linkAct">
+      <h2>我的订单</h2>
+      <b class="person-center-arrow arrow-right"></b> </a> <a href="./addr/index.html" class="person-center-box linkAct">
+      <h2>配送地址</h2>
+      <b class="person-center-arrow arrow-right"></b> </a> <a href="./modifypwd.html" class="person-center-box linkAct">
+      <h2>修改密码</h2>
+      <b class="person-center-arrow arrow-right"></b> </a> </div>
+    <a href="/haosi/index.php/weixin/login/doLogout.html" class="person-center-box linkAct person-logout">
+    <h2>退出账号</h2>
+    </a> </div>
+</div>
+</body>
+<script type="text/javascript">
+function yesno() {
+	if(confirm("是否删除?")){
+  		return true;
+	}else
+   		return false;
+	}
+</script>
+</html>

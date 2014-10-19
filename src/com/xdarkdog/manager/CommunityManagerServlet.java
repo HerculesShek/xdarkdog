@@ -1,6 +1,7 @@
 package com.xdarkdog.manager;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItem;
 
+import com.alibaba.fastjson.JSON;
 import com.xdarkdog.dao.CommunityDao;
 import com.xdarkdog.pojo.Community;
 import com.xdarkdog.web.util.FormUtil;
@@ -160,4 +162,5 @@ public class CommunityManagerServlet extends HttpServlet {
 		req.setAttribute("pb", pb);
 		req.getRequestDispatcher("/manager/showCommsByPage.jsp").forward(req, resp);
 	}
+	
 }

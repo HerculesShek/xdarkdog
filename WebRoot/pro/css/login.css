@@ -1,0 +1,10 @@
+@charset "utf-8";
+.login-box{ padding:0 1em; margin-bottom:3em;}
+
+.input-box,.input-box-on,.login-btn,.register-div{ margin-top:1em;}
+.login-tab-box a{ width:100%; padding:.4em 0; float:left; text-align:center; color:#333;}
+.login-tab-box a.on{ background:#ff7700; color:#fff;}
+.register-code-btn{ margin-top:15px; padding-left:0.4em;}
+#phone-btn{border-radius:2px; text-align:center;}
+.btn-off #phone-btn,.btn-off .btn-org:active{ background:#bebebe; color:#fff; font-size:1em;}
+.forget-pwd{ margin-top:0.5em;}

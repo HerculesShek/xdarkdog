@@ -1,0 +1,40 @@
+@charset "utf-8";
+/* CSS Document */
+body{ background:#fff;}
+.lunch-content{ padding:0.2em 0.5em 0 0.5em;}
+.fixed-menu-on{ position:fixed; top:46px; width:100%; float:left; background:#fff;}
+#lunch-header{ position:fixed; top:0;}
+.menu-wrap{ height:2.2em;}
+.menu .ui-grid-b div{ margin-left:1px; margin-right:-1px;}
+.menu .ui-grid-b a{ width:100%; text-align:center; height:2.2em; border-left:1px solid #ddd; border-bottom:1px solid #ddd; float:left; position:relative;}
+.menu .ui-grid-b a font{ line-height:2.2em;}
+.menu .ui-grid-b a b{ position:absolute; right:0.2em; top:0.1em; font-size:12px; height:1.3em; line-height:1.3em; padding:0 0.4em; background:#ff7700; color:#fff; float:left; border-radius:8px; font-weight:normal;}
+.menu .ui-grid-b a.on{ color:#ff7700; border-bottom:0px;}
+.lunch-banner-box{ margin-top:52px; text-align:center;}
+.lunch-banner-box img{height:auto; width：auto\9; max-width:100%;}
+
+
+.menu .ui-grid-a a{ width:100%; text-align:center; height:2.2em; border-left:1px solid #ddd; border-bottom:1px solid #ddd; float:left; position:relative;}
+.menu .ui-grid-a a font{ line-height:2.2em;}
+.menu .ui-grid-a a b{ position:absolute; right:0.2em; top:0.1em; font-size:12px; height:1.3em; line-height:1.3em; padding:0 0.4em; background:#ff7700; color:#fff; float:left; border-radius:8px; font-weight:normal;}
+.menu .ui-grid-a a.on{ color:#ff7700; border-bottom:0px;}
+
+.lunch-photo{ float:left; margin-right:0.4em;}
+.lunch-font12{ font-size:12px;}
+.lunch-title{ color:#000; padding-top:0.8em;}
+.lunch-info p{ padding-top:1.2em; color:#888;}
+.lunch-box{ padding-bottom:50px; float:left; width:100%;}
+.lunch-box ul li{ border-bottom:1px solid #dbdada; padding-bottom:0.2em; margin-bottom:0.4em; width:100%; float:right;}
+.lunch-info .item-btn{ float:right; cursor:pointer;}
+.lunch-info .item-text{ float:right; height:28px; line-height:28px; padding:0 0.4em;}
+.lunch-info .ui-block-b{ margin-top:0em;}
+.order-count-box{ height:50px; border:1px solid #dbdada; width:100%; float:left; position:fixed; bottom:0; background:#fff;}
+.waste-icon{ padding:0.8em 0.4em 0 0.5em;}
+.order-count-text{ line-height:50px; font-size:0.9em;}
+.settlement-box{ width:6em; float:right; margin-top:5px; padding-right:0.5em;}
+.lunch-sold{ float:right; color:#999;}
+
+.order-address-box{ border-top:1px solid #cccccc; border-bottom:1px solid #cccccc;}
+.order-address-box ul li{ border-bottom:1px dashed #cccccc; margin-bottom:-1px; padding:0.5em 0.5em; font-size:0.9em;}
+.order-address-box ul li h2{ width:90%; line-height:1.2em; padding-bottom:0.2em;}
+.order-address-box ul li p{ color:#999;}

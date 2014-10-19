@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="keywords" content="嘿狗社区
+" />
+<meta name="description" content="嘿狗社区。" />
+<title>嘿狗社区服务平台</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0">
+<link type="text/css" rel="stylesheet" href="css/common.css" />
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/jquery.cookie.js"></script>
+<script type="text/javascript" src="js/fastclick.min.js"></script>
+<script type="text/javascript" src="js/base.js"></script>
+<script>
+    //fastclick初始化
+    window.addEventListener('load', function () {
+        FastClick.attach(document.body);
+    }, false);
+</script>
+    <link type="text/css" rel="stylesheet" href="css/login.css" />
+</head>
+ 
+<body>
+<div class="container" id="register">
+    <div class="header">
+    	<a href="index.html" class="left linkAct"><img src="images/arrow-left.png" width="30" class="m-t-4"/></a>
+   	  <h2>找回密码</h2>
+    </div>
+    <div class="login-box">
+		<div class="input-box">
+			<input type="tel" name="tel" class="input"/>
+			<p>手机号码</p>
+		</div>
+		<div>
+			<div class="ui-grid-a">
+			    <div class="ui-block-a">
+			    	<div class="input-box">
+						<input type="number" id="tel_code" name="tel_code" class="input"/>
+						<p>验证码</p>
+					</div>
+			    </div>
+			    <div class="ui-block-b register-code-btn">
+			    	<div id="btn-box" class="btn-on"><input type="button" id="phone-btn" class="button btn-org" value="发送验证码"/></div>
+			    </div>
+		    </div>
+		</div>
+		<div class="register-div">
+			<div><input type="button" class="button btn-green find-pwd-btn" value="找回"/></div>
+		</div>
+    </div>
+    
+</div>
+</body>
+<script type="text/javascript"><!--
+$(function(){
+	$(".input").each(function() {
+		if($(this).val() != ""){
+			$(this).next("p").hide();
+		}
+	})
+	$reg1 = /^1\d{10}$/;//手机验证
+	var telIpt = $('input[name="tel"]');//手机号码
+	var code = $('input[name="tel_code"]');//验证码
+	
+	//判断手机号码正确性
+	function checkMobile(){
+		if(!$reg1.test(telIpt.val())){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
+	//表单验证
+	$(".find-pwd-btn").click(function (){
+		//判断号码
+		if(!checkMobile()) {
+			alert("请输入正确的手机号码");
+			return false;
+		}
+		var codeTemp = false;
+		//判断验证码是否正确
+		$.ajax({
+			url:"/haosi/Weixin/Login/checkTel_code",
+			type:"post",
+			async:false,
+			data:{code:code.val()},
+			success:function(data){
+				var data = eval("("+data+")");
+				if(data.info == 2){
+					codeTemp = true;
+				}else{
+					alert(data.info);
+				}
+			}
+		})
+		if(!codeTemp){
+			return false;
+		}
+		//ajax
+		$.ajax({
+			url:"/haosi/Weixin/Findpwd/updatePwd",
+			type:"post",
+			data:{tel:telIpt.val(),tel_code:code.val()},
+			success:function(json){
+				var data = eval("("+json+")");
+				if(data.status == 1){
+					window.location.href="/haosi/index.php/weixin/findpwd/pwd.html";
+				}else{
+					alert(data.info);
+				}
+			}
+		})
+		
+	})
+	
+	
+	//发送验证码
+	
+	$("#phone-btn").click(function() {
+		//判断手机是否验证通过
+		if($("#btn-box").attr("class") == "btn-on"){
+			if(checkMobile()) {
+				//异步发送手机短信
+				$.ajax({
+					url:"/haosi/Weixin/Common/sendMsg",
+					type:"post",
+					data:{tel:telIpt.val()},
+					success:function(data){
+						if(data != ""){
+							alert(data.info);
+						}else{
+							countDown(document.getElementById("phone-btn"));
+						}
+					}
+				})
+			}else{
+				alert("请输入正确的手机号码");
+				return false;
+			}
+		}
+	});
+
+})
+
+	//倒计时
+	var wait= 60;
+	function countDown(t){
+		if (wait == 0) {
+			$("#phone-btn").attr("class","button btn-org");
+			t.removeAttribute("disabled");
+			t.value="获取手机验证码";
+			wait = 60;
+		} else {
+			$("#phone-btn").attr("class","button btn-gray");
+			t.setAttribute("disabled", true);
+			t.value ="重新发送(" + wait + ")";
+			wait--;
+			setTimeout(function() {
+				countDown(t)
+			},1000)
+		}
+	}
+
+	$(".input").bind('input propertychange', function() {
+		if($(this).val() != ""){
+			$(this).next("p").hide();
+		}else{
+			$(this).next("p").show();
+		}
+	})
+	
+	//表单获得焦点提示信息
+	$(".input").focus(
+		function() {
+			$(this).parents(".input-box").attr("class","input-box-on");
+		}
+	)
+	//表单失去焦点提示信息
+	$(".input").blur(
+		function() {
+			$(this).parents(".input-box-on").attr("class","input-box");
+		}
+	)
+
+
+</script> 
+</html>
