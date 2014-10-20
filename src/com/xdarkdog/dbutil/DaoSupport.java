@@ -122,7 +122,7 @@ public class DaoSupport {
 	}
 
 	// 自动封装返回类型
-	public List executeQuery(String sql, Class clazz, Object... objects) {
+	public List executeQuery(String sql, Class<?> clazz, Object... objects) {
 		// 打印当前SQL语句。
 		System.out.println("SQL:> " + sql);
 		getConntion(); // 获得连接

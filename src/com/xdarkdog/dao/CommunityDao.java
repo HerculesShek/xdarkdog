@@ -56,9 +56,9 @@ public class CommunityDao extends DaoSupport {
 		return affectRows;
 	}
 	
-	public int removeCommById(int id){
+	public int removeCommById(int id) {
 		String sql = "delete from `ddcommunity`.`tbl_community` where id = ?";
-		Object[] params = {id};
+		Object[] params = { id };
 		int affectRows = execOther(sql, params);
 		return affectRows;
 	}

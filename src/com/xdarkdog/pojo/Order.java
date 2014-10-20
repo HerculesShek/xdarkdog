@@ -3,7 +3,7 @@ package com.xdarkdog.pojo;
 import java.util.Date;
 
 public class Order {
-	private int order_id; // 订单号
+	private int order_id; // 订单号 主键
 	private int order_type; // 订单类型 1 表示 普通订单 2 表示预约订单
 	private Date subscribe_delivery_time; // 预约订单的配送时间
 	private int userid; // 用户id

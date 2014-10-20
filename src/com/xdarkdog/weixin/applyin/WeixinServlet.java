@@ -133,7 +133,7 @@ public class WeixinServlet extends HttpServlet {
 		}
 	}
 
-	// 获取消息的类型 其实这么做比xml解析要快！
+	// 获取消息的类型 这么做比xml解析要快！
 	private static String msgType(String msg) {
 		return getMiddle("MsgType><![CDATA[", "]]></MsgType", msg);
 	}
