@@ -38,8 +38,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		<td>社区地址</td>
   		<td>社区纬度</td>
   		<td>社区经度</td>
-  		<td>社区小图</td>
-  		<td>社区大图</td>
+  		<td>社区图片</td>
   		<td>社区管理</td>
   	</tr>
     <c:forEach var="comm" items="${pb.data}">
@@ -48,7 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  		<td>${comm.location}</td>
 	  		<td>${comm.lat }</td>
 	  		<td>${comm.lon }</td>
-	  		<td>${comm.photos}</td>
+	  		<td><img src="${comm.photos}" width="40px" height="35px"></td>
 	  		<td>
 				<a href="/xdarkdog/servlet/comm.do?method=showcomm&id=${comm.id }">修改</a>
 				<a href="/xdarkdog/servlet/comm.do?method=removecomm&id=${comm.id }">删除</a>
@@ -57,7 +56,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</tr>
     </c:forEach>
     </table>
-  	
+  	<hr/>
+    <a href="/xdarkdog/manager/manager.jsp">管理主页面</a>
   </div>
   </body>
 </html>

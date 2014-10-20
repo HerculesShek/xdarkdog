@@ -29,5 +29,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	社区小照片：<input type="text" name="small_pic_url" value="<%=comm.getPhotos()%>"><br>
     	<input type="submit" value="修改"> 
     </form>
+    <hr/>
+    <a href="/xdarkdog/manager/manager.jsp">管理主页面</a>
   </body>
 </html>

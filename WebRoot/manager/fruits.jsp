@@ -61,5 +61,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </tr>
 
     </table>
+    
+    <hr/>
+    <a href="/xdarkdog/manager/manager.jsp">管理主页面</a>
   </body>
 </html>

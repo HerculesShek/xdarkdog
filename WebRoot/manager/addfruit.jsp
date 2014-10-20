@@ -79,7 +79,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	</tr>
     	<tr><td colspan="2" align="center"><input type="submit" value="添加水果"></td></tr>
     	</table>
-    	
     </form>
+    
+    <hr/>
+    <a href="/xdarkdog/manager/manager.jsp">管理主页面</a>
   </body>
 </html>
