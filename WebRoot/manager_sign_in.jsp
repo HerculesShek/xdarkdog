@@ -14,9 +14,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   <body>
     <form action="/xdarkdog/servlet/signin.do" method="post">
-    	用户名：<input type="text" name="username"/><br>
-    	密码：<input type="password" name="pwd"/><br>
-    	<input type="submit" value="sign in" />
+    <table align="center">
+    	<tr><th colspan="2" align="center"><h3>嘿狗社区管理员登陆</h3></th></tr>
+    	<tr>
+    		<td>用户名:</td>
+    		<td><input type="text" name="username"/></td>
+    	</tr>
+    	<tr>
+    		<td>密码:</td>
+    		<td><input type="password" name="pwd"/></td>
+    	</tr>
+    	<tr><td colspan="2" align="center"><input type="submit" value="sign in" /></td></tr>
+    </table>
+    	
+    	
     </form>
   </body>
 </html>

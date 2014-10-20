@@ -11,7 +11,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">  
-		<script type="text/javascript">
+	<script type="text/javascript">
 	function addMore(){
 		var td = $("imgs");
 		var input  = document.createElement("input");
@@ -30,6 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <form action="/xdarkdog/servlet/comm.do" method="post" enctype="multipart/form-data">
     	<input type="hidden" name="method" value="addComm"><br>
     	<table align="center">
+    	<tr><th colspan="2" align="center"><h3>社区信息添加</h3></th></tr>
     	<tr>
     		<td>社区水果店名字: </td>
     		<td><input type="text" name="fruit_shop_name"></td>

@@ -16,7 +16,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
   <table align="center">
-  	<tr><th><h3>嘿狗社区管理后台</h3></th></tr>
+  	<tr><th align="center"><h3>嘿狗社区管理后台</h3></th></tr>
   	<tr><td><a href="/xdarkdog/manager/addcomm.jsp">添加社区</a></td></tr>
   	<tr><td><a href="/xdarkdog/servlet/comm.do?method=show">社区列表</a></td></tr>
   	<tr><td><a href="/xdarkdog/servlet/comm.do?method=showcommsByPage">社区分页列表</a></td></tr>

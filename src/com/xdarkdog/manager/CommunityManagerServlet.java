@@ -1,5 +1,6 @@
 package com.xdarkdog.manager;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Iterator;
@@ -58,28 +59,76 @@ public class CommunityManagerServlet extends HttpServlet {
 			showComms(req, resp);
 		
 		Iterator<FileItem> it = items.iterator();
-		// 首先判断是什么方法
-		String method = "";
+		// 首先判断是什么方法 要删除的照片 原来的照片
+		String method = "", photostodelete = "", originalphotos = "";
 		while (it.hasNext()) {
 			FileItem item = it.next();
 			if (item.isFormField()) {
 				String fieldName = item.getFieldName();
 				if (fieldName.equalsIgnoreCase("method")) {
 					method = item.getString("utf-8");
-					break;
+				}
+				if (fieldName.equalsIgnoreCase("photostodelete")) {
+					photostodelete = item.getString("utf-8");
+				}
+				if (fieldName.equalsIgnoreCase("originalphotos")) {
+					originalphotos = item.getString("utf-8");
 				}
 			}
 		}
-		System.out.println("[add/modify]:"+method);
+		System.out.println("社区信息管理[add/modify]: "+method);
 		// 根据方法名字做处理
 		if (method.equalsIgnoreCase("addComm")) {
 			Community comm = (Community)fu.getInstanceByAdvanceForm(req, items, Community.class, "img");
 			new CommunityDao().addCommunity(comm);
+			showComms(req, resp);           
+		} else if (method.equalsIgnoreCase("modifyComm")) { // 修改一个社区的信息，有可能会有要删除的照片的信息
+			if (photostodelete.length() > 0) { // 要删除一些照片
+				// "http://localhost:8080/xdarkdog/img/1413805214235Koala.jpg,"
+				System.out.println("要删除的照片是：" + photostodelete);
+				// "/xdarkdog/img/1413805538709Koala.jpg,/xdarkdog/img/1413805538712Lighthouse.jpg"
+				System.out.println("原来的照片是：" + originalphotos);
+				// "C:\apache-tomcat-7.0.55\webapps\xdarkdog\"
+				System.out.println("RealPath->"+req.getServletContext().getRealPath("/"));
+			}
+			// 更新社区信息 
+			// 1 删除一部分图片 并且从原来的照片的url里把这些照片的url删掉，只保留剩余的
+			String orginalPhotos[] = originalphotos.split(",");
+			if (photostodelete.length() > 0) {
+				String p2delete[] = photostodelete.split(",");
+				for (String p : p2delete) {
+					String p_postfix = p.substring(p.indexOf("xdarkdog") + "xdarkdog".length() + 1, p.length());
+					String fileRpath = req.getServletContext().getRealPath("/")+p_postfix.replace('/', File.separatorChar);
+					File f = new File(fileRpath);
+					if (f.exists()) {
+						f.delete();
+					}
+					// 把这个图片的url从原来的url里删除
+					for (int i = 0; i < orginalPhotos.length; i++) {
+						if (orginalPhotos[i].contains(p_postfix)) {
+							orginalPhotos[i] = "";
+						}
+					}
+				}
+			}
+			// 2 重组comm的photos属性，更新数据库
+			Community comm = (Community) fu.getInstanceByAdvanceForm(req, items, Community.class, "img");
+			if (orginalPhotos != null && orginalPhotos.length > 0) {
+				for (String s : orginalPhotos) {
+					if (s != "") {
+						String ps = comm.getPhotos();
+						if (comm.getPhotos() == null) {
+							comm.setPhotos(s);
+						} else {
+							comm.setPhotos(ps + "," + s);
+						}
+					}
+				}
+			}
+			System.out.println("社区信息:"+comm);
+			new CommunityDao().modifyComm(comm);
 			showComms(req, resp);
-		} else if (method.equalsIgnoreCase("modifyComm")) {
-
 		}
-
 	}
 
 	// 显示所有的社区

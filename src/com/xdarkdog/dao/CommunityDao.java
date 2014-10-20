@@ -47,12 +47,10 @@ public class CommunityDao extends DaoSupport {
 		return null;
 	}
 	
-	// TODO
 	public int modifyComm(Community comm){
-		String sql = "update `ddcommunity`.`tbl_community` set name=?, location=?, lat=?, lon=?, small_pic_url=?, big_pic_url=? where id = ?";
-		// Object[] params= {comm.getName(), comm.getLocation(),comm.getLat(),comm.getLon(),comm.getSmall_pic_url(),comm.getBig_pic_url(),comm.getId()};
-		// int affectRows = execOther(sql, params);
-		int affectRows = 0;
+		String sql = "UPDATE `ddcommunity`.`tbl_community` SET `fruit_shop_name`=?, `comm_name`=?, `fruit_shop_owner`=?, `owner_phone`=?, `location`=?, `lat`=?, `lon`=?, `photos`=? WHERE `id`=?;";
+		Object[] params= {comm.getFruit_shop_name(), comm.getComm_name(),comm.getFruit_shop_owner(),comm.getOwner_phone(),comm.getLocation(),comm.getLat(),comm.getLon(), comm.getPhotos(), comm.getId()};
+		int affectRows = execOther(sql, params);
 		return affectRows;
 	}
 	
