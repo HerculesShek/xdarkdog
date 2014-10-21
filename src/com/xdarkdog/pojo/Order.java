@@ -3,7 +3,7 @@ package com.xdarkdog.pojo;
 import java.util.Date;
 
 public class Order {
-	private int order_id; // 订单号 主键
+	private String order_id; // 订单号 主键
 	private int order_type; // 订单类型 1 表示 普通订单 2 表示预约订单
 	private Date subscribe_delivery_time; // 预约订单的配送时间
 	private String username; // 用户名
@@ -24,16 +24,16 @@ public class Order {
 						// 4 订单完成 成功送到 并且付款
 						// 5 用户手动取消了订单
 
-	public int getOrder_id() {
+	public int getOrder_type() {
+		return order_type;
+	}
+
+	public String getOrder_id() {
 		return order_id;
 	}
 
-	public void setOrder_id(int order_id) {
+	public void setOrder_id(String order_id) {
 		this.order_id = order_id;
-	}
-
-	public int getOrder_type() {
-		return order_type;
 	}
 
 	public void setOrder_type(int order_type) {
@@ -140,27 +140,6 @@ public class Order {
 		super();
 	}
 
-	public Order(int order_id, int order_type, Date subscribe_delivery_time,
-			String username, int commid, int shipid, double totalcost,
-			Date create_time, int pay_style, int paid_tag, int delivery_tag,
-			int receipt_tag, int cancel_tag, int status) {
-		super();
-		this.order_id = order_id;
-		this.order_type = order_type;
-		this.subscribe_delivery_time = subscribe_delivery_time;
-		this.username = username;
-		this.commid = commid;
-		this.shipid = shipid;
-		this.totalcost = totalcost;
-		this.create_time = create_time;
-		this.pay_style = pay_style;
-		this.paid_tag = paid_tag;
-		this.delivery_tag = delivery_tag;
-		this.receipt_tag = receipt_tag;
-		this.cancel_tag = cancel_tag;
-		this.status = status;
-	}
-
 	@Override
 	public String toString() {
 		return "Order [order_id=" + order_id + ", order_type=" + order_type
@@ -182,7 +161,8 @@ public class Order {
 		result = prime * result
 				+ ((create_time == null) ? 0 : create_time.hashCode());
 		result = prime * result + delivery_tag;
-		result = prime * result + order_id;
+		result = prime * result
+				+ ((order_id == null) ? 0 : order_id.hashCode());
 		result = prime * result + order_type;
 		result = prime * result + paid_tag;
 		result = prime * result + pay_style;
@@ -221,7 +201,10 @@ public class Order {
 			return false;
 		if (delivery_tag != other.delivery_tag)
 			return false;
-		if (order_id != other.order_id)
+		if (order_id == null) {
+			if (other.order_id != null)
+				return false;
+		} else if (!order_id.equals(other.order_id))
 			return false;
 		if (order_type != other.order_type)
 			return false;
@@ -252,4 +235,25 @@ public class Order {
 		return true;
 	}
 
+	public Order(String order_id, int order_type, Date subscribe_delivery_time,
+			String username, int commid, int shipid, double totalcost,
+			Date create_time, int pay_style, int paid_tag, int delivery_tag,
+			int receipt_tag, int cancel_tag, int status) {
+		super();
+		this.order_id = order_id;
+		this.order_type = order_type;
+		this.subscribe_delivery_time = subscribe_delivery_time;
+		this.username = username;
+		this.commid = commid;
+		this.shipid = shipid;
+		this.totalcost = totalcost;
+		this.create_time = create_time;
+		this.pay_style = pay_style;
+		this.paid_tag = paid_tag;
+		this.delivery_tag = delivery_tag;
+		this.receipt_tag = receipt_tag;
+		this.cancel_tag = cancel_tag;
+		this.status = status;
+	}
+	
 }

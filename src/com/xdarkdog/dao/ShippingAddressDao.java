@@ -8,16 +8,16 @@ import com.xdarkdog.pojo.UserShippingAddress;
 public class ShippingAddressDao extends DaoSupport {
 	// 增加一条配送信息
 	public int addUserShippingAddress(UserShippingAddress addr) {
-		String sql = "INSERT INTO `ddcommunity`.`tbl_user_shipping_address` (`userid`, `realname`, `gender`, `phone`, `location`) VALUES (?,?,?,?,?);";
-		Object params[] = { addr.getUserid(), addr.getRealname(), addr.getGender(), addr.getPhone(), addr.getLocation() };
+		String sql = "INSERT INTO `ddcommunity`.`tbl_user_shipping_address` (`uesrname`, `realname`, `gender`, `phone`, `location`) VALUES (?,?,?,?,?);";
+		Object params[] = { addr.getUsername(), addr.getRealname(), addr.getGender(), addr.getPhone(), addr.getLocation() };
 		int affectRows = execOther(sql, params);
 		return affectRows;
 	}
 
 	// 根据用户的id获取此用户所有的配送地址
-	public List<UserShippingAddress> getAddrsByUserId(int userid) {
-		String sql = "SELECT * FROM ddcommunity.tbl_user_shipping_address where `userid` = ?";
-		Object[] params = { userid };
+	public List<UserShippingAddress> getAddrsByUsername(String username) {
+		String sql = "SELECT a.* FROM ddcommunity.tbl_user_shipping_address a, ddcommunity.tbl_user u where a.userid=u.id and u.username=? order by default_flag desc";
+		Object[] params = { username };
 		List<UserShippingAddress> addrs = executeQuery(sql, UserShippingAddress.class, params);
 		return addrs;
 	}

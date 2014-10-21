@@ -10,6 +10,7 @@ import java.util.Date;
 public class UserShippingAddress {
 	private int id;
 	private int userid; // 用户id
+	private String username; // 用户昵称
 	private String realname; // 用户真实姓名
 	private int gender; // 用户性别 1表示先生  0表示女士
 	private String phone; // 用户电话
@@ -18,6 +19,14 @@ public class UserShippingAddress {
 	private double lon; // 配送地址的经度 可为空
 	private Date last_time; // 用户最近一次使用这个配送地址的时间
 	private int default_flag; // 是不是默认的配送地址 1表示是 0表示否 默认是0
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
 	public int getId() {
 		return id;
@@ -99,12 +108,13 @@ public class UserShippingAddress {
 		this.default_flag = default_flag;
 	}
 
-	public UserShippingAddress(int id, int userid, String realname, int gender,
-			String phone, String location, double lat, double lon,
-			Date last_time, int default_flag) {
+	public UserShippingAddress(int id, int userid, String username,
+			String realname, int gender, String phone, String location,
+			double lat, double lon, Date last_time, int default_flag) {
 		super();
 		this.id = id;
 		this.userid = userid;
+		this.username = username;
 		this.realname = realname;
 		this.gender = gender;
 		this.phone = phone;
@@ -118,14 +128,14 @@ public class UserShippingAddress {
 	public UserShippingAddress() {
 		super();
 	}
-
+	
 	@Override
 	public String toString() {
 		return "UserShippingAddress [id=" + id + ", userid=" + userid
-				+ ", realname=" + realname + ", gender=" + gender + ", phone="
-				+ phone + ", location=" + location + ", lat=" + lat + ", lon="
-				+ lon + ", last_time=" + last_time + ", default_flag="
-				+ default_flag + "]";
+				+ ", username=" + username + ", realname=" + realname
+				+ ", gender=" + gender + ", phone=" + phone + ", location="
+				+ location + ", lat=" + lat + ", lon=" + lon + ", last_time="
+				+ last_time + ", default_flag=" + default_flag + "]";
 	}
 
 	@Override
@@ -148,6 +158,8 @@ public class UserShippingAddress {
 		result = prime * result
 				+ ((realname == null) ? 0 : realname.hashCode());
 		result = prime * result + userid;
+		result = prime * result
+				+ ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
 
@@ -191,6 +203,11 @@ public class UserShippingAddress {
 		} else if (!realname.equals(other.realname))
 			return false;
 		if (userid != other.userid)
+			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
 			return false;
 		return true;
 	}

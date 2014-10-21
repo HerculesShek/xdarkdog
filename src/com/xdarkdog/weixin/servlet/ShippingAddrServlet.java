@@ -21,8 +21,8 @@ public class ShippingAddrServlet extends HttpServlet {
 		String method = request.getParameter("method");
 		if ("addshipaddr".equalsIgnoreCase(method)) {
 			addShipaddr(request, response);
-		} else if ("allshipaddrs".equalsIgnoreCase(method)) {
-			allShipaddrs(request, response);
+		} else if ("getShipaddrsByUsername".equalsIgnoreCase(method)) {
+			getShipaddrsByUsername(request, response);
 		} else if ("removeshipaddr".equalsIgnoreCase(method)) {
 			removeShipaddr(request, response);
 		} else if ("modifyshipaddr".equalsIgnoreCase(method)) {
@@ -33,14 +33,14 @@ public class ShippingAddrServlet extends HttpServlet {
 	}
 	
 	public void addShipaddr(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int userid = Integer.parseInt(request.getParameter("userid"));
+		String username = request.getParameter("username");
 		String realname = request.getParameter("realname");
 		int gender = Integer.parseInt(request.getParameter("gender"));
 		String phone = request.getParameter("phone");
 		String location = request.getParameter("location");
 		
 		UserShippingAddress addr = new UserShippingAddress();
-		addr.setUserid(userid);
+		addr.setUsername(username);
 		addr.setRealname(realname);
 		addr.setGender(gender);
 		addr.setPhone(phone);
@@ -48,13 +48,21 @@ public class ShippingAddrServlet extends HttpServlet {
 		
 		int res = new ShippingAddressDao().addUserShippingAddress(addr);
 		
-		// TODO 成功增加用户的配送地址之后返回什么？
-		
+		response.setContentType("application/json;charset=utf-8");
+		response.setCharacterEncoding("utf-8");
+		PrintWriter out = response.getWriter();
+		if (res == 1) {
+			out.println("{\"success\":\"1\"}");
+		} else {
+			out.println("{\"success\":\"0\"}");
+		}
+		out.flush();
+		out.close();
 	}
 
-	public void allShipaddrs(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int userid = Integer.parseInt(request.getParameter("userid"));
-		List<UserShippingAddress> addrs = new ShippingAddressDao().getAddrsByUserId(userid);
+	public void getShipaddrsByUsername(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String username = request.getParameter("username");
+		List<UserShippingAddress> addrs = new ShippingAddressDao().getAddrsByUsername(username);
 		// TODO 获取用户的所有配送地址之后返回什么？
 		response.setContentType("application/json;charset=utf-8");
 		response.setCharacterEncoding("utf-8");
@@ -67,7 +75,16 @@ public class ShippingAddrServlet extends HttpServlet {
 	public void removeShipaddr(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int addrid = Integer.parseInt(request.getParameter("addrid"));
 		int res = new ShippingAddressDao().removeShippingAddr(addrid);
-		// TODO 删除用户的一个配送地址后返回什么？
+		response.setContentType("application/json;charset=utf-8");
+		response.setCharacterEncoding("utf-8");
+		PrintWriter out = response.getWriter();
+		if (res == 1) {
+			out.println("{\"success\":\"1\"}");
+		} else {
+			out.println("{\"success\":\"0\"}");
+		}
+		out.flush();
+		out.close();
 	}
 	
 	// 根据id来修改一个配送地址的信息 包含 真实姓名 性别 电话 地址
@@ -86,12 +103,30 @@ public class ShippingAddrServlet extends HttpServlet {
 		addr.setLocation(location);
 		
 		int res = new ShippingAddressDao().modifyShippingAddr(addr);
-		// TODO 成功修改用户的配送地址之后返回什么？
+		response.setContentType("application/json;charset=utf-8");
+		response.setCharacterEncoding("utf-8");
+		PrintWriter out = response.getWriter();
+		if (res == 1) {
+			out.println("{\"success\":\"1\"}");
+		} else {
+			out.println("{\"success\":\"0\"}");
+		}
+		out.flush();
+		out.close();
 	}
 	
 	public void setDefault(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int addrid = Integer.parseInt(request.getParameter("addrid"));
 		int res = new ShippingAddressDao().setDefault(addrid);
-		// TODO 成功把一个配送地址设为默认之后返回什么？
+		response.setContentType("application/json;charset=utf-8");
+		response.setCharacterEncoding("utf-8");
+		PrintWriter out = response.getWriter();
+		if (res == 1) {
+			out.println("{\"success\":\"1\"}");
+		} else {
+			out.println("{\"success\":\"0\"}");
+		}
+		out.flush();
+		out.close();
 	}
 }

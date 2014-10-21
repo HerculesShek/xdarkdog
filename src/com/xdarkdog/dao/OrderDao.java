@@ -7,10 +7,10 @@ public class OrderDao extends DaoSupport {
 	// 生生一份订单
 	public int addOrder(Order order) {
 		String sql = "INSERT INTO `ddcommunity`.`tbl_order` (`order_id`, " +
-				"`order_type`, " +
-				"`username`, " +
-				"`commid`, " +
-				"`shipid`, " +
+				"`order_type`, " + 
+				"`username`, " + 
+				"`commid`, " + 
+				"`shipid`, " + 
 				"`subscribe_delivery_time`, " +
 				"`create_time` ) VALUES (?,?,?,?,?,?,?);";
 		Object[] params = {order.getOrder_id(), 
