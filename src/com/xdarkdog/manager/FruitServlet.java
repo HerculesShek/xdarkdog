@@ -38,6 +38,7 @@ public class FruitServlet extends HttpServlet {
 		int cid = Integer.parseInt(comm_id);
 		Community comm = new CommunityDao().getCommById(cid);
 		List<Fruit> fruits = new FruitDao().getFruitsByCommId(cid);
+		// 需要把社区的信息放进去，表明当前的水果管理是哪个社区的
 		request.setAttribute("comm", comm);
 		request.setAttribute("fruits", fruits);
 		request.getRequestDispatcher("/manager/fruits.jsp").forward(request, response);

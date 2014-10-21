@@ -76,7 +76,7 @@ public class FormUtil {
 					// item.getFieldName() 指的是表单项的名字 比如 fruit_shop_name
 					// item.getString("utf-8") 则是value值
 					components.put(item.getFieldName(), item.getString("utf-8"));
-					System.out.println("FieldName:"+item.getFieldName()+", value:"+item.getString("utf-8"));
+					System.out.println("FieldName:`"+item.getFieldName()+"` -> value:`"+item.getString("utf-8")+"`");
 				} else { // TODO　应该首先判断是不是有文件上传
 					// 可以在此处 标记断点，来测试一下上传文件的类型
 					// item.getName() 在这里则是上传的文件的名字，没有任何的路径信息

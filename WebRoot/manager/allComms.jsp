@@ -19,18 +19,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-  <table border="1">
+  <table border="1" align="center">
   <tr><th colspan="9"><h3>社区信息列表</h3></th></tr>
-  	<tr>
-  		<td>社区水果店名字</td>
-  		<td>社区名字</td>
-  		<td>水果店店主名字</td>
-  		<td>店主电话</td>
-  		<td>水果店详细地址</td>
-  		<td>社区纬度</td>
-  		<td>社区经度</td>
-  		<td>社区图片</td>
-  		<td>社区管理</td>
+  	<tr align="center">
+  		<th>社区水果店名字</th>
+  		<th>社区名字</th>
+  		<th>水果店店主名字</th>
+  		<th>店主电话</th>
+  		<th>水果店详细地址</th>
+  		<th>社区纬度</th>
+  		<th>社区经度</th>
+  		<th>社区图片</th>
+  		<th>社区管理</th>
   	</tr>
     <%
     List<Community>	comms = (List<Community>)request.getAttribute("comms");

@@ -21,12 +21,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<h4><%=comm.getComm_name() %></h4>
 	<table border="1" align="center">
   	<tr>
-  		<td>水果名字</td>
-  		<td>价格</td>
-  		<td>可获得积分</td>
-  		<td>是否热卖</td>
-  		<td>是否推荐</td>
-  		<td>图片</td>
+  		<th>水果名字</th>
+  		<th>价格</th>
+  		<th>计量单位</th>
+  		<th>单位积分</th>
+  		<th>是否热卖</th>
+  		<th>是否推荐</th>
+  		<th>图片</th>
   	</tr>
     <%
     	if(fruits != null && fruits.size()>0){
@@ -34,6 +35,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     			out.print("<tr>");
     			out.println("<td>"+f.getName()+"</td>");
     			out.println("<td>"+f.getPrice()+"</td>");
+    			out.println("<td>"+f.getMeasurement_type()+"</td>");
     			out.println("<td>"+f.getPoints()+"</td>");
     			out.println("<td>"+(f.getHot_tag()==1?"是":"否")+"</td>");
     			out.println("<td>"+(f.getCommend_tag()==1?"是":"否")+"</td>");
@@ -43,23 +45,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     				String[] pics = photos.split(",");
     				if(pics.length>0){
     					for(String s : pics){
-    						out.println(" <img  src=\""+s+"\" width=\"40px\" height=\"35px\">");
+    						out.println("<img src=\""+s+"\" width=\"40px\" height=\"35px\">");
     					}
     				}
     			}
     			out.println("</td>");
     			// TODO 修改水果和删除水果的页面
     			out.println("<td><a href=\"/xdarkdog/servlet/fruit.do?method=friutinfo&id="+f.getId()+"\">修改</a>");
-    			out.println("<a href=\"/xdarkdog/servlet/fruit.do?method=removeFruit&id="+f.getId()+"&commid="+f.getCommunityid()+"\">删除</a>");
-    			out.println();
+    			out.println("<a href=\"/xdarkdog/servlet/fruit.do?method=removeFruit&id="+f.getId()+"&commid="+f.getCommunityid()+"\">删除</a></td>");
     			out.print("</tr>");
     		}
     	}
     %>
     <tr>
-    <td align="center" colspan="6"><a href="/xdarkdog/manager/addfruit.jsp?commid=<%=comm.getId()%>">添加水果</a></td>
+    <td align="center" colspan="7"><a href="/xdarkdog/manager/addfruit.jsp?commid=<%=comm.getId()%>">添加水果</a></td>
     </tr>
-
     </table>
     
     <hr/>

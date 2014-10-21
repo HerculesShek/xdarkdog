@@ -6,7 +6,7 @@ public class Order {
 	private int order_id; // 订单号 主键
 	private int order_type; // 订单类型 1 表示 普通订单 2 表示预约订单
 	private Date subscribe_delivery_time; // 预约订单的配送时间
-	private int userid; // 用户id
+	private String username; // 用户名
 	private int commid; // 水果店id
 	private int shipid; // 配送地址id
 	private double totalcost; // 总消费
@@ -23,27 +23,6 @@ public class Order {
 						// 3 表示审核通过 正在配送
 						// 4 订单完成 成功送到 并且付款
 						// 5 用户手动取消了订单
-
-	public Order(int order_id, int order_type, Date subscribe_delivery_time,
-			int userid, int commid, int shipid, double totalcost,
-			Date create_time, int pay_style, int paid_tag, int delivery_tag,
-			int receipt_tag, int cancel_tag, int status) {
-		super();
-		this.order_id = order_id;
-		this.order_type = order_type;
-		this.subscribe_delivery_time = subscribe_delivery_time;
-		this.userid = userid;
-		this.commid = commid;
-		this.shipid = shipid;
-		this.totalcost = totalcost;
-		this.create_time = create_time;
-		this.pay_style = pay_style;
-		this.paid_tag = paid_tag;
-		this.delivery_tag = delivery_tag;
-		this.receipt_tag = receipt_tag;
-		this.cancel_tag = cancel_tag;
-		this.status = status;
-	}
 
 	public int getOrder_id() {
 		return order_id;
@@ -67,14 +46,6 @@ public class Order {
 
 	public void setSubscribe_delivery_time(Date subscribe_delivery_time) {
 		this.subscribe_delivery_time = subscribe_delivery_time;
-	}
-
-	public int getUserid() {
-		return userid;
-	}
-
-	public void setUserid(int userid) {
-		this.userid = userid;
 	}
 
 	public int getCommid() {
@@ -157,15 +128,44 @@ public class Order {
 		this.status = status;
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 	public Order() {
 		super();
+	}
+
+	public Order(int order_id, int order_type, Date subscribe_delivery_time,
+			String username, int commid, int shipid, double totalcost,
+			Date create_time, int pay_style, int paid_tag, int delivery_tag,
+			int receipt_tag, int cancel_tag, int status) {
+		super();
+		this.order_id = order_id;
+		this.order_type = order_type;
+		this.subscribe_delivery_time = subscribe_delivery_time;
+		this.username = username;
+		this.commid = commid;
+		this.shipid = shipid;
+		this.totalcost = totalcost;
+		this.create_time = create_time;
+		this.pay_style = pay_style;
+		this.paid_tag = paid_tag;
+		this.delivery_tag = delivery_tag;
+		this.receipt_tag = receipt_tag;
+		this.cancel_tag = cancel_tag;
+		this.status = status;
 	}
 
 	@Override
 	public String toString() {
 		return "Order [order_id=" + order_id + ", order_type=" + order_type
 				+ ", subscribe_delivery_time=" + subscribe_delivery_time
-				+ ", userid=" + userid + ", commid=" + commid + ", shipid="
+				+ ", username=" + username + ", commid=" + commid + ", shipid="
 				+ shipid + ", totalcost=" + totalcost + ", create_time="
 				+ create_time + ", pay_style=" + pay_style + ", paid_tag="
 				+ paid_tag + ", delivery_tag=" + delivery_tag
@@ -196,7 +196,8 @@ public class Order {
 		long temp;
 		temp = Double.doubleToLongBits(totalcost);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + userid;
+		result = prime * result
+				+ ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
 
@@ -243,7 +244,10 @@ public class Order {
 		if (Double.doubleToLongBits(totalcost) != Double
 				.doubleToLongBits(other.totalcost))
 			return false;
-		if (userid != other.userid)
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
 			return false;
 		return true;
 	}

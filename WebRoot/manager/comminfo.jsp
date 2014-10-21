@@ -43,13 +43,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
   <%
   	Community comm = (Community)request.getAttribute("comm");
+    // 此段代码是为了解决修改之前社区没有照片信息，而会上传一个'null'的字符串
+  	String oriphotos;
+  	if(comm.getPhotos() == null || "".equalsIgnoreCase(comm.getPhotos())){
+  		oriphotos = "";
+  	}else{
+  		oriphotos = comm.getPhotos();
+  	}
   %>
     <form action="/xdarkdog/servlet/comm.do" method="post" enctype="multipart/form-data">
     <!-- 修改社区的信息，需要隐藏3个额外的信息：修改方法，社区id，要删除的社区的照片，原来的照片的值 -->
     	<input type="hidden" name="method" value="modifyComm"><br>
     	<input type="hidden" name="id" value="<%=comm.getId()%>"><br>
     	<input type="hidden" name="photostodelete" id="delete" value="">
-    	<input type="hidden" name="originalphotos" value="<%=comm.getPhotos()%>">
+    	<input type="hidden" name="originalphotos" value="<%=oriphotos%>">
     	<table align="center">
     	<tr><th colspan="2" align="center"><h3>修改社区信息</h3></th></tr>
     	<tr>

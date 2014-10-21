@@ -56,4 +56,12 @@ public class FruitDao extends DaoSupport{
 			return fs.get(0);
 		return null;
 	}
+	
+	public int removeFruitsByCommId(int commid){
+		String sql = "delete FROM ddcommunity.tbl_fruit where communityid=?";
+		Object[] param = {commid};
+		int affects = execOther(sql, param);
+		return affects;
+	}
+	
 }

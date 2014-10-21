@@ -15,7 +15,9 @@ import org.apache.commons.fileupload.FileItem;
 
 import com.alibaba.fastjson.JSON;
 import com.xdarkdog.dao.CommunityDao;
+import com.xdarkdog.dao.FruitDao;
 import com.xdarkdog.pojo.Community;
+import com.xdarkdog.pojo.Fruit;
 import com.xdarkdog.web.util.FormUtil;
 import com.xdarkdog.web.util.PageBean;
 
@@ -38,8 +40,6 @@ public class CommunityManagerServlet extends HttpServlet {
 			addOrModifyComm(req, resp);
 		} else if ("showcomm".equals(method)) {
 			showcomm(req, resp);
-		} else if ("modifyComm".equals(method)) {
-			modifyComm(req, resp);
 		} else if ("removecomm".equals(method)) {
 			removecomm(req, resp);
 		} else if ("managerfruits".equals(method)) {
@@ -76,10 +76,10 @@ public class CommunityManagerServlet extends HttpServlet {
 				}
 			}
 		}
-		System.out.println("社区信息管理[add/modify]: "+method);
+		System.out.println("社区信息管理[add/modify]: " + method);
 		// 根据方法名字做处理
 		if (method.equalsIgnoreCase("addComm")) {
-			Community comm = (Community)fu.getInstanceByAdvanceForm(req, items, Community.class, "img");
+			Community comm = (Community)fu.getInstanceByAdvanceForm(req, items, Community.class, "img/community");
 			new CommunityDao().addCommunity(comm);
 			showComms(req, resp);           
 		} else if (method.equalsIgnoreCase("modifyComm")) { // 修改一个社区的信息，有可能会有要删除的照片的信息
@@ -112,10 +112,10 @@ public class CommunityManagerServlet extends HttpServlet {
 				}
 			}
 			// 2 重组comm的photos属性，更新数据库
-			Community comm = (Community) fu.getInstanceByAdvanceForm(req, items, Community.class, "img");
+			Community comm = (Community) fu.getInstanceByAdvanceForm(req, items, Community.class, "img/community");
 			if (orginalPhotos != null && orginalPhotos.length > 0) {
 				for (String s : orginalPhotos) {
-					if (s != "") {
+					if (s != null && !"".equalsIgnoreCase(s) && !"null".equalsIgnoreCase(s)) {
 						String ps = comm.getPhotos();
 						if (comm.getPhotos() == null) {
 							comm.setPhotos(s);
@@ -154,44 +154,55 @@ public class CommunityManagerServlet extends HttpServlet {
 		}
 	}
 
-	// 修改一个社区的信息 TODO
-	private void modifyComm(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		String name = req.getParameter("name");
-		Community comm = new Community();
-		int id = Integer.parseInt(req.getParameter("id"));
-		comm.setId(id);
-		//comm.setName(name);
-		System.out.println("转义之后：" + name);
-		comm.setLocation(req.getParameter("location"));
-		String lonStr = req.getParameter("lon");
-		// TODO 此处必须加入验证
-		comm.setLon(Double.parseDouble(lonStr));
-		String latStr = req.getParameter("lat");
-		// TODO 此处必须加入验证
-		comm.setLat(Double.parseDouble(latStr));
-		//comm.setBig_pic_url(req.getParameter("big_pic_url"));
-
-		CommunityDao commDao = new CommunityDao();
-		commDao.modifyComm(comm);
-		req.getRequestDispatcher("/servlet/comm.do?method=show").forward(req, resp);
-	}
-	
 	// 删除一个社区的信息
-	private void removecomm(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	private void removecomm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String idStr = req.getParameter("id");
 		System.out.println("要删除的社区的id is " + idStr);
-		// TODO 
+		// 删除图片 删除社区下面所有的水果！
+		CommunityDao commDao = new CommunityDao();
 		int id = Integer.parseInt(idStr);
-		new CommunityDao().removeCommById(id);
+		Community comm = commDao.getCommById(id);
+		String photos_str = comm.getPhotos();
+		System.out.println("photos_str->"+photos_str);
+		if (photos_str != null && photos_str.length() > 0) { // 删除照片
+			String[] photo_s = photos_str.split(",");
+			for (String s : photo_s) { // 删除社区的照片
+				String p_postfix = s.substring(s.indexOf("xdarkdog") + "xdarkdog".length() + 1, s.length());
+				String fileRpath = req.getServletContext().getRealPath("/") + p_postfix.replace('/', File.separatorChar);
+				File f = new File(fileRpath);
+				if (f.exists()) {
+					System.out.println("删除照片：" + f.getAbsolutePath());
+					f.delete();
+				}
+			}
+		}
+		// 删除这个社区
+		commDao.removeCommById(id);
+		// 删除掉社区下面的所有的水果 TODO 不能简单的这么把水果信息给删掉 还有水果的照片必须也得删掉
+		FruitDao fruitDao = new FruitDao();
+		List<Fruit> fruits = fruitDao.getFruitsByCommId(id);
+		for (Fruit f : fruits) {
+			String f_photos_str = f.getPhotos();
+			System.out.println("f_photos_str->"+f_photos_str);
+			if (f_photos_str != null && f_photos_str.length() > 0) { // 删除照片
+				String[] f_photo_s = f_photos_str.split(",");
+				for (String s : f_photo_s) { // 删除社区的照片
+					String p_postfix = s.substring(s.indexOf("xdarkdog") + "xdarkdog".length() + 1, s.length());
+					String fileRpath = req.getServletContext().getRealPath("/") + p_postfix.replace('/', File.separatorChar);
+					File img_file = new File(fileRpath);
+					if (img_file.exists()) {
+						System.out.println("删除照片：" + img_file.getAbsolutePath());
+						img_file.delete();
+					}
+				}
+			}
+		}
+		fruitDao.removeFruitsByCommId(id);
 		req.getRequestDispatcher("/servlet/comm.do?method=show").forward(req, resp);
-		// TODO 
 	}
 		
 	// 获取一个社区中所有的水果
-	private void managerfruits(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	private void managerfruits(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String comm_id = req.getParameter("id");
 		req.getRequestDispatcher("/servlet/fruit.do?method=getFruitsByCommid&id="+comm_id).forward(req,resp);
 	}

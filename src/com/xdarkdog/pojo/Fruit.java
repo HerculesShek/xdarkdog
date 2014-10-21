@@ -4,19 +4,20 @@ import com.alibaba.fastjson.JSON;
 
 public class Fruit {
 	private int id;
-	private String name="";
+	private String name=""; // 水果名字
 	private double price; // 在售价格
-	private String measurement_type;
-	private int points;
-	private int communityid;
+	private String measurement_type = "斤"; // 计量单位 是按斤卖还是按个卖 或者其他
+	private int points; // 一个单位的水果会获得多少的积分
+	private int communityid; // 这个水鬼所属的社区id
 	private double original_price; // 进货价
 	private double display_price; // 展示价格
-	private int hot_tag;
-	private int commend_tag;
+	private int hot_tag; // 是否热卖
+	private int commend_tag; // 是否推荐
 	private String remark=""; // 简介
 	private String introduce=""; // 详细介绍
 	private int hitcount = 0; // 点击次数
-	private String photos="";
+	private String photos=""; // 图片的url串
+	private int valid_tag = 1; // 水果是否有效，就是是否在售 1表示正常 0表示不在售
 
 	public String getMeasurement_type() {
 		return measurement_type;
@@ -130,11 +131,18 @@ public class Fruit {
 		this.photos = photos;
 	}
 
+	public int getValid_tag() {
+		return valid_tag;
+	}
+
+	public void setValid_tag(int valid_tag) {
+		this.valid_tag = valid_tag;
+	}
 
 	public Fruit(int id, String name, double price, String measurement_type,
 			int points, int communityid, double original_price,
 			double display_price, int hot_tag, int commend_tag, String remark,
-			String introduce, int hitcount, String photos) {
+			String introduce, int hitcount, String photos, int valid_tag) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -150,10 +158,23 @@ public class Fruit {
 		this.introduce = introduce;
 		this.hitcount = hitcount;
 		this.photos = photos;
+		this.valid_tag = valid_tag;
 	}
 
 	public Fruit() {
 		super();
+	}
+
+	@Override
+	public String toString() {
+		return "Fruit [id=" + id + ", name=" + name + ", price=" + price
+				+ ", measurement_type=" + measurement_type + ", points="
+				+ points + ", communityid=" + communityid + ", original_price="
+				+ original_price + ", display_price=" + display_price
+				+ ", hot_tag=" + hot_tag + ", commend_tag=" + commend_tag
+				+ ", remark=" + remark + ", introduce=" + introduce
+				+ ", hitcount=" + hitcount + ", photos=" + photos
+				+ ", valid_tag=" + valid_tag + "]";
 	}
 
 	@Override
@@ -181,6 +202,7 @@ public class Fruit {
 		temp = Double.doubleToLongBits(price);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((remark == null) ? 0 : remark.hashCode());
+		result = prime * result + valid_tag;
 		return result;
 	}
 
@@ -239,18 +261,9 @@ public class Fruit {
 				return false;
 		} else if (!remark.equals(other.remark))
 			return false;
+		if (valid_tag != other.valid_tag)
+			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Fruit [id=" + id + ", name=" + name + ", price=" + price
-				+ ", measurement_type=" + measurement_type + ", points="
-				+ points + ", communityid=" + communityid + ", original_price="
-				+ original_price + ", display_price=" + display_price
-				+ ", hot_tag=" + hot_tag + ", commend_tag=" + commend_tag
-				+ ", remark=" + remark + ", introduce=" + introduce
-				+ ", hitcount=" + hitcount + ", photos=" + photos + "]";
 	}
 
 	public static void main(String[] args) {

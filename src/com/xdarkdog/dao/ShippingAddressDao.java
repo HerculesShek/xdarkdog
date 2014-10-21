@@ -9,8 +9,7 @@ public class ShippingAddressDao extends DaoSupport {
 	// 增加一条配送信息
 	public int addUserShippingAddress(UserShippingAddress addr) {
 		String sql = "INSERT INTO `ddcommunity`.`tbl_user_shipping_address` (`userid`, `realname`, `gender`, `phone`, `location`) VALUES (?,?,?,?,?);";
-		Object params[] = { addr.getUserid(), addr.getRealname(),
-				addr.getGender(), addr.getPhone(), addr.getLocation() };
+		Object params[] = { addr.getUserid(), addr.getRealname(), addr.getGender(), addr.getPhone(), addr.getLocation() };
 		int affectRows = execOther(sql, params);
 		return affectRows;
 	}

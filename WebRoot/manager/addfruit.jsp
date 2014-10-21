@@ -35,6 +35,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <form action="/xdarkdog/servlet/addfruit.do" method="post" enctype="multipart/form-data">
     	<input type="hidden" name="communityid" value="<%=commid%>">
     	<table align="center">
+    	<tr><th colspan="3"><h3>水果信息添加</h3></th></tr>
     	<tr>
     		<td>水果名:</td>
     		<td><input type="text" name="name"></td>
