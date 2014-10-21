@@ -46,7 +46,13 @@ $(function(){
     var GPS_LOCATION_LNG = 'GPS_LOCATION_LNG';
     var GPS_LOCATION_LAT = 'GPS_LOCATION_LAT';
     var TYPE = 'ORDER_BY';
-      if (!$.cookie(GPS_LOCATION_LNG)) {
+
+    var LOGIN_NAME = 'USER_NAME';
+       if ($.cookie(LOGIN_NAME)) {
+          $(".header-login").empty('a');
+          $(".header-login").append('<a class="linkAct" href="/person/index.html">'+ $.cookie(LOGIN_NAME) +'</a>');
+    }
+    if (!$.cookie(GPS_LOCATION_LNG)) {
       var date = new Date();
       date.setTime(date.getTime() + (30 * 60 * 1000));
       $.cookie(GPS_LOCATION_LNG, 120.2, { path: '/',expires: date });
@@ -59,7 +65,8 @@ $(function(){
        } else {
          alert("浏览器不支持html5来获取地理位置信息");
        }
-       
+
+ 
        function handleSuccess(position){
          // 获取到当前位置经纬度  本例中是chrome浏览器取到的是google地图中的经纬度
          var lng = position.coords.longitude;

@@ -33,7 +33,7 @@
       </div>
     </div>
   </div>
-  <div class="lunch-banner-box"><img src="images/lunch_banner.png"/></div>
+  <div class="lunch-banner-box"></div>
   <div class="lunch-content" id="lunch-content"> 
     <!-- 商务套餐 -->
     <div class="lunch-box" id="order-b1box">
@@ -68,7 +68,7 @@
     var position = $.cookie(GPS_LOCATION_LNG);
     if (position) {
       $.ajax({
-      url:"http://192.168.1.102:8080/xdarkdog/servlet/fruitsgps.do",
+      url:"/xdarkdog/servlet/fruitsgps.do",
       type:"post",
       dataType:'json',
       data:{lon:$.cookie(GPS_LOCATION_LNG),lat:$.cookie(GPS_LOCATION_LAT)},
@@ -78,13 +78,13 @@
             for(var i=0; i<typeData.length; i++)  
             {  
               var photos = typeData[i].photos.split(",")[0];
-              $("#order-b1box>ul").append('<li>' + 
-                                              '<div class="lunch-photo"><img width="85" height="85" alt="" src="'+photos+'"></div>' + 
-                                              '<div class="lunch-title">'+typeData[i].name+'<h2></div>'+
-                                              '<div class="lunch-info"><div class="ui-grid-a"><div class="ui-block-a">'+
-                                              '<p class="lunch-font12"><font class="org">￥<i class="price">'+typeData[i].price+'</i></font>&nbsp;<span>￥<font class="font-through">'+typeData[i].price+'</font></span></p></div>'+ 
-                                              '<div class="ui-block-b"> <b class="item-btn item-plus"><img height="28" src="images/plus.png"/></b><div class="item-btn-box" style="display:none;"> <font class="item-text">0</font> <span style="display:none;" class="item-id">55</span> <b class="item-btn item-minus"><img height="28" src="images/minus.png"/></b></div></div></div></div>'+
-                                          '</li>');
+               $("#order-b1box>ul").append('<li>' + 
+                                  '<div class="lunch-photo"><img width="85" height="85" alt="" src="'+photos+'"></div>' + 
+                                  '<div class="lunch-title">'+typeData[i].name+'<h2></div>'+
+                                  '<div class="lunch-info"><div class="ui-grid-a"><div class="ui-block-a">'+
+                                  '<p class="lunch-font12"><font class="org">￥<i class="price">'+typeData[i].price+'</i></font>&nbsp;</p></div><span>￥<font class="font-through">'+typeData[i].display_price+'</font></span>'+ 
+                                  '<div class="ui-block-b"> <b class="item-btn item-plus"><img height="28" src="images/plus.png"/></b><div class="item-btn-box" style="display:none;"> <font class="item-text">0</font> <span style="display:none;" class="item-id">'+typeData[i].id+'</span> <b class="item-btn item-minus"><img height="28" src="images/minus.png"/></b></div></div></div></div>'+
+                              '</li>');
 				$.cookie(COMM_ID, typeData[i].communityid);
             }
     		//如果有餐车记录进行回显
@@ -110,55 +110,52 @@
       })
     } else {
     	//根据社区ID读取水果列表
-        var id = request("id");
-        if (id & id != "") {
-           $.ajax({
-			  url:"./a.json",
-			  type:"get",
-			  data:{id:id},
-			  success:function(typeData){
-				// 获取信息
-			      $("#order-b1box ul").empty('li');
-			        for(var i=0; i<typeData.length; i++)  
-			        {  
-			          var photos = typeData[i].photos.split(",")[0];
-			          $("#order-b1box>ul").append('<li>' + 
-			                                          '<div class="lunch-photo"><img width="85" height="85" alt="" src="'+photos+'"></div>' + 
-			                                          '<div class="lunch-title">'+typeData[i].name+'<h2></div>'+
-			                                          '<div class="lunch-info"><div class="ui-grid-a"><div class="ui-block-a">'+
-			                                          '<p class="lunch-font12"><font class="org">￥<i class="price">'+typeData[i].price+'</i></font>&nbsp;<span>￥<font class="font-through">'+typeData[i].price+'</font></span></p></div>'+ 
-			                                          '<div class="ui-block-b"> <b class="item-btn item-plus"><img height="28" src="images/plus.png"/></b><div class="item-btn-box" style="display:none;"> <font class="item-text">0</font> <span style="display:none;" class="item-id">55</span> <b class="item-btn item-minus"><img height="28" src="images/minus.png"/></b></div></div></div></div>'+
-			                                      '</li>');
-            }
-         	//初始化
-    		countPrices();
-    		var COOKIE_NAME = 'mobileCart';
-    		//如果有餐车记录进行回显
-    		if( $.cookie(COOKIE_NAME) ){
-    			var $param = eval($.cookie(COOKIE_NAME));
+    	var id = $.cookie(COMM_ID);
+    	if (id == null || id == "") {
+    		window.location.href = "community.html";
+    	}
+       $.ajax({
+		  url:"/xdarkdog/servlet/fruitsgps.do",
+		  type:"get",
+		  data:{id:id},
+		  success:function(typeData){
+			// 获取信息
+		      $("#order-b1box ul").empty('li');
+		        for(var i=0; i<typeData.length; i++)  
+		        {  
+                       var photos = typeData[i].photos.split(",")[0];
+  					    $("#order-b1box>ul").append('<li>' + 
+                                  '<div class="lunch-photo"><img width="85" height="85" alt="" src="'+photos+'"></div>' + 
+                                  '<div class="lunch-title">'+typeData[i].name+'<h2></div>'+
+                                  '<div class="lunch-info"><div class="ui-grid-a"><div class="ui-block-a">'+
+                                  '<p class="lunch-font12"><font class="org">￥<i class="price">'+typeData[i].price+'</i></font>&nbsp;</p></div><span>￥<font class="font-through">'+typeData[i].display_price+'</font></span>'+ 
+                                  '<div class="ui-block-b"> <b class="item-btn item-plus"><img height="28" src="images/plus.png"/></b><div class="item-btn-box" style="display:none;"> <font class="item-text">0</font> <span style="display:none;" class="item-id">55</span> <b class="item-btn item-minus"><img height="28" src="images/minus.png"/></b></div></div></div></div>'+
+                              '</li>');
+        		}
+	    		var COOKIE_NAME = 'mobileCart';
+	    		//如果有餐车记录进行回显
+	    		if( $.cookie(COOKIE_NAME) ){
+	    			var $param = eval($.cookie(COOKIE_NAME));
 
-    			$(".item-id").each(function() {
-    				var $itemId = $(this).html();
-    				var $itemText = $(this).prev(".item-text");
-    				$($param).each(
-    					function() {
-    						if($itemId == this.id){
-    							$itemText.html(this.count);
-    						}
-    					}
-    				)
-    				countPrices();
-    			})
-    			
-    		}
-        },
-        error:function(json){
-          alert("服务器穿越了~ 再试试看");
-        }
-      })
-        } else {
-          alert("服务器穿越了~ 再试试看");
-        }
+	    			$(".item-id").each(function() {
+	    				var $itemId = $(this).html();
+	    				var $itemText = $(this).prev(".item-text");
+	    				$($param).each(
+	    					function() {
+	    						if($itemId == this.id){
+	    							$itemText.html(this.count);
+	    						}
+	    					}
+	    				)
+	    				countPrices();
+	    			})
+	    			
+	    		}
+	        },
+	        error:function(json){
+	          alert("服务器穿越了~ 再试试看");
+	        }
+	      })
     }
 
    function request(paras){  
@@ -305,8 +302,12 @@
 				function() {
 					$cookieNum = $(this).find(".item-text").html();
 					$cookieId = $(this).find(".item-id").html();
+					$photo = $(this).find(".lunch-photo img").attr("src");
+					$price = $(this).find(".price").html();
 					cartTemp.count = $cookieNum;
 					cartTemp.id = $cookieId;
+					cartTemp.photos = $photo;
+					cartTemp.price = $price;
 					cartTemp.name = $(this).find(".lunch-title h2").html();
 					if($cookieNum != 0) {
 						if(cartItem == "["){
@@ -337,19 +338,21 @@
 			}
 			var LOGIN_NAME = 'USER_NAME';
 		    var username = $.cookie(LOGIN_NAME);
-			if(username == ""){
+			if(username == null || username == ""){
 				if(confirm('您还未登录，是否跳转登录页面？')){
-					return true;
+					var url = location.href;
+					 var FROMURL = "4TO";
+					 var date = new Date();
+					 date.setTime(date.getTime() + (30 * 60 * 1000));
+					 $.cookie(FROMURL, url);
+					 window.location.href = "login.html";
+					 return false;
 				}else{
 					return false;
 				}
 			} else {
-				 var url = location.href;
-				 var FROMURL = "4TO";
-				 var date = new Date();
-				 date.setTime(date.getTime() + (30 * 60 * 1000));
-				 $.cookie(FROMURL, url);
-			}		
+				return true;
+			}	
 		})
    	})
 </script>

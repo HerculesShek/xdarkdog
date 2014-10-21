@@ -152,9 +152,9 @@ $(function(){
 		$.ajax({
 			url:"/xdarkdog/servlet/user.do?method=register",
 			type:"post",
-			data:{tel_code:code.val(),username:username.val(),password:pwd1.val(),tel:telIpt.val()},
+			data:{username:username.val(),password:pwd1.val(),tel:telIpt.val()},
 			success:function(json){
-				if(data.success == "1"){
+				if(json.success == "1"){
 					window.location.href="login.html";
 				}else{
 					alert("失败");

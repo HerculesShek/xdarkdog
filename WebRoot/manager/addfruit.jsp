@@ -46,6 +46,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		<td><input type="text" name="price"></td>
     	</tr>
     	<tr>
+    		<td>计量单位：</td>
+    		<td><input type="text" name="measurement_type"></td>
+    	</tr>
+    	<tr>
     		<td>积分：</td>
     		<td><input type="text" name="points"></td>
     	</tr>

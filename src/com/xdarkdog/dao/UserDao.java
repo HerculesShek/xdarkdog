@@ -6,11 +6,12 @@ import com.xdarkdog.dbutil.DaoSupport;
 import com.xdarkdog.pojo.User;
 
 public class UserDao extends DaoSupport {
-	public void addUser(User user) {
+	public int addUser(User user) {
 		String sql = "INSERT INTO `ddcommunity`.`tbl_user` (`username`, `phone`, `password`, `registration_time`) VALUES (?, ?, ?, ?);";
 		Object[] params = { user.getUsername(), user.getPhone(), user.getPassword(), user.getRegistration_time()};
-		int i = execOther(sql, params);
-		System.out.println(i + "条用户星系添加到user中了！！！");
+		int res = execOther(sql, params);
+		System.out.println(res + "条用户信息添加到user中了！！！");
+		return res;
 	}
 
 	public User getUserById(int id) {

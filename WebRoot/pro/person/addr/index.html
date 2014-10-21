@@ -43,7 +43,7 @@ $(function(){
 			data:{username:$.cookie(LOGIN_NAME)},
 			success:function(json){
 					$(".content").empty();
-					for (int i = 0; i < json.length; i ++){
+					for (var i = 0; i <json.length;i++){
 						    var address = json[i];
 						    var url = '<img src="../../images/success-icon.png" height="20">';
 						    if (i > 0) {

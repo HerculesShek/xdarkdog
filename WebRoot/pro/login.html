@@ -110,12 +110,13 @@ $(function(){
 			data:{username:$("#userName").val(),userpwd:$("#loginPassword").val(),come_form_key:$("#come_form_key").val()},
 			success:function(json){
 				if(json.success=="1"){
+					var FROMURL = "4TO";
 					if ($.cookie(FROMURL)) {
-						$.cookie(LOGIN_NAME);
 						window.location.href=$.cookie(FROMURL);	
 					} else {
 						window.location.href="index.html";
 					}
+					$.cookie(LOGIN_NAME, $("#userName").val());
 				}else{
 					$passWord.val("");
 					alert(json.info);

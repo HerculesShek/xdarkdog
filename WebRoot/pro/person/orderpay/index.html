@@ -167,13 +167,13 @@
 		$(".lunch-box.order-pay-lunch-box ul").empty('li');
 		for (var order in dataInCookie) {
 			if (order && typeof order != "undefined") {
-				$(".lunch-box.order-pay-lunch-box ul").append('<li><div class="lunch-photo"><img width="85" height="85" alt="" src="'+photos+'"></div>' + 
-		                									  '<div class="lunch-title"><h2>'+typeData[i].name+'</h2></div><div class="lunch-info">' +
+				$(".lunch-box.order-pay-lunch-box ul").append('<li><div class="lunch-photo"><img width="85" height="85" alt="" src="'+order.photos+'"></div>' + 
+		                									  '<div class="lunch-title"><h2>'+order.name+'</h2></div><div class="lunch-info">' +
 		                									  '<div class="ui-grid-a"><div class="ui-block-a"><p class="lunch-font12">' +
-		                									  '<font class="org">￥<i class="price">'+typeData[i].price+'</i></font>&nbsp;' +
-		                									  '<span>￥<font class="font-through">'+typeData[i].price+'</font></span></p></div>' +
+		                									  '<font class="org">￥<i class="price">'+order.price+'</i></font>&nbsp;' +
+		                									  '</p></div>' +
 		                									  '<div class="ui-block-b"><b class="item-btn item-plus"><img height="28" src="../../images/plus.png"/></b>' +
-		                									  '<div class="item-btn-box" style="display:none;"><font class="item-text">'+typeData[i].count+'</font><input type="hidden" class="order-pay-type" />' +
+		                									  '<div class="item-btn-box" style="display:none;"><font class="item-text">'+order.count+'</font><input type="hidden" class="order-pay-type" />' +
 															  '<b class="item-btn item-minus"><img height="28" src="../../images/minus.png"/></b></div></div></div></div></li>');
 			}
 
@@ -193,7 +193,7 @@
 				$("#order-pay-hour").append('<option value="'+s+'">'+s+'</option>');
 			}	
 		} else {
-			// 暂时不显示$(".order-pay-box-display").hide();
+			$(".order-pay-box-display").hide();
 		}
 
 		$("#noadd").find("a").click(function() {
@@ -376,7 +376,7 @@
 	    	$.ajax({	
 				url:" /xdarkdog/servlet/order.do?method=generate",
 				type:"post",
-				data:{username:$user_name,addr_id:$("#addr_id").val(),ids:$(".order-pay-order-id").val(),counts:$(".order-pay-order-count").val();order_time:$timestr,order_type:$ordertype,commid:$comm_id},
+				data:{username:$user_name,addr_id:$("#addr_id").val(),ids:$(".order-pay-order-id").val(),counts:$(".order-pay-order-count").val(),order_time:$timestr,order_type:$ordertype,commid:$comm_id},
 				success:function(json){
 					state = true;
 					$(".order-payment-btn").attr('disable','disable');

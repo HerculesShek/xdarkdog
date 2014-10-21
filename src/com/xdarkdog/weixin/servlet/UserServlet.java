@@ -39,11 +39,16 @@ public class UserServlet extends HttpServlet {
 		user.setPassword(password);
 		user.setPhone(tel);
 		user.setRegistration_time(new Date(System.currentTimeMillis()));
-		new UserDao().addUser(user);
+		System.out.println("增加注册用户：" + user);
+		int res = new UserDao().addUser(user);
 		response.setContentType("application/json;charset=utf-8");
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
-		out.println("{\"success\":\"1\"}");
+		if(res == 1){
+			out.println("{\"success\":\"1\"}");
+		} else {
+			out.println("{\"success\":\"0\"}");
+		}
 		out.flush();
 		out.close();
 	}
