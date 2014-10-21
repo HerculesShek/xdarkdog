@@ -20,6 +20,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
 	<h4><%=comm.getComm_name() %></h4>
 	<table border="1" align="center">
+	<tr><th colspan="9"><%=comm.getComm_name() %>水果信息</th></tr>
   	<tr>
   		<th>水果名字</th>
   		<th>价格</th>
@@ -27,7 +28,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		<th>单位积分</th>
   		<th>是否热卖</th>
   		<th>是否推荐</th>
+  		<th>是否在售</th>
   		<th>图片</th>
+  		<th>管理</th>
   	</tr>
     <%
     	if(fruits != null && fruits.size()>0){
@@ -39,12 +42,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     			out.println("<td>"+f.getPoints()+"</td>");
     			out.println("<td>"+(f.getHot_tag()==1?"是":"否")+"</td>");
     			out.println("<td>"+(f.getCommend_tag()==1?"是":"否")+"</td>");
+    			out.println("<td>"+(f.getValid_tag()==1?"是":"否")+"</td>");
     			out.println("<td>");
     			String photos = f.getPhotos();
     			if(photos != null){
     				String[] pics = photos.split(",");
     				if(pics.length>0){
     					for(String s : pics){
+    						if(!"".equalsIgnoreCase(s))
     						out.println("<img src=\""+s+"\" width=\"40px\" height=\"35px\">");
     					}
     				}
@@ -58,7 +63,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	}
     %>
     <tr>
-    <td align="center" colspan="7"><a href="/xdarkdog/manager/addfruit.jsp?commid=<%=comm.getId()%>">添加水果</a></td>
+    <td align="center" colspan="9"><a href="/xdarkdog/manager/addfruit.jsp?commid=<%=comm.getId()%>">添加水果</a></td>
     </tr>
     </table>
     

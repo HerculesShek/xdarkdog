@@ -52,7 +52,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	}
   %>
     <form action="/xdarkdog/servlet/comm.do" method="post" enctype="multipart/form-data">
-    <!-- 修改社区的信息，需要隐藏3个额外的信息：修改方法，社区id，要删除的社区的照片，原来的照片的值 -->
+    <!-- 修改社区的信息，需要隐藏4个额外的信息：修改方法，社区id，要删除的社区的照片，原来的照片的值 -->
     	<input type="hidden" name="method" value="modifyComm"><br>
     	<input type="hidden" name="id" value="<%=comm.getId()%>"><br>
     	<input type="hidden" name="photostodelete" id="delete" value="">
@@ -90,9 +90,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	</tr>
     	<c:forTokens var="url"  items="${comm.photos }"  delims=",">
     	<tr>
-	    		<td></td>
-	    		<td><img src="${url }" height="200px" width="200px" border="0" /></td>
-	    		<td><input type="button" value="删除这个照片" onclick="deletePhoto(this)"></td>
+	    	<td></td>
+	    	<td><img src="${url }" height="200px" width="200px" border="0" /></td>
+	    	<td><input type="button" value="删除这个照片" onclick="deletePhoto(this)"></td>
 	    </tr>
 	    </c:forTokens>
     	<tr>

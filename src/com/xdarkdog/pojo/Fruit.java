@@ -11,7 +11,7 @@ public class Fruit {
 	private int communityid; // 这个水鬼所属的社区id
 	private double original_price; // 进货价
 	private double display_price; // 展示价格
-	private int hot_tag; // 是否热卖
+	private int hot_tag; // 是否热卖 1表示热卖 0表示不热卖
 	private int commend_tag; // 是否推荐
 	private String remark=""; // 简介
 	private String introduce=""; // 详细介绍

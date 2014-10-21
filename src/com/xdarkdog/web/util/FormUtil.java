@@ -88,8 +88,7 @@ public class FormUtil {
 						if (filename.length() > 40) {
 							filename = filename.substring(0, 40);
 						}
-						String now = String.valueOf(System.currentTimeMillis());
-						filename = now + filename;
+						filename = UUIDSeria.getUUID() + filename;
 						File file2server = new File(request.getServletContext().getRealPath(filePath), filename);
 						item.write(file2server);
 						String file2db = request.getContextPath()

@@ -49,7 +49,7 @@ public class FruitDao extends DaoSupport{
 	}
 	
 	public Fruit getFruitById(int id){
-		String sql = "select * form ddcommunity.tbl_fruit where id = ?";
+		String sql = "select * from ddcommunity.tbl_fruit where id = ?";
 		Object[] params = {id};
 		List<Fruit> fs = executeQuery(sql, Fruit.class, params);
 		if(fs != null && fs.size()>0)
@@ -62,6 +62,38 @@ public class FruitDao extends DaoSupport{
 		Object[] param = {commid};
 		int affects = execOther(sql, param);
 		return affects;
+	}
+	
+	// 修改水果信息
+	public int modifyFruit(Fruit f){
+		String sql = "UPDATE `ddcommunity`.`tbl_fruit` SET `name`=?, " +
+				"`price`=?, " +
+				"`measurement_type`=?, " +
+				"`points`=?, " +
+				"`original_price`=?, " +
+				"`display_price`=?, " +
+				"`hot_tag`=?, " +
+				"`commend_tag`=?, " +
+				"`remark`=?, " +
+				"`introduce`=?, " +
+				"`photos`=?, " +
+				"`valid_tag`=? " +
+				"WHERE `id`= ?;";
+		Object[] params = {f.getName(),
+				f.getPrice(),
+				f.getMeasurement_type(),
+				f.getPoints(),
+				f.getOriginal_price(),
+				f.getDisplay_price(),
+				f.getHot_tag(),
+				f.getCommend_tag(),
+				f.getRemark(),
+				f.getIntroduce(),
+				f.getPhotos(),
+				f.getValid_tag(),
+				f.getId()};
+		int affectRows = execOther(sql, params);
+		return affectRows;
 	}
 	
 }

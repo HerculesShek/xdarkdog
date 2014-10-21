@@ -32,8 +32,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	String commid = request.getParameter("commid");
   %>
   <body>
-    <form action="/xdarkdog/servlet/addfruit.do" method="post" enctype="multipart/form-data">
+    <form action="/xdarkdog/servlet/fruit.do" method="post" enctype="multipart/form-data">
     	<input type="hidden" name="communityid" value="<%=commid%>">
+    	<input type="hidden" name="method" value="add">
     	<table align="center">
     	<tr><th colspan="3"><h3>水果信息添加</h3></th></tr>
     	<tr>
