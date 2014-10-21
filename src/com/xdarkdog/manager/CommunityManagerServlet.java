@@ -178,7 +178,7 @@ public class CommunityManagerServlet extends HttpServlet {
 		}
 		// 删除这个社区
 		commDao.removeCommById(id);
-		// 删除掉社区下面的所有的水果 TODO 不能简单的这么把水果信息给删掉 还有水果的照片必须也得删掉
+		// 删除掉社区下面的所有的水果 不能简单的这么把水果信息给删掉 还有水果的照片必须也得删掉
 		FruitDao fruitDao = new FruitDao();
 		List<Fruit> fruits = fruitDao.getFruitsByCommId(id);
 		for (Fruit f : fruits) {

@@ -21,12 +21,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
   <h4 align="center">分页显示社区</h4>
-  <div>&nbsp;&nbsp;共有${pb.totalRows}条记录
+  <div align="center">&nbsp;&nbsp;共有${pb.totalRows}条记录
   &nbsp;&nbsp;当前是第${pb.currentPage}页
   </div>
   
   <div>
   &nbsp;&nbsp;
+  <div align="center">
   	<c:forEach var="i" begin="1" end="${pb.totalPages }">
   		<c:if test="${i eq pb.currentPage }">
   		    ${i }&nbsp;&nbsp;
@@ -35,7 +36,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		    <a href="/xdarkdog/servlet/comm.do?method=showcommsByPage&currpage=${i }">${i }</a>&nbsp;&nbsp;
   		</c:if>
   	</c:forEach>
-  	<table border="1">
+  </div>
+  	<table border="1" align="center">
   	<tr><th colspan="9"><h3>社区信息列表</h3></th></tr>
   	<tr>
   		<td>水果店名字</td>

@@ -2,8 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta name="keywords" content="嘿狗社区
-" />
+<meta name="keywords" content="嘿狗社区" />
 <meta name="description" content="嘿狗社区。" />
 <title>嘿狗社区服务平台</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0">
@@ -43,16 +42,6 @@
             <option selected value="0">女士</option>
             <option  value="1">男士</option>
           </select>
-          <!-- 
-			    	<label for="gender1" class="linkAct">
-				        <input type="radio" class="addr-gender-radio" name="contact_sex" checked id="gender1" value="0"/><span>女士</span>
-				        <b id="cashier-icon1" class="on"></b>
-				    </label>
-			    	<label for="gender0" class="linkAct">
-				        <input type="radio" class="addr-gender-radio" name="contact_sex"  id="gender0" value="1"/><span>男士</span>
-				        <b id="cashier-icon2" ></b>
-				    </label>
-				     --> 
         </div>
       </div>
       <div class="clr"></div>
@@ -139,16 +128,17 @@ $(function(){
 
 			
 			//表单提交
+			var LOGIN_NAME = 'USER_NAME';
 			$.ajax({
-				url:"/haosi/index.php/weixin/addr/updateAddr.html",
+				url:"/xdarkdog/servlet/shipaddr.do?method=addshipaddr",
 				type:"post",
 				dataType:"json",
-				data:{id:$("input[name='id']").val(),community_id:$("input[name='community_id']").val(),addr:$("input[name='addr']").val(),contact:$("input[name='contact']").val(),contactTel:$("input[name='contactTel']").val(),contact_sex:$("#addr-gender-select option:selected").val()},
+				data:{username:$.cookie(LOGIN_NAME),location:$("input[name='community_id']").val(),realname:$("input[name='contact']").val(),phone:$("input[name='contactTel']").val(),gender:$("#addr-gender-select option:selected").val()},
 				success:function(json) {
-					if(json.status == 1){
-						window.location.href="/haosi/index.php/weixin/addr/index.html";
+					if(json.success == "1"){
+						window.location.href="index.html";
 					}else{
-						alert(json.info);
+						alert("地址增加失败");
 					}
 				}
 			})
@@ -157,11 +147,6 @@ $(function(){
 		}
 	)
 	
-	//修改的时候回调显示地址
-	if("" != ""){
-    	$('#keyword').val("()");
-    	$('#zh_community').attr("ref","()");
-    }
 
 	$(".input").each(function() {
 		if($(this).val() != ""){
@@ -191,46 +176,6 @@ $(function(){
 			$(this).parents(".input-box-on").attr("class","input-box");
 		}
 	)
-		
-	//验证配送路名/小区名是否正确
-	function testAddr() {
-		if($("#keyword").val() == $("#zh_community").attr("ref")){
-			return true;
-		}else{
-			return false;
-		}
-	}
-	var email = [ {high_rise:'Link A', street:'/page1'}, {high_rise:'Link B', street: '/page2'} ];
-	//自动完成
-    $(function() {
-        var $addrParams = new Array();
-    	$.getJSON("/haosi/Login/checkAddr", function (data) {
-			var datas = eval(data);
-           	$('#keyword').autocomplete(datas, {//"/haosi/index.php/weixin/addr/checkAddr"
-         	max: 3,    //列表里的条目数
-         	minChars: 0,    //自动完成激活之前填入的最小字符
-         	scrollHeight: 300,   //提示的高度，溢出显示滚动条
-         	matchContains: true,    //包含匹配，就是data参数里的数据，是否只要包含文本框里的数据就显示
-         	autoFill: false,    //自动填充
-         	autoFocus:true, // 是否自动填充.
-         	matchSubset:true,  //是否启用缓存
-         	selectFirst:true,
-         	formatItem: function(row, i, max) {
-				return row.high_rise + '(' + row.street + ')';
-         	},
-			formatMatch: function(row, i, max) {
-            	return row.high_rise + '(' + row.street + ')' + row.pinyin;
-         	},
-         	formatResult: function(row) {
-             	$addrParams.push(row.high_rise + '(' + row.street + ')');
-             	return row.high_rise + '(' + row.street + ')';
-         	}
-     		}).result(function(event, row, formatted) {
-     			$("#zh_community").attr("ref",row.high_rise + '(' + row.street + ')');
-     			$("#zh_community").val(row.id);//匹配成功把值赋值到隐藏域
-	    	});
-		});
-	})
 
 })
 </script>

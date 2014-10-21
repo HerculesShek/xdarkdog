@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="keywords" content="嘿狗社区
+" />
+<meta name="description" content="嘿狗社区。" />
+<title>嘿狗社区服务平台</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0">
+<link type="text/css" rel="stylesheet" href="css/common.css" />
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/jquery.cookie.js"></script>
+<script type="text/javascript" src="js/fastclick.min.js"></script>
+<script type="text/javascript" src="js/base.js"></script>
+<script>
+    //fastclick初始化
+    window.addEventListener('load', function () {
+        FastClick.attach(document.body);
+    }, false);
+</script>
+<link type="text/css" rel="stylesheet" href="css/member.css" />
+</head>
+
+<body>
+<div class="container">
+  <div class="header" id="header1" style="display:none;"> <a href="javascript:void(0)" class="left linkAct ok-icon"><font>完成</font></a>
+    <h2>配送地址</h2>
+    <a href="./operateAddr.html" class="right linkAct"><img src="images/plus-icon.png" width="27"/></a> </div>
+  <div class="header" id="header2"> <a href="index.html" class="left linkAct"><img class="m-t-4" src="images/arrow-left.png" width="30"/></a>
+    <h2>配送地址</h2>
+    <a href="./operateAddr.html" class="right linkAct"><img src="images/plus-icon.png" width="27"/></a> </div>
+  <div class="content">
+  </div>
+</div>
+</body>
+<script type="text/javascript">
+$(function(){
+	var COMM_ID = 'comm_id';
+	$.ajax({
+			url:"/xdarkdog/servlet/commsgps.do",
+			type:"post",
+			dataType:'json',
+			success:function(json){
+					$(".content").empty();
+					for (var comm in json) {
+				    		$(".content").append('<div class="addr-box"><div class="addr-info-box linkAct"><input class ="commid" type="hidden" value="'+comm.id+'"><div class="addr-name-tel-box"><p class="addr-name-tel" ><span>'+comm.comm_name+'</span></p><div class="clr"></div></div></div></div>');
+					}
+			},
+			error:function(json){
+				alert("服务器穿越了~ 再试试看");
+			}
+  	  	})
+
+	$(".addr-box").click(function() {
+		alert($(this).find(".commid").val());
+	 	$.cookie(COMM_ID, $(this).find(".commid").val());
+	 	window.location.href="lunch.html";
+	})
+})
+</script>
+</html>

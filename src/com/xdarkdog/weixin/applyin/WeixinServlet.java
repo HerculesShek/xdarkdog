@@ -126,9 +126,9 @@ public class WeixinServlet extends HttpServlet {
 	// 处理事件 TODO 扫描带参数二维码事件 这个还没有处理
 	private void processEvent(String xmlmsg, HttpServletResponse response) {
 		String event = getMiddle("Event><![CDATA[", "]]></Event", xmlmsg);
-		if (event.equals("subscribe")) { // 用户订阅了公众号 TODO
+		if (event.equals("subscribe")) { // TODO 用户订阅了公众号 
 
-		} else if (event.equals("unsubscribe")) { // 用户取消订阅公众号 TODO
+		} else if (event.equals("unsubscribe")) { // TODO 用户取消订阅公众号 
 
 		}
 	}

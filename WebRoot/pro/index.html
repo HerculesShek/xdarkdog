@@ -29,7 +29,7 @@
     </div>
     <div class="header-login"> <a class="linkAct" href="login.html">登录</a> <a class="linkAct" href="register.html">注册</a> </div>
   </div>
-  <div class="index-content"><a class="linkActImg" href="lunch.html"><img src="images/index1.jpg"/></a> <a class="linkActImg" href="person/index.html"><img src="images/index3.jpg"/></a><a class="linkActImg" href="tel:13806101602"><img src="images/index-tel.png"/></a> </div>
+  <div class="index-content"><a class="linkActImg" id="lunch" href="lunch.html"><img src="images/index1.jpg"/></a> <a class="linkActImg" href="person/index.html"><img src="images/index3.jpg"/></a><a class="linkActImg" href="tel:13806101602"><img src="images/index-tel.png"/></a> </div>
   <div class="down-box" style="display:none;">
     <div class="ui-grid-a">
       <div class="ui-block-a"> <img src="images/logo.png" height="50"/>
@@ -45,6 +45,7 @@
 $(function(){
     var GPS_LOCATION_LNG = 'GPS_LOCATION_LNG';
     var GPS_LOCATION_LAT = 'GPS_LOCATION_LAT';
+    var TYPE = 'ORDER_BY';
       if (!$.cookie(GPS_LOCATION_LNG)) {
       var date = new Date();
       date.setTime(date.getTime() + (30 * 60 * 1000));
@@ -94,6 +95,15 @@ $(function(){
         }
     }
 })
+
+$(".index-content linkActImg:first").click(function() {
+   $.cookie(TYPE, 1);
+}) 
+
+$(".index-content linkActImg:last").click(function() {
+   $.cookie(TYPE, 2);
+}) 
+
 $(".download-close-btn").click(function() {
 	$(".down-box").hide();
 })

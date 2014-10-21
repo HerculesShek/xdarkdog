@@ -31,7 +31,7 @@
       <a href="register.html" class="right linkAct"><font>注册</font></a>
   </div>
   <div class="login-box">
-    <form action="/haosi/index.php/weixin/login/checkLogin.html" method="post" id="loginForm">
+    <form action="/xdarkdog/servlet/user.do?method=login" method="post" id="loginForm">
       <div class="input-box">
         <input type="hidden" id="come_form_key" value=""/>
         <input type="text" class="input" id="userName" autocomplete="off" name="username"/>
@@ -44,9 +44,8 @@
       <div class="login-btn">
         <input type="button" class="button btn-org" id="btn" value="登 录" class="submit-btn"/>
         <a href="tel:13806101602" class="forget-pwd linkAct left">电话点餐</a> 
-        <a href="findpwd.html" class="forget-pwd linkAct right">忘记密码？</a> 
+        <a href="tel:13806101602" class="forget-pwd linkAct right">忘记密码？</a>  
        </div>
-      <input type="hidden" name="__hash__" value="fb416514169c65a357f28941f93d7567_1e5a3654738a5e990c750796f09afc0e" />
     </form>
   </div>
 </div>
@@ -87,8 +86,8 @@ $(function(){
 
 	
 	var LOGIN_NAME = 'USER_NAME';
-    if( $.cookie(USER_NAME) ){  
-        $("#userName").val($.cookie(USER_NAME) );  
+    if( $.cookie(LOGIN_NAME) ){  
+        $("#userName").val($.cookie(LOGIN_NAME) );  
     }  
     
 	$("#btn").click(function(){
@@ -105,13 +104,18 @@ $(function(){
 		$(this).val("登录中...");
 		$(this).attr("disabled","true");
 		$.ajax({
-			url:'/haosi/Weixin/Login/checkLogin',
+			url:'/xdarkdog/servlet/user.do?method=login',
 			type:'post',
 			dataType:'json',
 			data:{username:$("#userName").val(),userpwd:$("#loginPassword").val(),come_form_key:$("#come_form_key").val()},
 			success:function(json){
-				if(json.status==1){
-					window.location.href=json.info;
+				if(json.success=="1"){
+					if ($.cookie(FROMURL)) {
+						$.cookie(LOGIN_NAME);
+						window.location.href=$.cookie(FROMURL);	
+					} else {
+						window.location.href="index.html";
+					}
 				}else{
 					$passWord.val("");
 					alert(json.info);

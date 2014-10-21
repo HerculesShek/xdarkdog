@@ -57,7 +57,7 @@ public class FormUtil {
 	 * @return Object 该方法可以完成文件上传操作（包括多文件上传），能接收表单中所有大部分控件注册信息 ，并封装成Bean
 	 *         返回实例对象，完成填充 POJO 层的操作。
 	 */
-	// TODO 把这个方法封装为增加和更新同时能够处理的
+	// 这个方法封装为增加和更新同时能够处理的
 	public Object getInstanceByAdvanceForm(HttpServletRequest request, 
 										   List<FileItem> files,
 			                               Class<?> clazz, 
@@ -77,11 +77,11 @@ public class FormUtil {
 					// item.getString("utf-8") 则是value值
 					components.put(item.getFieldName(), item.getString("utf-8"));
 					System.out.println("FieldName:`"+item.getFieldName()+"` -> value:`"+item.getString("utf-8")+"`");
-				} else { // TODO　应该首先判断是不是有文件上传
+				} else {
 					// 可以在此处 标记断点，来测试一下上传文件的类型
 					// item.getName() 在这里则是上传的文件的名字，没有任何的路径信息
 					String filename = item.getName();
-					
+					// 首先判断是不是有文件上传
 					if (filename !=null && !filename.equals("") && ArrayUtils.contains(ALLOW_TYPE, item.getContentType())) {
 						System.out.println("上传的文件的名字是->"+filename);
 						// 对文件的名字做一些处理

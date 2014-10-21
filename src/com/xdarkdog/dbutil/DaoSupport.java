@@ -23,7 +23,7 @@ public class DaoSupport {
 
 	// 四个方法
 	// method1: 创建数据库的连接
-	// TODO 异常的时候应该返回boolean类型
+	// 异常的时候应该返回boolean类型
 	private void getConntion() {
 		try {
 			// 1: 加载连接驱动，Java反射原理

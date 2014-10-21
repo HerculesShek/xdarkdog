@@ -63,7 +63,6 @@ public class ShippingAddrServlet extends HttpServlet {
 	public void getShipaddrsByUsername(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String username = request.getParameter("username");
 		List<UserShippingAddress> addrs = new ShippingAddressDao().getAddrsByUsername(username);
-		// TODO 获取用户的所有配送地址之后返回什么？
 		response.setContentType("application/json;charset=utf-8");
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();

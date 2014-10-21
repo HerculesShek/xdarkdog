@@ -139,7 +139,7 @@ public class FruitServlet extends HttpServlet {
 		FruitDao fruitDao = new FruitDao();
 		if (idStr != null && idStr.length() > 0) {
 			int id = Integer.parseInt(idStr);
-			// TODO 还要删除掉水果的照片
+			// 还要删除掉水果的照片
 			// 首先删除图片 
 			Fruit fruit = fruitDao.getFruitById(id);
 			String f_photos_str = fruit.getPhotos();

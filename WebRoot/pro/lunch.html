@@ -55,7 +55,6 @@
       <div class="settlement-box">
         <input type="submit" id="settlement" class="button btn-gray" value="选好了"/>
       </div>
-      <input type="hidden" name="__hash__" value="4774616f27ccdde1cb175129d8d3242b_9489402e7cbf9a8aec4701f87c7509fb" />
     </form>
   </div>
 </div>
@@ -64,6 +63,7 @@
 	$(function(){
     var GPS_LOCATION_LNG = 'GPS_LOCATION_LNG';
     var GPS_LOCATION_LAT = 'GPS_LOCATION_LAT';
+    var COMM_ID = 'comm_id';
     var COOKIE_NAME = 'mobileCart';
     var position = $.cookie(GPS_LOCATION_LNG);
     if (position) {
@@ -85,6 +85,7 @@
                                               '<p class="lunch-font12"><font class="org">￥<i class="price">'+typeData[i].price+'</i></font>&nbsp;<span>￥<font class="font-through">'+typeData[i].price+'</font></span></p></div>'+ 
                                               '<div class="ui-block-b"> <b class="item-btn item-plus"><img height="28" src="images/plus.png"/></b><div class="item-btn-box" style="display:none;"> <font class="item-text">0</font> <span style="display:none;" class="item-id">55</span> <b class="item-btn item-minus"><img height="28" src="images/minus.png"/></b></div></div></div></div>'+
                                           '</li>');
+				$.cookie(COMM_ID, typeData[i].communityid);
             }
     		//如果有餐车记录进行回显
     		if( $.cookie(COOKIE_NAME) ){
@@ -108,25 +109,26 @@
         }
       })
     } else {
+    	//根据社区ID读取水果列表
         var id = request("id");
         if (id & id != "") {
            $.ajax({
-      url:"./a.json",
-      type:"get",
-      data:{id:id},
-      success:function(typeData){
-    	// 获取信息
-          $("#order-b1box ul").empty('li');
-            for(var i=0; i<typeData.length; i++)  
-            {  
-              var photos = typeData[i].photos.split(",")[0];
-              $("#order-b1box>ul").append('<li>' + 
-                                              '<div class="lunch-photo"><img width="85" height="85" alt="" src="'+photos+'"></div>' + 
-                                              '<div class="lunch-title">'+typeData[i].name+'<h2></div>'+
-                                              '<div class="lunch-info"><div class="ui-grid-a"><div class="ui-block-a">'+
-                                              '<p class="lunch-font12"><font class="org">￥<i class="price">'+typeData[i].price+'</i></font>&nbsp;<span>￥<font class="font-through">'+typeData[i].price+'</font></span></p></div>'+ 
-                                              '<div class="ui-block-b"> <b class="item-btn item-plus"><img height="28" src="images/plus.png"/></b><div class="item-btn-box" style="display:none;"> <font class="item-text">0</font> <span style="display:none;" class="item-id">55</span> <b class="item-btn item-minus"><img height="28" src="images/minus.png"/></b></div></div></div></div>'+
-                                          '</li>');
+			  url:"./a.json",
+			  type:"get",
+			  data:{id:id},
+			  success:function(typeData){
+				// 获取信息
+			      $("#order-b1box ul").empty('li');
+			        for(var i=0; i<typeData.length; i++)  
+			        {  
+			          var photos = typeData[i].photos.split(",")[0];
+			          $("#order-b1box>ul").append('<li>' + 
+			                                          '<div class="lunch-photo"><img width="85" height="85" alt="" src="'+photos+'"></div>' + 
+			                                          '<div class="lunch-title">'+typeData[i].name+'<h2></div>'+
+			                                          '<div class="lunch-info"><div class="ui-grid-a"><div class="ui-block-a">'+
+			                                          '<p class="lunch-font12"><font class="org">￥<i class="price">'+typeData[i].price+'</i></font>&nbsp;<span>￥<font class="font-through">'+typeData[i].price+'</font></span></p></div>'+ 
+			                                          '<div class="ui-block-b"> <b class="item-btn item-plus"><img height="28" src="images/plus.png"/></b><div class="item-btn-box" style="display:none;"> <font class="item-text">0</font> <span style="display:none;" class="item-id">55</span> <b class="item-btn item-minus"><img height="28" src="images/minus.png"/></b></div></div></div></div>'+
+			                                      '</li>');
             }
          	//初始化
     		countPrices();
@@ -305,6 +307,7 @@
 					$cookieId = $(this).find(".item-id").html();
 					cartTemp.count = $cookieNum;
 					cartTemp.id = $cookieId;
+					cartTemp.name = $(this).find(".lunch-title h2").html();
 					if($cookieNum != 0) {
 						if(cartItem == "["){
 							cartItem = cartItem + JSON.stringify(cartTemp);
@@ -340,7 +343,13 @@
 				}else{
 					return false;
 				}
-			}			
+			} else {
+				 var url = location.href;
+				 var FROMURL = "4TO";
+				 var date = new Date();
+				 date.setTime(date.getTime() + (30 * 60 * 1000));
+				 $.cookie(FROMURL, url);
+			}		
 		})
    	})
 </script>

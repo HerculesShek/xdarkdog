@@ -74,7 +74,7 @@ public class OrderServlet extends HttpServlet {
 			return;
 		}
 		
-		// 把订单的详细信息存入数据库 TODO 
+		// 把订单的详细信息存入数据库 
 		String[] idarr = ids.split(",");
 		String[] countarr = counts.split(",");
 		OrderDetailDao detailDao = new OrderDetailDao();

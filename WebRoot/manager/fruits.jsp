@@ -55,7 +55,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     				}
     			}
     			out.println("</td>");
-    			// TODO 修改水果和删除水果的页面
+    			// 修改水果和删除水果的页面
     			out.println("<td><a href=\"/xdarkdog/servlet/fruit.do?method=friutinfo&id="+f.getId()+"\">修改</a>");
     			out.println("<a href=\"/xdarkdog/servlet/fruit.do?method=removeFruit&id="+f.getId()+"&commid="+f.getCommunityid()+"\">删除</a></td>");
     			out.print("</tr>");
