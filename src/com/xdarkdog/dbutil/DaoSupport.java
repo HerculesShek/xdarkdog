@@ -13,9 +13,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DaoSupport {
 
+	private final Logger logger = LoggerFactory.getLogger(DaoSupport.class);
 	// 三大核心接口
 	private Connection conn = null;
 	private PreparedStatement pstmt = null;
@@ -23,31 +26,27 @@ public class DaoSupport {
 
 	// 四个方法
 	// method1: 创建数据库的连接
-	// 异常的时候应该返回boolean类型
 	private void getConntion() {
-		try {
-			// 1: 加载连接驱动，Java反射原理
-			Class.forName(Config.CLASS_NAME);
-			// 2:创建Connection接口对象，用于获取MySQL数据库的连接对象。三个参数：url连接字符串 账号 密码
-			String url = Config.DATABASE_URL
-					+ "://"
-					+ Config.SERVER_IP
-					+ ":"
-					+ Config.SERVER_PORT
-					+ "/"
-					+ Config.DATABASE_SID
-					+ "?autoReconnect=true&useUnicode=true&characterEncoding=utf-8";
-			conn = DriverManager.getConnection(url, Config.USERNAME, Config.PASSWORD);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		if (conn == null) {
+			try {
+				// 1: 加载连接驱动，Java反射原理
+				Class.forName(Config.CLASS_NAME);
+				// 2:创建Connection接口对象，用于获取MySQL数据库的连接对象。三个参数：url连接字符串 账号 密码
+				String url = Config.DATABASE_URL
+						+ "://"
+						+ Config.SERVER_IP
+						+ ":"
+						+ Config.SERVER_PORT
+						+ "/"
+						+ Config.DATABASE_SID
+						+ "?autoReconnect=true&useUnicode=true&characterEncoding=utf-8";
+				conn = DriverManager.getConnection(url, Config.USERNAME, Config.PASSWORD);
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
-	}
-
-	public Connection getConn() {
-		getConntion();
-		return conn;
 	}
 
 	// method2：关闭数据库的方法
@@ -62,7 +61,6 @@ public class DaoSupport {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	// method3: 专门用于发送增删改语句的方法
@@ -134,16 +132,13 @@ public class DaoSupport {
 					pstmt.setObject(j + 1, objects[j]);
 				}
 			}
-
 			rs = pstmt.executeQuery();
 			// 获取模型
 			ResultSetMetaData metaData = rs.getMetaData();
-
 			while (rs.next()) {
 				Map<String, Object> map = new HashMap<String, Object>();
 				// 实例化对象 相当于 new .
 				Object object = clazz.newInstance(); // Emp emp = new Emp();
-
 				for (int i = 1; i <= metaData.getColumnCount(); i++) {
 					// 让列名充当 Key 让得到的结果 充当Value 。
 					// 这样 Key列就和Java类中的属性列是同名的 ， 那么Value 就会通过后面的方法赋值给该属性。
@@ -153,7 +148,6 @@ public class DaoSupport {
 				BeanUtils.populate(object, map); // Emp .... set
 				list.add(object);
 			}
-
 			return list;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -165,17 +159,12 @@ public class DaoSupport {
 
 	// [a,b,c] => "a,b,c"
 	public static String arrayToString(String[] param, String link) {
-
 		StringBuilder builder = new StringBuilder();
-
 		for (int i = 0; i < param.length; i++) {
 			builder.append(param[i]).append(link);
 		}
-
 		builder.deleteCharAt(builder.lastIndexOf(link));
-
 		return builder.toString();
-
 	}
 
 	// 将字符串数组转化成 int 数组
@@ -191,7 +180,6 @@ public class DaoSupport {
 	}
 
 	// 将int数组 转化成 Object[]
-
 	public static Object[] IntArrayToObjectArray(int[] intArray) {
 		Object[] objectArray = null;
 		if (intArray != null && intArray.length > 0) {
@@ -204,7 +192,6 @@ public class DaoSupport {
 	}
 
 	// 将String数组 转化成 Object[]
-
 	public static Object[] strArrayToObjectArray(String[] strArray) {
 		Object[] objectArray = null;
 		if (strArray != null && strArray.length > 0) {
@@ -222,20 +209,18 @@ public class DaoSupport {
 		for (int i = 0; i < history.length; i++) {
 			builder.append("?").append(",");
 		}
-		builder.deleteCharAt(builder.lastIndexOf(","));
-
+		if (builder.length() > 0)
+			builder.deleteCharAt(builder.lastIndexOf(","));
 		return builder.toString();
 	}
 
 	protected static String buildOrderby(LinkedHashMap<String, String> orderby) {
-
 		// pid desc , name
 		StringBuilder orderbyql = new StringBuilder("");
 		if (orderby != null && orderby.size() > 0) {
 			orderbyql.append(" order by "); // - order by pid desc
 			for (String key : orderby.keySet()) {
-				orderbyql.append(key).append(" ").append(orderby.get(key))
-						.append(",");
+				orderbyql.append(key).append(" ").append(orderby.get(key)).append(",");
 			}
 			orderbyql.deleteCharAt(orderbyql.length() - 1);
 		}
@@ -253,5 +238,5 @@ public class DaoSupport {
 			e.printStackTrace();
 		}
 	}
-
+	
 }
