@@ -22,7 +22,7 @@ public class Order {
 						// 2 表示审核不通过 是客服电话联系用户之后没有给予通过审核
 						// 3 表示审核通过 正在配送
 						// 4 订单完成 成功送到 并且付款
-						// 5 用户手动取消了订单
+						// 5 用户手动取消了订单 不管什么时候
 
 	public int getOrder_type() {
 		return order_type;

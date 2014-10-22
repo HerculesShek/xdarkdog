@@ -26,19 +26,24 @@ public class OrderServlet extends HttpServlet {
 		String method = request.getParameter("method");
 		if ("generate".equalsIgnoreCase(method)) {
 			generateOrder(request, response);
-		}
+		} else if ("generate".equalsIgnoreCase(method)) {
+			generateOrder(request, response);
+		} 
 	}
 
+	// 生成一份订单
 	public void generateOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String order_type_str = request.getParameter("order_type");
+		String order_type_str = request.getParameter("order_type"); // 订单类型
 		int order_type = Integer.parseInt(order_type_str);
 		String commid_str = request.getParameter("commid"); // 社区id
-		int commid = Integer.parseInt(commid_str);
-		String username = request.getParameter("username");
-		String addr_id = request.getParameter("addr_id");
+		int commid = Integer.parseInt(commid_str); 
+		String username = request.getParameter("username"); // 用户名 唯一的
+		String addr_id = request.getParameter("addr_id"); // 配送地址id
 		int shipid = Integer.parseInt(addr_id);
-		String ids = request.getParameter("ids");
-		String counts = request.getParameter("counts");
+		String ids = request.getParameter("ids"); // 所有的水果id， 逗号隔开
+		String counts = request.getParameter("counts"); // 水果对应的数量，逗号隔开
+		// TODO 后期加入水果的等级
+		String levels = request.getParameter("levels"); // 水果对应的大小等级，逗号隔开
 		String order_time = request.getParameter("order_time"); // 预约配送时间
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		Date create_time = new Date(System.currentTimeMillis());
@@ -80,7 +85,7 @@ public class OrderServlet extends HttpServlet {
 		OrderDetailDao detailDao = new OrderDetailDao();
 		for (int idx = 0; idx < idarr.length; idx++) {
 			int id = Integer.parseInt(idarr[idx]);
-			int count = Integer.parseInt(countarr[idx]);
+			double count = Double.parseDouble(countarr[idx]);
 			OrderDetail detail = new OrderDetail();
 			detail.setOrder_id(order_id);
 			detail.setFruit_id(id);

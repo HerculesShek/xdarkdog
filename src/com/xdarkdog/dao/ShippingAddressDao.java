@@ -14,7 +14,7 @@ public class ShippingAddressDao extends DaoSupport {
 		return affectRows;
 	}
 
-	// 根据用户的id获取此用户所有的配送地址
+	// 根据用户名获取此用户所有的配送地址
 	public List<UserShippingAddress> getAddrsByUsername(String username) {
 		String sql = "SELECT a.* FROM ddcommunity.tbl_user_shipping_address a, ddcommunity.tbl_user u where a.userid=u.id and u.username=? order by default_flag desc";
 		Object[] params = { username };
@@ -36,11 +36,31 @@ public class ShippingAddressDao extends DaoSupport {
 		return execOther(sql, params);
 	}
 	
-	// 把一个配送地址设为默认的
+	// 把一个配送地址设为默认的 TODO 这里只传入一个addrid是不够方便的
 	public int setDefault(int addrId){
+		// 获取这个配送地址id的配送地址，主要是为了获取用户的username
+		String _sql = "SELECT * FROM ddcommunity.tbl_user_shipping_address where id=?";
+		Object[] ps = {addrId};
+		List<UserShippingAddress> addrs = executeQuery(_sql, UserShippingAddress.class, ps);
+		String username;
+		if (addrs.size() > 0) {
+			username = addrs.get(0).getUsername();
+		} else {
+			return 0;
+		}
+		// 把这个用户的所有的配送地址的id都置为0
+		String _sql2 = "UPDATE ddcommunity.tbl_user_shipping_address SET `default_flag`='0' where `username`=?";
+		Object[] ps2 = {username};
+		execOther(_sql2, ps2);
+		// 把这个配送地址置为默认
 		String sql = "UPDATE `ddcommunity`.`tbl_user_shipping_address` SET `default_flag`='1' WHERE `id`=?";
 		Object[] param = {addrId};
 		return execOther(sql, param);
+	}
+	
+	public static void main(String[] args) {
+		ShippingAddressDao dao  = new ShippingAddressDao();
+		dao.setDefault(3);
 	}
 
 }

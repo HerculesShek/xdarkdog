@@ -27,8 +27,8 @@ public class DaoSupport {
 	// 四个方法
 	// method1: 创建数据库的连接
 	private void getConntion() {
-		if (conn == null) {
-			try {
+		try {
+			if (conn == null || conn.isClosed()) {
 				// 1: 加载连接驱动，Java反射原理
 				Class.forName(Config.CLASS_NAME);
 				// 2:创建Connection接口对象，用于获取MySQL数据库的连接对象。三个参数：url连接字符串 账号 密码
@@ -40,12 +40,13 @@ public class DaoSupport {
 						+ "/"
 						+ Config.DATABASE_SID
 						+ "?autoReconnect=true&useUnicode=true&characterEncoding=utf-8";
-				conn = DriverManager.getConnection(url, Config.USERNAME, Config.PASSWORD);
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			} catch (SQLException e) {
-				e.printStackTrace();
+				conn = DriverManager.getConnection(url, Config.USERNAME,
+						Config.PASSWORD);
 			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 
