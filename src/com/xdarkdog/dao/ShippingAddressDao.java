@@ -8,7 +8,7 @@ import com.xdarkdog.pojo.UserShippingAddress;
 public class ShippingAddressDao extends DaoSupport {
 	// 增加一条配送信息
 	public int addUserShippingAddress(UserShippingAddress addr) {
-		String sql = "INSERT INTO `ddcommunity`.`tbl_user_shipping_address` (`uesrname`, `realname`, `gender`, `phone`, `location`) VALUES (?,?,?,?,?);";
+		String sql = "INSERT INTO `ddcommunity`.`tbl_user_shipping_address` (`username`, `realname`, `gender`, `phone`, `location`) VALUES (?,?,?,?,?);";
 		Object params[] = { addr.getUsername(), addr.getRealname(), addr.getGender(), addr.getPhone(), addr.getLocation() };
 		int affectRows = execOther(sql, params);
 		return affectRows;
@@ -36,15 +36,26 @@ public class ShippingAddressDao extends DaoSupport {
 		return execOther(sql, params);
 	}
 	
+	// 根据id获取配送地址信息 用于显示订单用
+	public UserShippingAddress getAddrById(int addrId){
+		String _sql = "SELECT * FROM ddcommunity.tbl_user_shipping_address where id=?";
+		Object[] ps = { addrId };
+		List<UserShippingAddress> addrs = executeQuery(_sql, UserShippingAddress.class, ps);
+		if (addrs != null && addrs.size() > 0) {
+			return addrs.get(0);
+		} else {
+			return null;
+		}
+	}
+	
+	
 	// 把一个配送地址设为默认的 TODO 这里只传入一个addrid是不够方便的
 	public int setDefault(int addrId){
 		// 获取这个配送地址id的配送地址，主要是为了获取用户的username
-		String _sql = "SELECT * FROM ddcommunity.tbl_user_shipping_address where id=?";
-		Object[] ps = {addrId};
-		List<UserShippingAddress> addrs = executeQuery(_sql, UserShippingAddress.class, ps);
+		UserShippingAddress a = getAddrById(addrId);
 		String username;
-		if (addrs.size() > 0) {
-			username = addrs.get(0).getUsername();
+		if (a != null) {
+			username = a.getUsername();
 		} else {
 			return 0;
 		}

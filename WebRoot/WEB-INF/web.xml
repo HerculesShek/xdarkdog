@@ -40,8 +40,8 @@
     <servlet-class>com.xdarkdog.weixin.servlet.CommsGPS</servlet-class>
   </servlet>
   <servlet>
-    <servlet-name>FruitsGPS</servlet-name>
-    <servlet-class>com.xdarkdog.weixin.servlet.FruitsGPS</servlet-class>
+    <servlet-name>Fruit_Servlet</servlet-name>
+    <servlet-class>com.xdarkdog.weixin.servlet.FruitServlet</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>UserServlet</servlet-name>
@@ -79,8 +79,8 @@
     <url-pattern>/servlet/commsgps.do</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>FruitsGPS</servlet-name>
-    <url-pattern>/servlet/fruitsgps.do</url-pattern>
+    <servlet-name>Fruit_Servlet</servlet-name>
+    <url-pattern>/servlet/user_fruits.do</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>UserServlet</servlet-name>

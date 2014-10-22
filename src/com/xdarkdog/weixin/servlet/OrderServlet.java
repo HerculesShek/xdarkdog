@@ -26,8 +26,8 @@ public class OrderServlet extends HttpServlet {
 		String method = request.getParameter("method");
 		if ("generate".equalsIgnoreCase(method)) {
 			generateOrder(request, response);
-		} else if ("generate".equalsIgnoreCase(method)) {
-			generateOrder(request, response);
+		} else if ("getOrdersByUsername".equalsIgnoreCase(method)) {
+			getOrdersByUsername(request, response);
 		} 
 	}
 
@@ -102,5 +102,9 @@ public class OrderServlet extends HttpServlet {
 		out.flush();
 		out.close();
 	}
-	
+
+	// 根据用户名获取用户所有的订单
+	public void getOrdersByUsername(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	}
 }

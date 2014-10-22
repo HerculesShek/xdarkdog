@@ -15,12 +15,22 @@ import com.xdarkdog.dao.FruitDao;
 import com.xdarkdog.pojo.Community;
 import com.xdarkdog.pojo.Fruit;
 
-public class FruitsGPS extends HttpServlet {
+public class FruitServlet extends HttpServlet {
 	private static final long serialVersionUID = 7093800319575515702L;
 
+	public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String method = request.getParameter("method");
+		if ("getFruitsByGPS".equalsIgnoreCase(method)) {
+			getFruitsByGPS(request, response);
+		} else if ("getFruitsByCommId".equalsIgnoreCase(method)) {
+			getFruitsByCommId(request, response);
+		}
+
+	}
+	
 	// for AJAX
 	// 根据用户的经纬度返回最近的水果店的所有水果的JSON信息
-	public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void getFruitsByGPS(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		double lat = Double.parseDouble(request.getParameter("lat"));
 		double lon = Double.parseDouble(request.getParameter("lon"));
 
@@ -47,6 +57,21 @@ public class FruitsGPS extends HttpServlet {
 		out.flush();
 		out.close();
 	}
+	
+	// for ajax
+	// 根据社区id获取所有的水果
+	public void getFruitsByCommId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int commid = Integer.parseInt(request.getParameter("commid"));
+		List<Fruit> fs = new FruitDao().getFruitsByCommId(commid);
+		String str = JSON.toJSONString(fs);
+		response.setContentType("application/json;charset=utf-8");
+		response.setCharacterEncoding("utf-8");
+		PrintWriter out = response.getWriter();
+		out.println(str);
+		out.flush();
+		out.close();
+	}
+	
 	private double getDistance(double lat1, double lon1, double lat2, double lon2){
 		double res = (lat1-lat2)*(lat1-lat2)+(lon1-lon2)*(lon1-lon2);
 		return Math.sqrt(res);

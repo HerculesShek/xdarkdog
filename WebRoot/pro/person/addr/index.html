@@ -49,42 +49,40 @@ $(function(){
 						    if (i > 0) {
 						    	url = '';
 						    }
-				    		$(".content").append('<div class="addr-box"><div class="addr-icon-btn"><a href="javascript:void(0)" onclick="return yesno('+ address.id+')" class="right linkAct member-del"><img src="../../images/waste-gray.png" height="20"></a>
-				    			<a href="../operateAddr.html?id='+address.id+'" class="right linkAct member-modify"><img src="../../images/modify-icon.png" height="20"></a></div>
-				    		      <div class="addr-info-box linkAct" onclick="window.open("/xdarkdog/servlet/shipaddr.do?method=setdefault&id="'+address.id+',"_self")">
-				    			<div class="addr-default-icon" style="display:none;">'+url+' 
-				    			</div>
-				    			<div class="addr-name-tel-box">
-					    			<p class="addr-name-tel"><span>'+address.location+'</span><em>'+address.phone+'</em></p>
-					    			<div class="clr"></div></div></div></div>');
+				    		$(".content").append('<div class="addr-box"><div class="addr-icon-btn"><a href="javascript:void(0)" onclick="return yesno('+ address.id+')" class="right linkAct member-del"><img src="../../images/waste-gray.png" height="20"></a><a href="../operateAddr.html?id='+address.id+'" class="right linkAct member-modify"><img src="../../images/modify-icon.png" height="20"></a></div><div class="addr-info-box linkAct" onclick="window.open("/xdarkdog/servlet/shipaddr.do?method=setdefault&id="'+address.id+',"_self")"><div class="addr-default-icon" style="display:none;">'+url+'</div><div class="addr-name-tel-box"><p class="addr-name-tel"><span>'+address.location+'</span><em>'+address.phone+'</em></p><div class="clr"></div></div></div></div>');
 					}
 			},
 			error:function(json){
 				alert("服务器穿越了~ 再试试看");
 			}
   	  	})
-}
+
+		
+})
+
 function yesno(data) {
-	if(confirm("是否删除?")){
-  		$.ajax({
-			url:"/xdarkdog/servlet/shipaddr.do?method=removeshipaddr",
-			type:"post",
-			dataType:'json',
-			data:{id:data},
-			success:function(json){
-				if(json.success == "1"){
-					window.location.href="../index.html";
-				}else{
-					alert("服务器穿越了~ 再试试看");
-				}
-			},
-			error:function(json){
-				alert("服务器穿越了~ 再试试看");
-			}
-  	  	})
-	}else
-   		return false;
-	}
+			if(confirm("是否删除?")){
+		  		$.ajax({
+					url:"/xdarkdog/servlet/shipaddr.do?method=removeshipaddr",
+					type:"post",
+					dataType:'json',
+					data:{id:data},
+					success:function(json){
+						if(json.success == "1"){
+							window.location.href="../index.html";
+						}else{
+							alert("服务器穿越了~ 再试试看");
+						}
+					},
+					error:function(json){
+						alert("服务器穿越了~ 再试试看");
+					}
+		  	  	});
+			}else
+		   		return false;
+}
+
+
 $(".back-icon").click(function() {
 	window.parent.closeIframe();
 })
@@ -92,7 +90,23 @@ $(".ok-icon").click(function() {
 	window.parent.refreshAddrIframe();
 })
 $(document).ready(function(){
-	var temp = window.parent.testAddr();
+	var temp = 0;
+	var LOGIN_NAME = 'USER_NAME';
+	$.ajax({
+			url:"/xdarkdog/servlet/shipaddr.do?method=getShipaddrsByUsername",
+			type:"post",
+			dataType:'json',
+			data:{username:$.cookie(LOGIN_NAME)},
+			success:function(json){
+				if (json.length > 1) {
+					temp = 1;
+				}
+					
+			},
+			error:function(json){
+				alert("服务器穿越了~ 再试试看");
+			}
+  	  	})
 	if(temp ==1){
 		$("#header2").hide();
 		$("#header1").show();

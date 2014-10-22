@@ -49,19 +49,10 @@
         <input type="tel" class="input phonenum" name="contactTel" value=""/>
         <p>手机号码</p>
       </div>
-      <div class="input-box" style="border:0;">
-        <input name="city" checked type="radio" style="display:none;" id="city1"/>
-        <input type="tel" class="input" disabled="disabled" value="杭州滨江"/>
-      </div>
       <div class="input-box">
         <input class="input address-c" id="keyword" value=""/>
         <p>写字楼/小区名称</p>
         <input type="hidden" class="community_id" name="community_id" id="zh_community" value=""/>
-      </div>
-      <p class="addr-tips-tel">没有找到地址？<a href="tel:13806101602" class="org">致电客服开通吧！</a></p>
-      <div class="input-box">
-        <input class="input detail-address" name="addr" value=""/>
-        <p>地址补充信息</p>
       </div>
       <div class="input-box">
         <input type="button" class="button btn-org m-btn-success" value="提交"/>
@@ -114,11 +105,6 @@ $(function(){
 					alert("请输入正确的手机号码");
 					return false;
 				}
-			}
-			//写字楼/小区验证
-			if(!testAddr()){
-				alert("您填写的地址可能暂时没有开通");
-				return false;
 			}
 			//补充地址验证
 			if(addr.val() == ""){

@@ -88,13 +88,13 @@ $(function(){
 		}
 		
 		$.ajax({
-			url:"/haosi/index.php/weixin/modifypwd/updatePwd.html",
+			url:"/updatePwd.html",
 			type:"post",
 			data:{password:pwd.val(),pwd:pwd1.val()},
 			success:function(json){
 				var data = eval("("+json+")");
 				if(data.status == 1){
-					window.location.href="/haosi/index.php/weixin/login/index.html";
+					window.location.href="../index.html";
 				}else{
 					alert(data.info);
 				}

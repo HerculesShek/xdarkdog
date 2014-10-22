@@ -27,7 +27,7 @@
     <h2>个人中心</h2>
   </div>
   <div class="content">
-    <div class="person-welcome">您好，caterwei</div>
+    <div class="person-welcome"></div>
     <div class="clr"></div>
     <div class="person-center-wrap"> <a href="./order/index.html" class="person-center-box linkAct">
       <h2>我的订单</h2>
@@ -36,12 +36,20 @@
       <b class="person-center-arrow arrow-right"></b> </a> <a href="./modifypwd.html" class="person-center-box linkAct">
       <h2>修改密码</h2>
       <b class="person-center-arrow arrow-right"></b> </a> </div>
-    <a href="/haosi/index.php/weixin/login/doLogout.html" class="person-center-box linkAct person-logout">
+    <a href="../index.html" class="person-center-box linkAct person-logout">
     <h2>退出账号</h2>
     </a> </div>
 </div>
 </body>
 <script type="text/javascript">
+$(function(){
+    var LOGIN_NAME = 'USER_NAME';
+    $(".person-welcome").html("您好，" + $.cookie(LOGIN_NAME));
+    $(".person-logout").click(function() {
+      $.cookie(LOGIN_NAME, null);
+      window.location.href="../index.html";
+    })
+})
 function yesno() {
 	if(confirm("是否删除?")){
   		return true;

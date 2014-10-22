@@ -46,16 +46,7 @@
 		<div class="dialog-box">
 			<h3>选择送餐地址<a href="javascript:void(0)" class="dialog-close-btn linkAct"><img src="../../images/close.png" width="20"/></a></h3>
 			<div class="dialog-content">
-				<ul class="order-other-address">
-		    		<li class="linkAct" onclick="changeAddr(this)">
-	    				<input type="hidden" class="address-id" ref="1356"/>
-		    			<h2>杭州市滨江区浙江施强国际培训学院滨安璐1168号1111&nbsp;&nbsp;asd</h2>
-		    			<p>13098190981</p>
-	    			</li><li class="linkAct" onclick="changeAddr(this)" >
-	    				<input type="hidden" class="address-id" ref="1355"/>
-		    			<h2>杭州市滨江区国信嘉园滨盛路4056号33-1-802&nbsp;&nbsp;魏帅</h2>
-		    			<p>18222891890</p>
-	    			</li>		    	
+				<ul class="order-other-address">		    	
 	    		</ul>
 			</div>
 		</div>
@@ -138,51 +129,44 @@
 			dataType:'json',
 			data:{username:$.cookie(LOGIN_NAME)},
 			success:function(json){
-				if(json.success=="1"){
-					if (length < 1) {
-						$("#noadd").css("display","none");
-					} else {
-						$("#noadd").css("display","inline");
-					}
-					$(".dialog-content ul.order-address-box").empty("li");
-					for (var i=0;i<length;i++) {
-						var address = json[i];
-						$(".dialog-content ul.order-address-box").append('<li class="linkAct" onclick="changeAddr(this)">' +
-	    																  '<input type="hidden" class="address-id" ref="'+address.id+'"/>' + 
-		    															   '<h2>'+address.name+'</h2><p>'+address.phone+'</p></li>');
-					}
-					if($("#noadd").css("display") != "none") {
-						$(".order-address-box").hide();
-					}else{
-						$(".order-address-box").show();
-					}
+				if (json.length < 1) {
+					$("#noadd").show();
+				} else {
+					$("#noadd").hide();
+				}
+				$(".dialog-content ul.order-address-box").empty("li");
+				for (var i=0; i<json.length; i++){
+					var address = json[i];
+					$(".dialog-content ul.order-address-box").append('<li class="linkAct" onclick="changeAddr(this)">' +
+    																  '<input type="hidden" class="address-id" ref="'+address.id+'"/>' + 
+	    															   '<h2>'+address.name+'</h2><p>'+address.phone+'</p></li>');
+				}
+
+				if($("#noadd").css("display") != "none") {
+					$(".order-address-box").hide();
 				}else{
-					alert("获取地址失败");
+					$(".order-address-box").show();
 				}
 			}
 		});
 
 
-		var dataInCookie = $.cookie(COOKIE_NAME);
 		$(".lunch-box.order-pay-lunch-box ul").empty('li');
-		for (var order in dataInCookie) {
-			if (order && typeof order != "undefined") {
-				$(".lunch-box.order-pay-lunch-box ul").append('<li><div class="lunch-photo"><img width="85" height="85" alt="" src="'+order.photos+'"></div>' + 
-		                									  '<div class="lunch-title"><h2>'+order.name+'</h2></div><div class="lunch-info">' +
-		                									  '<div class="ui-grid-a"><div class="ui-block-a"><p class="lunch-font12">' +
-		                									  '<font class="org">￥<i class="price">'+order.price+'</i></font>&nbsp;' +
-		                									  '</p></div>' +
-		                									  '<div class="ui-block-b"><b class="item-btn item-plus"><img height="28" src="../../images/plus.png"/></b>' +
-		                									  '<div class="item-btn-box" style="display:none;"><font class="item-text">'+order.count+'</font><input type="hidden" class="order-pay-type" />' +
-															  '<b class="item-btn item-minus"><img height="28" src="../../images/minus.png"/></b></div></div></div></div></li>');
-			}
-
+		//如果有餐车记录进行回显
+		if( $.cookie(COOKIE_NAME) ){
+			var $param = eval($.cookie(COOKIE_NAME));
+				$($param).each(
+					function() {
+						$(".lunch-box.order-pay-lunch-box ul").append('<li><div class="lunch-photo"><img width="85" height="85" alt="" src="'+this.photos+'"></div><div class="lunch-title"><h2>'+this.name+'</h2></div><div class="lunch-info"><div class="ui-grid-a"><div class="ui-block-a"><p class="lunch-font12"><font class="org">￥<i class="price">'+this.price+'</i></font>&nbsp;</p></div><div class="ui-block-b"><b class="item-btn item-plus"><img height="28" src="../../images/plus.png"/></b><div class="item-btn-box" style="display:none;"><font class="item-text">'+this.count+'</font><input type="hidden" class="order-pay-type" /><b class="item-btn item-minus"><img height="28" src="../../images/minus.png"/></b></div></div></div></div></li>');
+					}
+				);
 		}
 		countPrices();
 
 
 		if($.cookie(TYPE) && $.cookie(TYPE) == 1) {
-			$(".order-pay-box-display").show();
+			$(".order-pay-time-wrap").hide();
+			$(".manage-title").hide();
 			// 一个小时后的时间
 			$("#order-pay-hour").empty('option');
 			for (var i = 8; i <= 23; i++) {
@@ -193,7 +177,8 @@
 				$("#order-pay-hour").append('<option value="'+s+'">'+s+'</option>');
 			}	
 		} else {
-			$(".order-pay-box-display").hide();
+			$(".order-pay-time-wrap").show();
+			$(".manage-title").show();
 		}
 
 		$("#noadd").find("a").click(function() {

@@ -66,51 +66,11 @@
     var COMM_ID = 'comm_id';
     var COOKIE_NAME = 'mobileCart';
     var position = $.cookie(GPS_LOCATION_LNG);
-    if (position) {
-      $.ajax({
-      url:"/xdarkdog/servlet/fruitsgps.do",
-      type:"post",
-      dataType:'json',
-      data:{lon:$.cookie(GPS_LOCATION_LNG),lat:$.cookie(GPS_LOCATION_LAT)},
-      success:function(typeData){
-          // 获取信息
-          $("#order-b1box ul").empty('li');
-            for(var i=0; i<typeData.length; i++)  
-            {  
-              var photos = typeData[i].photos.split(",")[0];
-               $("#order-b1box>ul").append('<li>' + 
-                                  '<div class="lunch-photo"><img width="85" height="85" alt="" src="'+photos+'"></div>' + 
-                                  '<div class="lunch-title">'+typeData[i].name+'<h2></div>'+
-                                  '<div class="lunch-info"><div class="ui-grid-a"><div class="ui-block-a">'+
-                                  '<p class="lunch-font12"><font class="org">￥<i class="price">'+typeData[i].price+'</i></font>&nbsp;<span>￥<font class="font-through">'+typeData[i].display_price+'</font></span></p></div>'+ 
-                                  '<div class="ui-block-b"> <b class="item-btn item-plus"><img height="28" src="images/plus.png"/></b><div class="item-btn-box" style="display:none;"> <font class="item-text">0</font> <span style="display:none;" class="item-id">'+typeData[i].id+'</span> <b class="item-btn item-minus"><img height="28" src="images/minus.png"/></b></div></div></div></div>'+
-                              '</li>');
-				$.cookie(COMM_ID, typeData[i].communityid);
-            }
-    		//如果有餐车记录进行回显
-    		if( $.cookie(COOKIE_NAME) ){
-    			var $param = eval($.cookie(COOKIE_NAME));
-    			$(".item-id").each(function() {
-    				var $itemId = $(this).html();
-    				var $itemText = $(this).prev(".item-text");
-    				$($param).each(
-    					function() {
-    						if($itemId == this.id){
-    							$itemText.html(this.count);
-    						}
-    					}
-    				);
-    				countPrices();
-    			});	
-    		}
-        },
-        error:function(json){
-          alert("服务器穿越了~ 再试试看");
-        }
-      })
-    } else {
-    	//根据社区ID读取水果列表
-    	var id = $.cookie(COMM_ID);
+    var url = location.href;
+    var loc = url.indexOf("=");
+    var id = url.substring(url.indexOf("=") + 1);
+    if (loc && loc > -1) {
+        //根据社区ID读取水果列表
     	if (id == null || id == "") {
     		window.location.href = "community.html";
     	}
@@ -126,7 +86,7 @@
                        var photos = typeData[i].photos.split(",")[0];
   					    $("#order-b1box>ul").append('<li>' + 
                                   '<div class="lunch-photo"><img width="85" height="85" alt="" src="'+photos+'"></div>' + 
-                                  '<div class="lunch-title">'+typeData[i].name+'<h2></div>'+
+                                  '<div class="lunch-title"><h2>'+typeData[i].name+'</h2></div>'+
                                   '<div class="lunch-info"><div class="ui-grid-a"><div class="ui-block-a">'+
                                   '<p class="lunch-font12"><font class="org">￥<i class="price">'+typeData[i].price+'</i></font>&nbsp;<span>￥<font class="font-through">'+typeData[i].display_price+'</font></span></p></div>'+ 
                                   '<div class="ui-block-b"> <b class="item-btn item-plus"><img height="28" src="images/plus.png"/></b><div class="item-btn-box" style="display:none;"> <font class="item-text">0</font> <span style="display:none;" class="item-id">55</span> <b class="item-btn item-minus"><img height="28" src="images/minus.png"/></b></div></div></div></div>'+
@@ -156,6 +116,50 @@
 	          alert("服务器穿越了~ 再试试看");
 	        }
 	      })
+    } else {
+
+
+			$.ajax({
+			      url:"/xdarkdog/servlet/fruitsgps.do",
+			      type:"post",
+			      dataType:'json',
+			      data:{lon:$.cookie(GPS_LOCATION_LNG),lat:$.cookie(GPS_LOCATION_LAT)},
+			      success:function(typeData){
+			          // 获取信息
+			          $("#order-b1box ul").empty('li');
+			            for(var i=0; i<typeData.length; i++)  
+			            {  
+			              var photos = typeData[i].photos.split(",")[0];
+			               $("#order-b1box>ul").append('<li>' + 
+			                                  '<div class="lunch-photo"><img width="85" height="85" alt="" src="'+photos+'"></div>' + 
+			                                  '<div class="lunch-title"><h2>'+typeData[i].name+'</h2></div>'+
+			                                  '<div class="lunch-info"><div class="ui-grid-a"><div class="ui-block-a">'+
+			                                  '<p class="lunch-font12"><font class="org">￥<i class="price">'+typeData[i].price+'</i></font>&nbsp;<span>￥<font class="font-through">'+typeData[i].display_price+'</font></span></p></div>'+ 
+			                                  '<div class="ui-block-b"> <b class="item-btn item-plus"><img height="28" src="images/plus.png"/></b><div class="item-btn-box" style="display:none;"> <font class="item-text">0</font> <span style="display:none;" class="item-id">'+typeData[i].id+'</span> <b class="item-btn item-minus"><img height="28" src="images/minus.png"/></b></div></div></div></div>'+
+			                              '</li>');
+							$.cookie(COMM_ID, typeData[i].communityid);
+			            }
+			    		//如果有餐车记录进行回显
+			    		if( $.cookie(COOKIE_NAME) ){
+			    			var $param = eval($.cookie(COOKIE_NAME));
+			    			$(".item-id").each(function() {
+			    				var $itemId = $(this).html();
+			    				var $itemText = $(this).prev(".item-text");
+			    				$($param).each(
+			    					function() {
+			    						if($itemId == this.id){
+			    							$itemText.html(this.count);
+			    						}
+			    					}
+			    				);
+			    				countPrices();
+			    			});	
+			    		}
+			        },
+			        error:function(json){
+			          alert("服务器穿越了~ 再试试看");
+			        }
+			      })
     }
 
    function request(paras){  

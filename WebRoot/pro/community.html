@@ -23,12 +23,9 @@
 
 <body>
 <div class="container">
-  <div class="header" id="header1" style="display:none;"> <a href="javascript:void(0)" class="left linkAct ok-icon"><font>完成</font></a>
-    <h2>配送地址</h2>
-    <a href="./operateAddr.html" class="right linkAct"><img src="images/plus-icon.png" width="27"/></a> </div>
   <div class="header" id="header2"> <a href="index.html" class="left linkAct"><img class="m-t-4" src="images/arrow-left.png" width="30"/></a>
-    <h2>配送地址</h2>
-    <a href="./operateAddr.html" class="right linkAct"><img src="images/plus-icon.png" width="27"/></a> </div>
+    <h2>社区列表</h2>
+    </div>
   <div class="content">
   </div>
 </div>
@@ -42,7 +39,8 @@ $(function(){
 			dataType:'json',
 			success:function(json){
 					$(".content").empty();
-					for (var comm in json) {
+					for (var i = 0; i < json.length; i++) {
+							var  comm = json[i];
 				    		$(".content").append('<div class="addr-box"><div class="addr-info-box linkAct"><input class ="commid" type="hidden" value="'+comm.id+'"><div class="addr-name-tel-box"><p class="addr-name-tel" ><span>'+comm.comm_name+'</span></p><div class="clr"></div></div></div></div>');
 					}
 			},
@@ -51,11 +49,10 @@ $(function(){
 			}
   	  	})
 
-	$(".addr-box").click(function() {
-		alert($(this).find(".commid").val());
-	 	$.cookie(COMM_ID, $(this).find(".commid").val());
-	 	window.location.href="lunch.html";
-	})
+	var $address = $(".addr-box");
+	$address.live("click",function(){
+	 	window.location.href="lunch.html?id=" + $(this).find(".commid").val();
+	});
 })
 </script>
 </html>

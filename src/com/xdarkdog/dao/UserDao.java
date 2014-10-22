@@ -6,6 +6,7 @@ import com.xdarkdog.dbutil.DaoSupport;
 import com.xdarkdog.pojo.User;
 
 public class UserDao extends DaoSupport {
+	// 用户注册
 	public int addUser(User user) {
 		String sql = "INSERT INTO `ddcommunity`.`tbl_user` (`username`, `phone`, `password`, `registration_time`) VALUES (?, ?, ?, ?);";
 		Object[] params = { user.getUsername(), user.getPhone(), user.getPassword(), user.getRegistration_time()};
@@ -14,6 +15,7 @@ public class UserDao extends DaoSupport {
 		return res;
 	}
 
+	// 根据id获取用户
 	public User getUserById(int id) {
 		String sql = "select * from user where user_id =  ?";
 		Object[] params = { id };
@@ -24,6 +26,7 @@ public class UserDao extends DaoSupport {
 			return null;
 	}
 	
+	// 根据“用户用户名或者是 用户名和密码”获取用户
 	public User getUserByUserName(String username, String passwd) {
 		List<User> users = null;
 		if (passwd != null) {
@@ -41,6 +44,7 @@ public class UserDao extends DaoSupport {
 			return null;
 	}
 	
+	// 根据“用户电话或者是 电话和密码”获取用户
 	public User getUserByPhone(String phone, String passwd) {
 		List<User> users = null;
 		if (passwd != null) {
@@ -57,7 +61,5 @@ public class UserDao extends DaoSupport {
 		else
 			return null;
 	}
-	
-	
 
 }
