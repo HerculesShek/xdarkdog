@@ -16,7 +16,7 @@ public class ShippingAddressDao extends DaoSupport {
 
 	// 根据用户名获取此用户所有的配送地址
 	public List<UserShippingAddress> getAddrsByUsername(String username) {
-		String sql = "SELECT a.* FROM ddcommunity.tbl_user_shipping_address a, ddcommunity.tbl_user u where a.userid=u.id and u.username=? order by default_flag desc";
+		String sql = "SELECT a.* FROM ddcommunity.tbl_user_shipping_address a, ddcommunity.tbl_user u where a.username=u.username and u.username=? order by default_flag desc";
 		Object[] params = { username };
 		List<UserShippingAddress> addrs = executeQuery(sql, UserShippingAddress.class, params);
 		return addrs;
@@ -71,7 +71,10 @@ public class ShippingAddressDao extends DaoSupport {
 	
 	public static void main(String[] args) {
 		ShippingAddressDao dao  = new ShippingAddressDao();
-		dao.setDefault(3);
+		List<UserShippingAddress> ll = dao.getAddrsByUsername("heihei");
+		for(UserShippingAddress u : ll ){
+			System.out.println(u);
+		}
 	}
 
 }

@@ -61,5 +61,13 @@ public class UserDao extends DaoSupport {
 		else
 			return null;
 	}
+	
+	// 更改密码
+	public int changePasswd(User user){
+		String sql = "UPDATE `ddcommunity`.`tbl_user` SET `password`=? WHERE `username`=?;";
+		Object[] params = {user.getPassword(), user.getUsername()};
+		return execOther(sql, params);
+	}
+	
 
 }
