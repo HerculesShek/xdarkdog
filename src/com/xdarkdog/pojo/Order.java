@@ -23,7 +23,9 @@ public class Order {
 						// 3 表示审核通过 正在配送
 						// 4 订单完成 成功送到 并且付款
 						// 5 用户手动取消了订单 不管什么时候
-
+	private Date audit_time;   // 订单的审核时间
+	private Date finish_time;  // 订单的完成时间 
+	
 	public int getOrder_type() {
 		return order_type;
 	}
@@ -136,8 +138,48 @@ public class Order {
 		this.username = username;
 	}
 
+	public Date getAudit_time() {
+		return audit_time;
+	}
+
+	public void setAudit_time(Date audit_time) {
+		this.audit_time = audit_time;
+	}
+
+	public Date getFinish_time() {
+		return finish_time;
+	}
+
+	public void setFinish_time(Date finish_time) {
+		this.finish_time = finish_time;
+	}
+
 	public Order() {
 		super();
+	}
+
+	public Order(String order_id, int order_type, Date subscribe_delivery_time,
+			String username, int commid, int shipid, double totalcost,
+			Date create_time, int pay_style, int paid_tag, int delivery_tag,
+			int receipt_tag, int cancel_tag, int status, Date audit_time,
+			Date finish_time) {
+		super();
+		this.order_id = order_id;
+		this.order_type = order_type;
+		this.subscribe_delivery_time = subscribe_delivery_time;
+		this.username = username;
+		this.commid = commid;
+		this.shipid = shipid;
+		this.totalcost = totalcost;
+		this.create_time = create_time;
+		this.pay_style = pay_style;
+		this.paid_tag = paid_tag;
+		this.delivery_tag = delivery_tag;
+		this.receipt_tag = receipt_tag;
+		this.cancel_tag = cancel_tag;
+		this.status = status;
+		this.audit_time = audit_time;
+		this.finish_time = finish_time;
 	}
 
 	@Override
@@ -149,18 +191,23 @@ public class Order {
 				+ create_time + ", pay_style=" + pay_style + ", paid_tag="
 				+ paid_tag + ", delivery_tag=" + delivery_tag
 				+ ", receipt_tag=" + receipt_tag + ", cancel_tag=" + cancel_tag
-				+ ", status=" + status + "]";
+				+ ", status=" + status + ", audit_time=" + audit_time
+				+ ", finish_time=" + finish_time + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result
+				+ ((audit_time == null) ? 0 : audit_time.hashCode());
 		result = prime * result + cancel_tag;
 		result = prime * result + commid;
 		result = prime * result
 				+ ((create_time == null) ? 0 : create_time.hashCode());
 		result = prime * result + delivery_tag;
+		result = prime * result
+				+ ((finish_time == null) ? 0 : finish_time.hashCode());
 		result = prime * result
 				+ ((order_id == null) ? 0 : order_id.hashCode());
 		result = prime * result + order_type;
@@ -190,6 +237,11 @@ public class Order {
 		if (getClass() != obj.getClass())
 			return false;
 		Order other = (Order) obj;
+		if (audit_time == null) {
+			if (other.audit_time != null)
+				return false;
+		} else if (!audit_time.equals(other.audit_time))
+			return false;
 		if (cancel_tag != other.cancel_tag)
 			return false;
 		if (commid != other.commid)
@@ -200,6 +252,11 @@ public class Order {
 		} else if (!create_time.equals(other.create_time))
 			return false;
 		if (delivery_tag != other.delivery_tag)
+			return false;
+		if (finish_time == null) {
+			if (other.finish_time != null)
+				return false;
+		} else if (!finish_time.equals(other.finish_time))
 			return false;
 		if (order_id == null) {
 			if (other.order_id != null)
@@ -234,26 +291,4 @@ public class Order {
 			return false;
 		return true;
 	}
-
-	public Order(String order_id, int order_type, Date subscribe_delivery_time,
-			String username, int commid, int shipid, double totalcost,
-			Date create_time, int pay_style, int paid_tag, int delivery_tag,
-			int receipt_tag, int cancel_tag, int status) {
-		super();
-		this.order_id = order_id;
-		this.order_type = order_type;
-		this.subscribe_delivery_time = subscribe_delivery_time;
-		this.username = username;
-		this.commid = commid;
-		this.shipid = shipid;
-		this.totalcost = totalcost;
-		this.create_time = create_time;
-		this.pay_style = pay_style;
-		this.paid_tag = paid_tag;
-		this.delivery_tag = delivery_tag;
-		this.receipt_tag = receipt_tag;
-		this.cancel_tag = cancel_tag;
-		this.status = status;
-	}
-	
 }

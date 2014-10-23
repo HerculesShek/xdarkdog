@@ -4,17 +4,26 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.alibaba.fastjson.JSON;
+import com.xdarkdog.dao.CommunityDao;
+import com.xdarkdog.dao.FruitDao;
 import com.xdarkdog.dao.OrderDao;
 import com.xdarkdog.dao.OrderDetailDao;
+import com.xdarkdog.dao.ShippingAddressDao;
+import com.xdarkdog.dao.UserDao;
 import com.xdarkdog.pojo.Order;
 import com.xdarkdog.pojo.OrderDetail;
+import com.xdarkdog.web.util.OrderInfo;
+import com.xdarkdog.web.util.DetailInfo;
 import com.xdarkdog.web.util.UUIDSeria;
 
 
@@ -28,7 +37,17 @@ public class OrderServlet extends HttpServlet {
 			generateOrder(request, response);
 		} else if ("getOrdersByUsername".equalsIgnoreCase(method)) {
 			getOrdersByUsername(request, response);
-		} 
+		} else if ("getUnauditedOrder".equalsIgnoreCase(method)) {
+			getUnauditedOrder(request, response);
+		} else if ("cancelOrder".equalsIgnoreCase(method)) {
+			cancelOrder(request, response);
+		} else if ("getShippingOrders".equalsIgnoreCase(method)) {
+			getShippingOrders(request, response);
+		} else if ("auditOrder".equalsIgnoreCase(method)) {
+			auditOrder(request, response);
+		} else if ("finishOrder".equalsIgnoreCase(method)) {
+			finishOrder(request, response);
+		}
 	}
 
 	// 生成一份订单
@@ -105,6 +124,93 @@ public class OrderServlet extends HttpServlet {
 
 	// 根据用户名获取用户所有的订单
 	public void getOrdersByUsername(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		String username = request.getParameter("username");
+		OrderDao odao = new OrderDao();
+		// 获取这个用户所有的订单
+		List<Order> orders = odao.getOrderByUsername(username);
+		// prepare dao
+		List<OrderInfo> order_infos = new ArrayList<OrderInfo>();
+		UserDao user_dao = new UserDao();
+		CommunityDao comm_dao = new CommunityDao();
+		ShippingAddressDao ship_addr_dao = new ShippingAddressDao();
+		OrderDetailDao detail_dao = new OrderDetailDao();
+		FruitDao fruit_dao = new FruitDao();
+		for (Order order : orders) {
+			OrderInfo order_info = new OrderInfo();
+			order_info.setOrder(order);
+			order_info.setUser(user_dao.getUserByUserName(order.getUsername(), null));
+			order_info.setCommunity(comm_dao.getCommById(order.getCommid()));
+			order_info.setShipAddr(ship_addr_dao.getAddrById(order.getShipid()));
+			List<OrderDetail> details = detail_dao.getDetailsByOrder_id(order.getOrder_id());
+			List<DetailInfo> detail_infos = new ArrayList<DetailInfo>();
+			for (OrderDetail order_detail : details) {
+				DetailInfo detail_info = new DetailInfo();
+				detail_info.setDetail(order_detail);
+				detail_info.setFruit(fruit_dao.getFruitById(order_detail.getFruit_id()));
+				detail_infos.add(detail_info);
+			}
+			order_info.setDetail_infos(detail_infos);
+			order_infos.add(order_info);
+		}
+		response.setContentType("application/json;charset=utf-8");
+		response.setCharacterEncoding("utf-8");
+		PrintWriter out = response.getWriter();
+		out.println(JSON.toJSONString(order_infos));
+		out.flush();
+		out.close();
 	}
+	
+	// TODO 获取所有的未审核的订单
+	public void getUnauditedOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			
+	}
+		
+	// TODO 取消订单
+	public void cancelOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			
+	}
+	// TODO 获取所有的在配送的订单
+	public void getShippingOrders(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	}
+
+	// 审核订单
+	public void auditOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	}
+	
+	// 订单成功完成
+	public void finishOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	}
+	
+	public static void main(String[] args) {
+		OrderDao odao = new OrderDao();
+		List<Order> orders = odao.getOrderByUsername("heihei");
+		List<OrderInfo> order_infos = new ArrayList<OrderInfo>();
+		UserDao user_dao = new UserDao();
+		CommunityDao comm_dao = new CommunityDao();
+		ShippingAddressDao ship_addr_dao = new ShippingAddressDao();
+		OrderDetailDao detail_dao = new OrderDetailDao();
+		FruitDao fruit_dao = new FruitDao();
+		for (Order order : orders) {
+			OrderInfo order_info = new OrderInfo();
+			order_info.setOrder(order);
+			order_info.setUser(user_dao.getUserByUserName(order.getUsername(), null));
+			order_info.setCommunity(comm_dao.getCommById(order.getCommid()));
+			order_info.setShipAddr(ship_addr_dao.getAddrById(order.getShipid()));
+			List<OrderDetail> details = detail_dao.getDetailsByOrder_id(order.getOrder_id());
+			List<DetailInfo> detail_infos = new ArrayList<DetailInfo>();
+			for(OrderDetail order_detail : details){
+				DetailInfo detail_info = new DetailInfo();
+				detail_info.setDetail(order_detail);
+				detail_info.setFruit(fruit_dao.getFruitById(order_detail.getFruit_id()));
+				detail_infos.add(detail_info);
+			}
+			order_info.setDetail_infos(detail_infos);
+			order_infos.add(order_info);
+		}
+		System.out.println(JSON.toJSONString(order_infos));
+	}
+	
 }

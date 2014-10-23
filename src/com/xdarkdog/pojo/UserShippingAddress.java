@@ -8,17 +8,17 @@ import java.util.Date;
  * @author Hercules
  */
 public class UserShippingAddress {
-	private int id;
-	private int userid; // 用户id
-	private String username; // 用户昵称
-	private String realname; // 用户真实姓名
-	private int gender; // 用户性别 1表示先生  0表示女士
-	private String phone; // 用户电话
-	private String location; // 用户详细地址
-	private double lat; // 配送地址的维度 可为空
-	private double lon; // 配送地址的经度 可为空
-	private Date last_time; // 用户最近一次使用这个配送地址的时间
-	private int default_flag; // 是不是默认的配送地址 1表示是 0表示否 默认是0
+	private int id;			   // 配送地址id 主键
+	private int userid;        // 用户id
+	private String username;   // 用户昵称
+	private String realname;   // 用户真实姓名
+	private int gender;        // 用户性别 1表示先生  0表示女士
+	private String phone; 	   // 用户联系电话
+	private String location;   // 用户详细地址
+	private double lat;        // 配送地址的维度 可为空
+	private double lon;        // 配送地址的经度 可为空
+	private Date last_time;    // 用户最近一次使用这个配送地址的时间
+	private int default_flag;  // 是不是默认的配送地址 1表示是 0表示否 默认是0
 
 	public String getUsername() {
 		return username;

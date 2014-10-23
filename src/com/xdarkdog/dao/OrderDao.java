@@ -35,7 +35,7 @@ public class OrderDao extends DaoSupport {
 	}
 
 	// 根据用户id 获取所有的订单
-	public List<Order> getOrderByUsername(int user_id) {
+	public List<Order> getOrderByUserId(int user_id) {
 		String sql = "SELECT o.* FROM ddcommunity.tbl_order o, ddcommunity.tbl_user u where o.`username`= u.username and u.id = ? order by create_time desc;";
 		Object[] params = { user_id };
 		return executeQuery(sql, Order.class, params);
@@ -46,18 +46,33 @@ public class OrderDao extends DaoSupport {
 		String sql = "SELECT * FROM ddcommunity.tbl_order where status=1 order by create_time desc;";
 		return executeQuery(sql, Order.class, null);
 	}
-	
-	// 取消订单
-	public int cancelOrder(String order_id){
-		String sql = "update ddcommunity.tbl_order set status = 5 where order_id = ?";
-		Object[] params = { order_id };
-		return execOther(sql, params);
-	}
-	
+
 	// 获取所有的正在配送的订单
 	public List<Order> getShippingOrders() {
 		String sql = "SELECT * FROM ddcommunity.tbl_order where status=3 order by create_time desc;";
 		return executeQuery(sql, Order.class, null);
+	}
+	
+	// 取消订单
+	public int cancelOrder(String order_id) {
+		return dealOrder(order_id, 5);
+	}
+
+	// 客服 审核订单
+	public int auditOrder(String order_id, int status) {
+		return dealOrder(order_id, status);
+	}
+
+	// 使订单完成
+	public int finishOrder(String order_id) {
+		return dealOrder(order_id, 4);
+	}
+
+	// 私有方法 处理订单 将订单置为某个状态
+	private int dealOrder(String order_id, int status) {
+		String sql = "update ddcommunity.tbl_order set status=? where order_id = ?";
+		Object[] params = { status, order_id };
+		return execOther(sql, params);
 	}
 	
 	public static void main(String[] args) {

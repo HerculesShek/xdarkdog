@@ -13,67 +13,87 @@ public class User {
 	private Date registration_time;
 	private Date last_signin_time;
 	private String photo_url;
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public String getUsername() {
 		return username;
 	}
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	public String getPhone() {
 		return phone;
 	}
+
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+
 	public int getGender() {
 		return gender;
 	}
+
 	public void setGender(int gender) {
 		this.gender = gender;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	public Date getFirst_time() {
 		return first_time;
 	}
+
 	public void setFirst_time(Date first_time) {
 		this.first_time = first_time;
 	}
+
 	public Date getRegistration_time() {
 		return registration_time;
 	}
+
 	public void setRegistration_time(Date registration_time) {
 		this.registration_time = registration_time;
 	}
+
 	public Date getLast_signin_time() {
 		return last_signin_time;
 	}
+
 	public void setLast_signin_time(Date last_signin_time) {
 		this.last_signin_time = last_signin_time;
 	}
+
 	public String getOpen_id() {
 		return open_id;
 	}
+
 	public void setOpen_id(String open_id) {
 		this.open_id = open_id;
 	}
+
 	public String getPhoto_url() {
 		return photo_url;
 	}
+
 	public void setPhoto_url(String photo_url) {
 		this.photo_url = photo_url;
 	}
+
 	public User(int id, String open_id, String username, String phone,
 			int gender, String password, Date first_time,
 			Date registration_time, Date last_signin_time, String photo_url) {
@@ -89,9 +109,11 @@ public class User {
 		this.last_signin_time = last_signin_time;
 		this.photo_url = photo_url;
 	}
+
 	public User() {
 		super();
 	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", open_id=" + open_id + ", username="
@@ -101,6 +123,7 @@ public class User {
 				+ ", last_signin_time=" + last_signin_time + ", photo_url="
 				+ photo_url + "]";
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -126,6 +149,7 @@ public class User {
 				+ ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -181,5 +205,5 @@ public class User {
 			return false;
 		return true;
 	}
-	
+
 }
