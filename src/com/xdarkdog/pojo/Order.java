@@ -9,7 +9,7 @@ public class Order {
 	private String username; // 用户名
 	private int commid; // 水果店id
 	private int shipid; // 配送地址id
-	private double totalcost; // 总消费
+	private double totalcost; // 总消费 TODO 客服在完成订单的时候填写用户实付款
 	private Date create_time; // 订单创建时间
 	private int pay_style; // 支付类型 1表示在线支付 2表示到付
 	private int paid_tag; // 是不是支付 0未支付 1已支付

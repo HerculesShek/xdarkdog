@@ -27,7 +27,6 @@ public class FormUtil {
 	private static final String[] ALLOW_TYPE = new String[] { "image/bmp",
 			"image/x-png", "image/png", "image/gif", "image/jpeg", "image/jpg", "image/pjpeg" };
 
-	
 	public List<FileItem> getFileList(HttpServletRequest request, String filePath) {
 		// 设置磁盘工厂
 		DiskFileItemFactory factory = new DiskFileItemFactory();

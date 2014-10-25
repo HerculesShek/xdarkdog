@@ -33,7 +33,7 @@ public class FruitServlet extends HttpServlet {
 	public void getFruitsByGPS(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		double lat = Double.parseDouble(request.getParameter("lat"));
 		double lon = Double.parseDouble(request.getParameter("lon"));
-
+		System.out.println("lat is " + lat + ", lon is " + lon);
 		List<Community> comms = new CommunityDao().getAllCommunitiesByKey(null);
 		Community near_comm = comms.get(0);
 		double min_distance = getDistance(lat, lon, near_comm.getLat(), near_comm.getLon());;
