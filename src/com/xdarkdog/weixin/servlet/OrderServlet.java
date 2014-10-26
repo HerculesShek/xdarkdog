@@ -173,14 +173,31 @@ public class OrderServlet extends HttpServlet {
 		
 	}
 
-	// 审核订单
+	// TODO 审核订单
 	public void auditOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 	}
 	
 	// 订单成功完成
 	public void finishOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		String order_id = request.getParameter("order_id"); // 订单id
+		String cost = request.getParameter("cost"); // 此次账单的花费
+		Order o = new Order();
+		o.setOrder_id(order_id);
+		o.setTotalcost(Double.parseDouble(cost));
+		o.setStatus(4);
+		int res = new OrderDao().finishOrder(o);
+		// TODO 客服的界面 完成之后应该跳转还是使用ajax
+		response.setContentType("application/json;charset=utf-8");
+		response.setCharacterEncoding("utf-8");
+		PrintWriter out = response.getWriter();
+		if (res == 1) {
+			out.println("{\"success\":\"1\"}");
+		} else {
+			out.println("{\"success\":\"0\"}");
+		}
+		out.flush();
+		out.close();
 	}
 	
 	public static void main(String[] args) {

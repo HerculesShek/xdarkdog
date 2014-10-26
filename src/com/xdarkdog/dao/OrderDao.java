@@ -63,9 +63,11 @@ public class OrderDao extends DaoSupport {
 		return dealOrder(order_id, status);
 	}
 
-	// 使订单完成
-	public int finishOrder(String order_id) {
-		return dealOrder(order_id, 4);
+	// 使订单完成 并且填写交易金额
+	public int finishOrder(Order order) {
+		String sql = "update ddcommunity.tbl_order set status=?, set totalcost=? where order_id=?";
+		Object[] params = { 4, order.getTotalcost(), order.getOrder_id()};
+		return execOther(sql, params);
 	}
 
 	// 私有方法 处理订单 将订单置为某个状态
