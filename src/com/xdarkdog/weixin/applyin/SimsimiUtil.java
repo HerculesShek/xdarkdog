@@ -18,6 +18,6 @@ public class SimsimiUtil {
 		if ("100".equals(result)) {
 			return msg.getString("response");
 		}
-		return "暗黑无边，你我并肩！";
+		return "嘿狗社区欢迎您！";
 	}
 }

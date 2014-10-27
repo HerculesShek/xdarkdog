@@ -1,7 +1,12 @@
 package com.xdarkdog.pojo;
 
 import java.util.Date;
-
+/**
+ * TODO 
+ * 这个表在以后可能会变得很大，需要以后的分库分表操作，并且需要好好的设计一下
+ * @author Hercules
+ * 
+ */
 public class Order {
 	private String order_id; // 订单号 主键
 	private int order_type; // 订单类型 1 表示 普通订单 2 表示预约订单
