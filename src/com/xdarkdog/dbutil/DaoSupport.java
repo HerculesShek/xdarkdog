@@ -15,7 +15,11 @@ import java.util.Map;
 import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * TODO 这个最终还是换为 mybatis
+ * @author Hercules
+ *
+ */
 public class DaoSupport {
 
 	private final Logger logger = LoggerFactory.getLogger(DaoSupport.class);
@@ -44,8 +48,10 @@ public class DaoSupport {
 						Config.PASSWORD);
 			}
 		} catch (ClassNotFoundException e) {
+			logger.error("没有找到数据库的class！");
 			e.printStackTrace();
 		} catch (SQLException e) {
+			logger.error("获取数据库连接异常！");
 			e.printStackTrace();
 		}
 	}
@@ -60,6 +66,7 @@ public class DaoSupport {
 			if (conn != null)
 				conn.close();
 		} catch (SQLException e) {
+			logger.error("关闭数据库连接异常！");
 			e.printStackTrace();
 		}
 	}
@@ -69,7 +76,7 @@ public class DaoSupport {
 		// 1、获取数据库连接
 		getConntion();
 		// 2、预先打印出即将执行的SQL语句(便于项目测试，仿Hibernate框架)
-		System.out.println("SQL:> " + strSQL);
+		logger.info("SQL:> {}", strSQL);
 		try {
 			// 3、创建Statement接口对象
 			pstmt = conn.prepareStatement(strSQL);
@@ -84,6 +91,7 @@ public class DaoSupport {
 			// 6、返回结果
 			return affectedRows;
 		} catch (SQLException e) {
+			logger.error("数据库访问或其他异常！");
 			e.printStackTrace();
 			return -1;
 		} finally {
@@ -96,7 +104,7 @@ public class DaoSupport {
 		// 1、获取数据库连接
 		getConntion();
 		// 2、预先打印出即将执行的SQL语句(便于项目测试，仿Hibernate框架)
-		System.out.println("SQL:> " + strSQL);
+		logger.info("SQL:> {}", strSQL);
 		try {
 			// 3、创建PreparedStatement接口对象
 			pstmt = conn.prepareStatement(strSQL);
@@ -111,10 +119,11 @@ public class DaoSupport {
 			// 6、返回结果
 			return rs;
 		} catch (SQLException e) {
+			logger.error("数据库访问或其他异常！");
 			e.printStackTrace();
 			return null;
 		} 
-// TODO 这里必须使用框架来解决资源没法释放的问题!!!!!
+//      TODO 这里必须使用框架来解决资源没法释放的问题!!!!!
 //		finally {
 //			closeConn();
 //		}
@@ -123,7 +132,7 @@ public class DaoSupport {
 	// 自动封装返回类型
 	public List executeQuery(String sql, Class<?> clazz, Object... objects) {
 		// 打印当前SQL语句。
-		System.out.println("SQL:> " + sql);
+		logger.info("SQL:> {}", sql);
 		getConntion(); // 获得连接
 		try {
 			List list = new ArrayList(); // 声明容器
@@ -151,6 +160,7 @@ public class DaoSupport {
 			}
 			return list;
 		} catch (Exception e) {
+			logger.error("数据库执行查询异常！");
 			e.printStackTrace();
 		} finally {
 			closeConn();

@@ -2,7 +2,6 @@ package com.xdarkdog.pojo;
 
 import com.alibaba.fastjson.JSON;
 /**
- * 
  * @author Hercules
  *
  * 对于水果的表的设计，需要把一些过期的或者是失效的商品放入到另外的表中，方便商品的

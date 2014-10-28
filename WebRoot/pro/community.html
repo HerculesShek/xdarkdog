@@ -2,9 +2,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta name="keywords" content="嘿狗社区
-" />
-<meta name="description" content="嘿狗社区。" />
+<meta name="keywords" content="嘿狗社区" />
+<meta name="description" content="嘿狗社区" />
 <title>嘿狗社区服务平台</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0">
 <link type="text/css" rel="stylesheet" href="css/common.css" />
@@ -23,13 +22,14 @@
 
 <body>
 <div class="container">
-  <div class="header" id="header2"> <a href="index.html" class="left linkAct"><img class="m-t-4" src="images/arrow-left.png" width="30"/></a>
-    <h2>社区列表</h2>
-    </div>
-  <div class="content">
+  <div class="header" id="header2"> 
+  	<a href="index.html" class="left linkAct"><img class="m-t-4" src="images/arrow-left.png" width="30"/></a>
+    <h2>附近社区</h2>
   </div>
+  <div class="content"></div>
 </div>
 </body>
+
 <script type="text/javascript">
 $(function(){
 	var COMM_ID = 'comm_id';
@@ -40,7 +40,7 @@ $(function(){
 			success:function(json){
 					$(".content").empty();
 					for (var i = 0; i < json.length; i++) {
-							var  comm = json[i];
+							var comm = json[i];
 				    		$(".content").append('<div class="addr-box"><div class="addr-info-box linkAct"><input class ="commid" type="hidden" value="'+comm.id+'"><div class="addr-name-tel-box"><p class="addr-name-tel" ><span>'+comm.comm_name+'</span></p><div class="clr"></div></div></div></div>');
 					}
 			},
