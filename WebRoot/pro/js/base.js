@@ -21,4 +21,17 @@ Date.prototype.Format = function(fmt)
     if(new RegExp("("+ k +")").test(fmt))   
   fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
   return fmt;   
+};
+
+
+$(document).ready(function() {
+	$(".historyBack").click(function() {
+		history.back();
+	});
+});
+
+function getQueryString(name) {
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+	var r = window.location.search.substr(1).match(reg);
+	if (r != null) return unescape(r[2]); return null;
 }

@@ -2,14 +2,19 @@ package com.xdarkdog.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.xdarkdog.dbutil.DaoSupport;
 import com.xdarkdog.pojo.User;
 
+@Service
 public class UserDao extends DaoSupport {
+
 	// 用户注册
 	public int addUser(User user) {
 		String sql = "INSERT INTO `ddcommunity`.`tbl_user` (`username`, `phone`, `password`, `registration_time`) VALUES (?, ?, ?, ?);";
-		Object[] params = { user.getUsername(), user.getPhone(), user.getPassword(), user.getRegistration_time()};
+		Object[] params = { user.getUsername(), user.getPhone(),
+				user.getPassword(), user.getRegistration_time() };
 		int res = execOther(sql, params);
 		System.out.println(res + "条用户信息添加到user中了！！！");
 		return res;
@@ -25,7 +30,7 @@ public class UserDao extends DaoSupport {
 		else
 			return null;
 	}
-	
+
 	// 根据“用户用户名或者是 用户名和密码”获取用户
 	public User getUserByUserName(String username, String passwd) {
 		List<User> users = null;
@@ -43,7 +48,7 @@ public class UserDao extends DaoSupport {
 		else
 			return null;
 	}
-	
+
 	// 根据“用户电话或者是 电话和密码”获取用户
 	public User getUserByPhone(String phone, String passwd) {
 		List<User> users = null;
@@ -61,13 +66,12 @@ public class UserDao extends DaoSupport {
 		else
 			return null;
 	}
-	
+
 	// 更改密码
-	public int changePasswd(User user){
+	public int changePasswd(User user) {
 		String sql = "UPDATE `ddcommunity`.`tbl_user` SET `password`=? WHERE `username`=?;";
-		Object[] params = {user.getPassword(), user.getUsername()};
+		Object[] params = { user.getPassword(), user.getUsername() };
 		return execOther(sql, params);
 	}
-	
 
 }

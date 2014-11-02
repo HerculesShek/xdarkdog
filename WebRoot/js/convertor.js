@@ -29,7 +29,7 @@
              delete BMap.Convertor[callbackName]; // 调用完需要删除改函数
              var point = new BMap.Point(xyResult.x, xyResult.y);
              callback && callback(point);
-         }
+         };
      }
  
      window.BMap = window.BMap || {};

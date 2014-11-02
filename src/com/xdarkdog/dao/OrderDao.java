@@ -1,32 +1,29 @@
 package com.xdarkdog.dao;
 
-import java.util.List;
-
 import com.xdarkdog.dbutil.DaoSupport;
 import com.xdarkdog.pojo.Order;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+@Service
 public class OrderDao extends DaoSupport {
+
 	// 生成一份订单
 	public int addOrder(Order order) {
-		String sql = "INSERT INTO `ddcommunity`.`tbl_order` (`order_id`, " +
-				"`order_type`, " + 
-				"`username`, " + 
-				"`commid`, " + 
-				"`shipid`, " + 
-				"`subscribe_delivery_time`, " +
-				"`create_time` ) VALUES (?,?,?,?,?,?,?);";
-		Object[] params = {order.getOrder_id(), 
-				order.getOrder_type(), 
-				order.getUsername(), 
-				order.getCommid(), 
-				order.getShipid(), 
-				order.getSubscribe_delivery_time(),
-				order.getCreate_time()};
-		
+		String sql = "INSERT INTO `ddcommunity`.`tbl_order` (`order_id`, "
+				+ "`order_type`, " + "`username`, " + "`commid`, "
+				+ "`shipid`, " + "`subscribe_delivery_time`, "
+				+ "`create_time` ) VALUES (?,?,?,?,?,?,?);";
+		Object[] params = { order.getOrder_id(), order.getOrder_type(),
+				order.getUsername(), order.getCommid(), order.getShipid(),
+				order.getSubscribe_delivery_time(), order.getCreate_time() };
+
 		int affectRows = execOther(sql, params);
 		return affectRows;
 	}
-	
+
 	// 根据用户名 获取所有的订单
 	public List<Order> getOrderByUsername(String username) {
 		String sql = "SELECT * FROM ddcommunity.tbl_order where `username`=? order by create_time desc";
@@ -44,15 +41,15 @@ public class OrderDao extends DaoSupport {
 	// 获取所有的未审核的订单
 	public List<Order> getUnauditedOrder() {
 		String sql = "SELECT * FROM ddcommunity.tbl_order where status=1 order by create_time desc;";
-		return executeQuery(sql, Order.class, null);
+		return executeQuery(sql, Order.class);
 	}
 
 	// 获取所有的正在配送的订单
 	public List<Order> getShippingOrders() {
 		String sql = "SELECT * FROM ddcommunity.tbl_order where status=3 order by create_time desc;";
-		return executeQuery(sql, Order.class, null);
+		return executeQuery(sql, Order.class);
 	}
-	
+
 	// 取消订单
 	public int cancelOrder(String order_id) {
 		return dealOrder(order_id, 5);
@@ -66,7 +63,7 @@ public class OrderDao extends DaoSupport {
 	// 使订单完成 并且填写交易金额
 	public int finishOrder(Order order) {
 		String sql = "update ddcommunity.tbl_order set status=?, set totalcost=? where order_id=?";
-		Object[] params = { 4, order.getTotalcost(), order.getOrder_id()};
+		Object[] params = { 4, order.getTotalcost(), order.getOrder_id() };
 		return execOther(sql, params);
 	}
 
@@ -76,10 +73,23 @@ public class OrderDao extends DaoSupport {
 		Object[] params = { status, order_id };
 		return execOther(sql, params);
 	}
-	
-	public static void main(String[] args) {
-		OrderDao dao = new OrderDao();
-		System.out.println(dao.cancelOrder("1"));
+
+	public List<Order> getByPaging(String userName, Integer pageNo,
+			Integer pageSize, Integer status) {
+
+		Integer offset = (pageNo - 1) * pageSize;
+		Integer rows = pageSize;
+
+		String sql = "SELECT o.* FROM ddcommunity.tbl_order o, ddcommunity.tbl_user u "
+				+ "WHERE o.`username`= u.username and u.`username`= ? "
+				+ (status == null ? "" : " and o.`status` = ? ")
+				+ "ORDER BY create_time desc LIMIT ?,?";
+
+		if(null == status) {
+			return executeQuery(sql, Order.class, new Object[]{userName,offset, rows});
+		} else {
+			return executeQuery(sql, Order.class, new Object[]{userName,status, offset, rows});
+		}
 	}
-	
+
 }

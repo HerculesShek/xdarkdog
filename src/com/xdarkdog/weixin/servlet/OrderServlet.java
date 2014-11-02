@@ -137,8 +137,7 @@ public class OrderServlet extends HttpServlet {
 			json_obj_detail.put("photos", i.getPhotos());
 			json_obj_detail.put("fruit_count", i.getFruit_count());
 			if (infos.containsKey(i.getOrder_id())) { // 已有 增加订单详情
-				infos.get(i.getOrder_id()).getJSONArray("details")
-						.add(json_obj_detail);
+				infos.get(i.getOrder_id()).getJSONArray("details").add(json_obj_detail);
 			} else { // 还没有这个订单
 				JSONObject json_obj = JSON.parseObject(JSON.toJSONString(i));
 				json_obj.remove("name");

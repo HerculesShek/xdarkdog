@@ -19,7 +19,8 @@ public class WeixinServlet extends HttpServlet {
 	private static final String weixinid = "gh_275da87c0371";
 
 	// 进行地址的验证
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 

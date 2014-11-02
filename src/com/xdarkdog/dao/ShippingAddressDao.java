@@ -2,9 +2,12 @@ package com.xdarkdog.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.xdarkdog.dbutil.DaoSupport;
 import com.xdarkdog.pojo.UserShippingAddress;
 
+@Service
 public class ShippingAddressDao extends DaoSupport {
 	// 增加一条配送信息
 	public int addUserShippingAddress(UserShippingAddress addr) {
@@ -26,6 +29,12 @@ public class ShippingAddressDao extends DaoSupport {
 	public int removeShippingAddr(int addrId){
 		String sql = "delete FROM ddcommunity.tbl_user_shipping_address where id=?";
 		Object[] param = {addrId};
+		return execOther(sql, param);
+	}
+	
+	public int removeShippingAddr(String username, int addrId){
+		String sql = "delete FROM ddcommunity.tbl_user_shipping_address where id=? and username=?";
+		Object[] param = {addrId,username};
 		return execOther(sql, param);
 	}
 	

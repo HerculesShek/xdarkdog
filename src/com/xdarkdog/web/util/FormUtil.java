@@ -1,15 +1,5 @@
 package com.xdarkdog.web.util;
 
-import java.io.File;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.MultiMap;
 import org.apache.commons.collections.map.MultiValueMap;
@@ -20,6 +10,11 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.util.*;
+
+@SuppressWarnings("unchecked")
 public class FormUtil {
 	// 设置上传文件最大为 3M
 	private static final long MAX_SIZE = 30 * 1024 * 1024;
@@ -31,7 +26,7 @@ public class FormUtil {
 		// 设置磁盘工厂
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		factory.setSizeThreshold(20 * 1024 * 1024); // 设置缓冲区
-		File repo = new File(request.getServletContext().getRealPath(filePath));
+		File repo = new File(request.getSession().getServletContext().getRealPath(filePath));
 		factory.setRepository(repo); // 设置图片保存位置
 		// 文件上传的工具类
 		ServletFileUpload handler = new ServletFileUpload(factory);
@@ -88,7 +83,7 @@ public class FormUtil {
 							filename = filename.substring(0, 40);
 						}
 						filename = UUIDSeria.getUUID() + filename;
-						File file2server = new File(request.getServletContext().getRealPath(filePath), filename);
+						File file2server = new File(request.getSession().getServletContext().getRealPath(filePath), filename);
 						item.write(file2server);
 						String file2db = request.getContextPath()
 								+ "/"
@@ -140,7 +135,7 @@ public class FormUtil {
 		// 设置磁盘工厂
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		factory.setSizeThreshold(20 * 1024 * 1024);
-		factory.setRepository(new File(request.getServletContext().getRealPath(filePath))); // 设置图片保存位置
+		factory.setRepository(new File(request.getSession().getServletContext().getRealPath(filePath))); // 设置图片保存位置
 
 		// 文件上传的工具类
 		ServletFileUpload handler = new ServletFileUpload(factory);
@@ -161,7 +156,7 @@ public class FormUtil {
 						// 获取文件名.
 						String filename = item.getName();
 						// 声明服务器端的文件，等待文件上传，填充。
-						File filetoserver = new File(request.getServletContext().getRealPath(filePath), filename);
+						File filetoserver = new File(request.getSession().getServletContext().getRealPath(filePath), filename);
 						// 实现文件上传
 						item.write(filetoserver);
 						// 声明相对路径， 此路径要保存到Bean中 ， 例如

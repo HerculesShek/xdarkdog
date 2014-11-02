@@ -1,4 +1,4 @@
-﻿package com.xdarkdog.dbutil;
+package com.xdarkdog.dbutil;
 
 import java.io.IOException;
 import java.util.Properties;

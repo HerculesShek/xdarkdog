@@ -75,7 +75,7 @@ public class FruitServlet extends HttpServlet {
 				// "/xdarkdog/img/1413805538709Koala.jpg,/xdarkdog/img/1413805538712Lighthouse.jpg"
 				System.out.println("原来的照片是：" + originalphotos);
 				// "C:\apache-tomcat-7.0.55\webapps\xdarkdog\"
-				System.out.println("RealPath->" + request.getServletContext().getRealPath("/"));
+				System.out.println("RealPath->" + request.getSession().getServletContext().getRealPath("/"));
 			}
 			// 更新水果信息
 			// 1 删除一部分图片 并且从原来的照片的url里把这些照片的url删掉，只保留剩余的
@@ -84,7 +84,7 @@ public class FruitServlet extends HttpServlet {
 				String p2delete[] = photostodelete.split(",");
 				for (String p : p2delete) {
 					String p_postfix = p.substring(p.indexOf("xdarkdog") + "xdarkdog".length() + 1, p.length());
-					String fileRpath = request.getServletContext().getRealPath("/") + p_postfix.replace('/', File.separatorChar);
+					String fileRpath = request.getSession().getServletContext().getRealPath("/") + p_postfix.replace('/', File.separatorChar);
 					File f = new File(fileRpath);
 					if (f.exists()) {
 						f.delete();
@@ -147,7 +147,7 @@ public class FruitServlet extends HttpServlet {
 				String[] photo_s = f_photos_str.split(",");
 				for (String s : photo_s) { // 删除社区的照片
 					String p_postfix = s.substring(s.indexOf("xdarkdog") + "xdarkdog".length() + 1, s.length());
-					String fileRpath = request.getServletContext().getRealPath("/") + p_postfix.replace('/', File.separatorChar);
+					String fileRpath = request.getSession().getServletContext().getRealPath("/") + p_postfix.replace('/', File.separatorChar);
 					File f = new File(fileRpath);
 					if (f.exists()) {
 						System.out.println("删除照片：" + f.getAbsolutePath());

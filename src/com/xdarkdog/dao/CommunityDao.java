@@ -1,13 +1,16 @@
 package com.xdarkdog.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
-
 import com.xdarkdog.dbutil.DaoSupport;
 import com.xdarkdog.pojo.Community;
 import com.xdarkdog.web.util.PageBean;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+@Service
 public class CommunityDao extends DaoSupport {
 	public int addCommunity(Community comm) {
 		String sql = "INSERT INTO `ddcommunity`.`tbl_community` (`fruit_shop_name`, `comm_name`, `fruit_shop_owner`, `owner_phone`, `location`, `lat`, `lon`, `photos`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
@@ -32,7 +35,7 @@ public class CommunityDao extends DaoSupport {
 			comms = executeQuery(sql, Community.class, params);
 		} else {
 			String sql = "select * from `ddcommunity`.`tbl_community`";
-			comms = executeQuery(sql, Community.class, null);
+			comms = executeQuery(sql, Community.class);
 		}
 		return comms;
 	}

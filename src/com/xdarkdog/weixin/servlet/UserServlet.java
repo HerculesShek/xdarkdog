@@ -11,12 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.xdarkdog.dao.UserDao;
 import com.xdarkdog.pojo.User;
-import com.xdarkdog.test.UserDaoTest;
 
 public class UserServlet extends HttpServlet {
+
 	private static final long serialVersionUID = 2889320364114338060L;
-	public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String method = request.getParameter("method");
+
+	public void service(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String method = request.getParameter("method").trim();
 		if ("register".equalsIgnoreCase(method)) { // 用户注册
 			register(request, response);
 		} else if ("login".equalsIgnoreCase(method)) { // 用户登录
@@ -31,8 +33,9 @@ public class UserServlet extends HttpServlet {
 	}
 
 	// ajax
-	// 修改密码 
-	public void changePasswd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	// 修改密码
+	public void changePasswd(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		String username = request.getParameter("username");
 		String oldPass = request.getParameter("oldPass");
 		String newPass = request.getParameter("newPass");
@@ -55,10 +58,11 @@ public class UserServlet extends HttpServlet {
 		out.flush();
 		out.close();
 	}
-	
+
 	// ajax
 	// 成功的话返回1，否则返回0
-	public void register(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void register(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String tel = request.getParameter("tel");
@@ -83,8 +87,9 @@ public class UserServlet extends HttpServlet {
 	}
 
 	// ajax
-	// 
-	public void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	//
+	public void login(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String u_str = request.getParameter("username");
 		String passwd = request.getParameter("password");
 		UserDao dao = new UserDao();
@@ -106,7 +111,8 @@ public class UserServlet extends HttpServlet {
 		out.close();
 	}
 
-	public void checkName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void checkName(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		String name = request.getParameter("username");
 		User u = new UserDao().getUserByUserName(name, null);
 		response.setContentType("application/json;charset=utf-8");
@@ -119,7 +125,8 @@ public class UserServlet extends HttpServlet {
 		}
 	}
 
-	public void checkPhone(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void checkPhone(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		String phone = request.getParameter("phone");
 		User u = new UserDao().getUserByPhone(phone, null);
 		response.setContentType("application/json;charset=utf-8");
