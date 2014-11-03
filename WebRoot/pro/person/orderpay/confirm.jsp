@@ -30,7 +30,7 @@
 		</div>
 		<div class="container">
 		    <div class="header">
-		    	<a href="javascript:void(0)" class="historyBack left linkAct"><img class="m-t-4" src="/pro/images/arrow-left.png" width="30"/></a>
+		    	<a href="/fruit" class="left linkAct"><img class="m-t-4" src="/pro/images/arrow-left.png" width="30"/></a>
 		    	<h2>订单结算</h2>
 		    </div>
 	    	<div class="manage-address">
@@ -70,6 +70,7 @@
 					   	  	</div>
 					   	  	<div class="order-pay-time-select-right">
 						   	  	<select class="order-pay-select select" id="order-pay-hour">
+						   	  		
 							   	</select>
 						   	</div>
 						   	<div class="order-pay-time-select-right">

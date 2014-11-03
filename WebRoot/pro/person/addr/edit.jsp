@@ -31,7 +31,7 @@
 	<body>
 		<div class="container">
 			<div class="header"> 
-				<a href="javascript:void(0)" class="historyBack left linkAct"><img class="m-t-4" src="/pro/images/arrow-left.png" width="30"/></a>
+				<a href="/shipping" class="left linkAct"><img class="m-t-4" src="/pro/images/arrow-left.png" width="30"/></a>
 		    	<h2>编辑地址</h2>
 		  	</div>
 		  	<div class="content">
@@ -39,7 +39,7 @@
 			      	<div style="width:60%; float:left;">
 				        <div class="input-box">
 		          			<input type="hidden" name="addrId" value="${shippingAddress.id}">
-		          			<input type="text" class="input name" value="${shippingAddress.username}" name="contact"/>
+		          			<input type="text" class="input name" value="${shippingAddress.realname}" name="contact"/>
 		          			<p>真实姓名</p>
 		        		</div>
 		      		</div>
@@ -58,7 +58,7 @@
 			      	</div>
 		    	  	<div class="input-box">
 		        		<input class="input address-c" id="location" name="location" value="${shippingAddress.location}"/>
-		        		<p>写字楼/小区名称</p>
+		        		<p>配送地址</p>
 		      		</div>
 		      		<div class="input-box">
 		        		<input type="button" class="button btn-org m-btn-success" value="提交"/>
@@ -87,7 +87,7 @@
 			$reg2 = /^[\u4E00-\u9FA5\uf900-\ufa2d\w\.\s]{2,12}$/;//真实姓名验证
 			var name = $('input[name="contact"]');//真实姓名
 			var tel = $('input[name="contactTel"]');//手机号码
-			var community = $('.address-c');//写字楼/小区名称
+			var community = $('.address-c');//配送地址
 			var addr = $('input[name="addr"]');//补充地址
 			//表单验证
 			$(".m-btn-success").click(

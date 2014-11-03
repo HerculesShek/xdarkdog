@@ -79,9 +79,9 @@ public class FormUtil {
 					if (filename !=null && !filename.equals("") && ArrayUtils.contains(ALLOW_TYPE, item.getContentType())) {
 						System.out.println("上传的文件的名字是->"+filename);
 						// 对文件的名字做一些处理
-						if (filename.length() > 40) {
-							filename = filename.substring(0, 40);
-						}
+//						if (filename.length() > 40) {
+//							filename = filename.substring(0, 40);
+//						}
 						filename = UUIDSeria.getUUID() + filename;
 						File file2server = new File(request.getSession().getServletContext().getRealPath(filePath), filename);
 						item.write(file2server);
@@ -130,7 +130,6 @@ public class FormUtil {
 	}
 	
 	// 该方法适用于：比如一个产品需要修改产品图片，但是其他信息没必要修改时，则只重新上传文件，并返回新的路径即可。
-	@SuppressWarnings("unchecked")
 	public String UpdateFile(HttpServletRequest request, String filePath) {
 		// 设置磁盘工厂
 		DiskFileItemFactory factory = new DiskFileItemFactory();

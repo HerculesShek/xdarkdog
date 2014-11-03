@@ -38,20 +38,18 @@
                 <form method="post" id="loginForm">
                     <div class="input-box">
                         <input type="hidden" id="come_form_key" value=""/>
-                        <input type="text" class="input" id="userName" autocomplete="off" name="username"/>
-                        <p>用户名/手机号码</p>
+                        <input type="text" class="input" id="userName" autocomplete="off" name="username" placeholder="用户名/手机号码"/>
                     </div>
                     <div class="input-box">
-                        <input type="password" class="input" id="loginPassword" autocomplete="off" name="password"/>
-                            <p>密码</p>
-                        </div>
-                        <div class="login-btn">
-                            <input type="button" class="button btn-org" id="btn" value="登 录" class="submit-btn"/>
-                            <a href="tel:13806101602" class="forget-pwd linkAct left">电话点餐</a>
-                            <a href="tel:13806101602" class="forget-pwd linkAct right">忘记密码？</a>
-                        </div>
-                    </form>
-                    <input name="redirectURL" value="${redirectURL}" type="hidden"/>
+                        <input type="password" class="input" id="loginPassword" autocomplete="off" name="password" placeholder="密码"/>
+                    </div>
+                    <div class="login-btn">
+                        <input type="button" class="button btn-org" id="btn" value="登 录" class="submit-btn"/>
+                        <a href="tel:${orderPhone}" class="forget-pwd linkAct left">电话点餐</a>
+                        <a href="tel:${orderPhone}" class="forget-pwd linkAct right">忘记密码？</a>
+                    </div>
+                </form>
+                <input name="redirectURL" value="${redirectURL}" type="hidden"/>
               </div>
         </div>
     </body>

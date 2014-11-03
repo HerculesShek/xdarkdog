@@ -6,6 +6,7 @@ import com.jfinal.config.Interceptors;
 import com.jfinal.config.JFinalConfig;
 import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
+import com.jfinal.kit.PathKit;
 import com.jfinal.plugin.spring.SpringPlugin;
 import com.jfinal.render.ViewType;
 import com.xdarkdog.web.controller.front.CommunityController;
@@ -36,7 +37,11 @@ public class JfinalConfig extends JFinalConfig {
 
 	@Override
 	public void configPlugin(Plugins plugins) {
-		plugins.add(new SpringPlugin());
+		if( "/".equals(System.getProperty("file.separator")) ) {
+			plugins.add(new SpringPlugin("/" + PathKit.getWebRootPath() + "/WEB-INF/applicationContext.xml"));
+		} else {
+			plugins.add(new SpringPlugin(PathKit.getWebRootPath() + "/WEB-INF/applicationContext.xml"));
+		}
 	}
 
 	@Override

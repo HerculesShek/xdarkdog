@@ -28,7 +28,7 @@ public class SecurityFilter implements Filter {
 		if("ok".equals(session.getAttribute("user"))){
 			chain.doFilter(request, response);
 		} else {
-			((HttpServletResponse)response).sendRedirect("/xdarkdog/manager_sign_in.jsp");
+			((HttpServletResponse)response).sendRedirect("/manager_sign_in.jsp");
 		}
 	}
 

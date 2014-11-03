@@ -3,16 +3,16 @@ package com.xdarkdog.pojo;
 import java.util.Date;
 
 public class User {
-	private int id;					// 用户id 主键标识
-	private String open_id;			// 用户的微信的openid 备用
-	private String username;		// 用户名
-	private String phone;			// 用户的电话
-	private int gender;				// 用户性别
-	private String password;		// 密码
-	private Date first_time;		// 首次登陆时间
-	private Date registration_time;	// 注册时间
-	private Date last_signin_time;  // 最后登录时间
-	private String photo_url;		// 头像地址
+	private int id;
+	private String open_id;
+	private String username;
+	private String phone;
+	private int gender;
+	private String password;
+	private Date first_time;
+	private Date registration_time;
+	private Date last_signin_time;
+	private String photo_url;
 
 	public int getId() {
 		return id;

@@ -22,12 +22,12 @@
 		        FastClick.attach(document.body);
 		    }, false);
 		</script>
-		<link type="text/css" rel="stylesheet" href="css/login.css" />
+		<link type="text/css" rel="stylesheet" href="/pro/css/login.css" />
 	</head>
 	<body>
 	<div class="container" id="register">
 		<div class="header"> 
-			<a href="javascript:void(0)" class="historyBack left linkAct">
+			<a href="/" class="left linkAct">
 				<img class="m-t-4" src="/pro/images/arrow-left.png" width="30"/><font>首页</font>
 			</a>
 	    	<h2>注册</h2>
@@ -35,20 +35,16 @@
 		  	<div class="login-box">
 		    	<form action="/xdarkdog/servlet/user.do?method=register" method="post" class="registerForm">
 			      	<div class="input-box">
-			        	<input type="text" class="input" name="username" />
-			        	<p>用户名（以字母开头）</p>
+			        	<input type="text" class="input" name="username" placeholder="用户名（以字母开头）"/>
 			      	</div>
 			      	<div class="input-box">
-			        	<input type="password" class="input" name="password"/>
-			        	<p>密码</p>
+			        	<input type="password" class="input" name="password" placeholder="密码"/>
 			      	</div>
 			      	<div class="input-box">
-			        	<input type="password" class="input" name="password2"/>
-			        	<p>确认密码</p>
+			        	<input type="password" class="input" name="password2" placeholder="确认密码"/>
 			      	</div>
 			      	<div class="input-box">
-			        	<input type="tel" name="tel" class="input"/>
-			        	<p>手机号码</p>
+			        	<input type="tel" name="tel" class="input" placeholder="手机号码"/>
 			      	</div>
 			      	<div class="register-div">
 			        	<div class="register-btn-box">

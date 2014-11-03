@@ -2,12 +2,12 @@ package com.xdarkdog.dao;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import com.xdarkdog.dbutil.DaoSupport;
 import com.xdarkdog.pojo.User;
 
-@Service
+@Repository
 public class UserDao extends DaoSupport {
 
 	// 用户注册

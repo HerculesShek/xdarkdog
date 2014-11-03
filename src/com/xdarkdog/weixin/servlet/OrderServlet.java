@@ -22,10 +22,10 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.xdarkdog.dao.OrderDao;
 import com.xdarkdog.dao.OrderDetailDao;
-import com.xdarkdog.dao.Order_InfoDao;
+import com.xdarkdog.dao.OrderInfoDao;
 import com.xdarkdog.pojo.Order;
 import com.xdarkdog.pojo.OrderDetail;
-import com.xdarkdog.web.util.Order_Info;
+import com.xdarkdog.web.util.OrderInfo;
 import com.xdarkdog.web.util.UUIDSeria;
 
 
@@ -128,10 +128,10 @@ public class OrderServlet extends HttpServlet {
 	// 根据用户名获取用户所有的订单
 	public void getOrdersByUsername(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String username = request.getParameter("username");
-		List<Order_Info> order_infos = new Order_InfoDao().getInfosByUsername(username);
+		List<OrderInfo> order_infos = new OrderInfoDao().getInfosByUsername(username);
 		
 		HashMap<String, JSONObject> infos = new LinkedHashMap<String, JSONObject>();
-		for (Order_Info i : order_infos) {
+		for (OrderInfo i : order_infos) {
 			JSONObject json_obj_detail = new JSONObject();
 			json_obj_detail.put("name", i.getName());
 			json_obj_detail.put("photos", i.getPhotos());
@@ -201,10 +201,10 @@ public class OrderServlet extends HttpServlet {
 	
 	public static void main(String[] args) {
 		long start = System.currentTimeMillis();
-		List<Order_Info> order_infos = new Order_InfoDao().getInfosByUsername("heihei");
+		List<OrderInfo> order_infos = new OrderInfoDao().getInfosByUsername("heihei");
 		System.out.println(System.currentTimeMillis()-start);
 		HashMap<String, JSONObject> infos = new LinkedHashMap<String, JSONObject>();
-		for (Order_Info i : order_infos) {
+		for (OrderInfo i : order_infos) {
 			JSONObject json_obj_detail = new JSONObject();
 			json_obj_detail.put("name", i.getName());
 			json_obj_detail.put("photos", i.getPhotos());

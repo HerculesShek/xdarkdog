@@ -19,9 +19,9 @@ public class ManagerSigninServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			System.out.println("管理员登陆 sign session id is " + session.getId());
 			session.setAttribute("user", "ok");
-			request.getRequestDispatcher("/manager/manager.jsp").forward(request, response);
+			request.getRequestDispatcher("/admin/manager.jsp").forward(request, response);
 		} else {
-			response.sendRedirect("/xdarkdog/manager_sign_in.jsp");
+			response.sendRedirect("/manager_sign_in.jsp");
 		}
 	}
 

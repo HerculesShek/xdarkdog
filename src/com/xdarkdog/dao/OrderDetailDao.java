@@ -1,10 +1,13 @@
 package com.xdarkdog.dao;
 
+import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
 import com.xdarkdog.dbutil.DaoSupport;
 import com.xdarkdog.pojo.OrderDetail;
 
-import java.util.List;
-
+@Repository
 public class OrderDetailDao extends DaoSupport {
 
     // 添加订单详情
@@ -15,9 +18,9 @@ public class OrderDetailDao extends DaoSupport {
     }
 
     // 根据订单id获取所有的订单详情
-    public List<OrderDetail> getDetailsByOrder_id(String order_id) {
+    public List<OrderDetail> getDetailsByOrder_id(String orderId) {
         String sql = "SELECT * FROM ddcommunity.tbl_order_detail where order_id=?;";
-        Object[] params = {order_id};
+        Object[] params = {orderId};
         return executeQuery(sql, OrderDetail.class, params);
     }
 

@@ -18,14 +18,14 @@ public class Order {
 	private int cancel_tag; // 是否取消 0 未取消 1 取消
 	private int status; // 订单的状态，目前先用此字段，
 						// 上面的 paid_tag delivery_tag receipt_tag cancel_tag 暂时不用
-						// status 中 1 表示未审核 是用户下单 客服还没有审核
+						// 1 表示待审核是用户下单 客服还没有审核
 						// 2 表示审核不通过 是客服电话联系用户之后没有给予通过审核
 						// 3 表示审核通过 正在配送
 						// 4 订单完成 成功送到 并且付款
 						// 5 用户手动取消了订单 不管什么时候
-	private Date audit_time;   // 订单的审核时间
-	private Date finish_time;  // 订单的完成时间 
-	
+	private Date audit_time; // 订单的审核时间
+	private Date finish_time; // 订单的完成时间
+
 	public int getOrder_type() {
 		return order_type;
 	}

@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="/WEB-INF/c.tld" %>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -27,23 +28,32 @@
 	<body>
 		<div class="container">
 		  	<div class="header" id="lunch-header"> 
-			  	<a href="javascript:void(0)" class="historyBack left linkAct">
+			  	<a href="/" class="left linkAct">
 			  		<img class="m-t-4" src="/pro/images/arrow-left.png" width="30"/>
 			  	</a>
-			    <h2>会员订餐</h2>
-			    <a href="tel:13806101602" class="right linkAct"><img  src="/pro/images/tel-white.png" width="30"/></a> 
+			    <h2>
+			    	<c:choose>
+			    		<c:when test="${community ne null}">
+			    			${community.comm_name}
+			    		</c:when>
+			    		<c:otherwise>
+							会员订餐			    		
+			    		</c:otherwise>
+			    	</c:choose>
+			   	</h2>
+			    <a href="tel:${orderPhone}" class="right linkAct"><img  src="/pro/images/tel-white.png" width="30"/></a> 
 		    </div>
 		  	<div class="menu-wrap">
 		    	<div class="menu fixed-menu-on">
 		      		<div class="ui-grid-a">
 		        		<div class="ui-block-a"> 
 		        			<a href="javascript:void(0)" id="order-b1" class="on">
-		        				<font>商务套餐</font><b id="order-tip1" style="display:none">0</b>
+		        				<font>鲜美水果</font><b id="order-tip1" style="display:none">0</b>
 		        			</a> 
 		        		</div>
 			        	<div class="ui-block-b"> 
 			        		<a href="javascript:void(0)" id="order-b2">
-			        			<font>汤品果盘</font><b id="order-tip2" style="display:none">0</b>
+			        			<font>精品果盘</font><b id="order-tip2" style="display:none">0</b>
 			        		</a> 
 			        	</div>
 	      			</div>
@@ -55,7 +65,7 @@
 		    	<div class="lunch-box" id="order-b1box">
 		      		<ul></ul>
 		    	</div>
-		    	<!-- 汤品果盘 -->
+		    	<!-- 精品果盘 -->
 		    	<div class="lunch-box" id="order-b2box" style="display:none;">
 		      		<ul></ul>
 		    	</div>
@@ -239,10 +249,10 @@
 			
 				//计算最终的数量和价格和cookie操作
 				function countPrices(){
-					var $tcToTalNum = 0;//商务套餐总数
+					var $tcToTalNum = 0;//鲜美水果总数
 					var $tpToTalNum = 0;//汤品套餐总数
 					var $jsToTalNum = 0;//酒水套餐总数
-					//商务套餐计数
+					//鲜美水果计数
 					$("#order-b1box").find(".item-text").each(function() {
 						var $tip = $("#order-tip1");
 						$tcToTalNum = parseFloat($(this).html()) + $tcToTalNum;

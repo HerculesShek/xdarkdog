@@ -27,7 +27,7 @@
 	<body>
 		<div class="container">
 	  		<div class="header"> 
-	  			<a href="javascript:void(0)" class="historyBack left linkAct">
+	  			<a href="/" class="left linkAct">
 	  				<img class="m-t-4" src="/pro/images/arrow-left.png" width="30"/>
 	  			</a>
 	    		<h2>个人中心</h2>

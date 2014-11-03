@@ -23,10 +23,9 @@ Date.prototype.Format = function(fmt)
   return fmt;   
 };
 
-
 $(document).ready(function() {
 	$(".historyBack").click(function() {
-		history.back();
+		history.back(-1);
 	});
 });
 

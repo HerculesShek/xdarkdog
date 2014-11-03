@@ -38,10 +38,10 @@
 		  	<div class="screen-shade" style="display:none;"></div>
 		  	<div class="screen-box" style="display:none;">
 				<ul>
-			    	<li><a href="/order?status=1" class="linkAct">正在进行</a></li>
-			      	<li><a href="/order?status=2" class="linkAct">订单完成</a></li>
-			      	<li><a href="/order?status=3" class="linkAct">订单失效</a></li>
-			      	<li><a href="/order?status=4" class="linkAct">等待审核</a></li>
+			      	<li><a href="/order?status=1" class="linkAct">等待审核</a></li>
+			    	<li><a href="/order?status=3" class="linkAct">正在进行</a></li>
+			      	<li><a href="/order?status=4" class="linkAct">订单完成</a></li>
+			      	<li><a href="/order?status=5" class="linkAct">订单失效</a></li>
 			    </ul>
 		  	</div>
 			<div class="content" id="order-content"> 
@@ -74,7 +74,8 @@
 			      	</div>
 			      	<div class="content">
 			        	<div class="order-item-box">
-			          		<p>订单：<span id="order-item-code"></span><font id="order-item-status"></font></p>
+			          		<p>订单：<span id="order-item-code"></span></p>
+			          		<p>状态：<span><font id="order-item-status"></font></span></p>
 			          		<p>下单时期：<span id="order-item-create-time"></span></p>
 			          		<p>配送时期：<span id="order-item-order-time"></span></p>
 			        	</div>
@@ -95,7 +96,7 @@
 		$(document).ready(function() {
 			loadOrders();
 		});
-		var status = getQueryString("status") || 1;
+		var status = getQueryString("status") || "";
 		function loadOrders(){
 			$.ajax({
 				url:"/order/list",
@@ -105,48 +106,68 @@
 					status:status
 				},
 				success:function(orders){
-					console.dir(orders);
-					if( orders.length > 0 ) {
-						for(var i=0; i<jsonData.length; i++) {
-							var createTime = new Date(jsonData[i].create_time*1000).Format("yyyy-MM-dd");
-							var order_time = new Date(jsonData[i].order_time*1000).Format("yyyy-MM-dd");
-							var is_lunch = jsonData[i].is_lunch?'午餐':'晚餐';
-							switch(parseInt(jsonData[i].status)) {
-								case 1:var status = '未付款';break;
-								case 2:if(jsonData[i].pay_type == 3){var status = '已受理';}else{var status = '已受理';}break;
-								case 3:var status = '等待配送';break;
-								case 4:var status = '配送中';break;
-								case 5:var status = '交易成功';break;
-								case 6:var status = '待审核';break;
-								case 7:var status = '订单失效';break;
+				
+					var haveOrders = false; 
+					for(var orderId in orders) {
+						if(haveOrders == false) {
+							haveOrders = true;
+						} 
+						var order = orders[orderId]; 
+						var createTime = new Date(order.create_time).Format("yyyy-MM-dd");
+						var deliveryTime = new Date(order.subscribe_delivery_time).Format("yyyy-MM-dd");
+						var status = parseInt(order.status);
+						switch(status) {
+							case 1:var statusStr = '待审核';break;
+							case 2:var statusStr = '审核不通过';break;
+							case 3:var statusStr = '正在配送';break;
+							case 4:var statusStr = '交易成功';break;
+							case 5:var statusStr = '成功送到';break;
+							case 6:var statusStr = '订单失效';break;
+						}
+						if(order.photos != ''){
+							var photo = '<img width="85" height="85" src="' + order.details[0].photos + '"/>';
+						}
+						var totalcostStr = '';
+						if(status == 4 || status == 5) {
+							totalcostStr = '<span class="m5-l">总价：<font class="red">'+ order.totalcost+'元</font></span>'; 
+						}
+						var orderName = "";
+						var orderNums = 0;
+						var details = order.details;
+						for( var i = 0, len = details.length; i < len; i ++ ) {
+							var detail = details[i];
+							if( i != 0 ) {
+								orderName += "+";
 							}
-							if(jsonData[i].photo != ''){
-								var photo = '<img width="85" height="85" src="http://www.mrhaosi.com/haosi'+jsonData[i].photo+'"/>';
-							}
-							if(jsonData[i].lunch_name.length > 10){
-								var lunch_name = jsonData[i].lunch_name.substr(0,10)+'...';	
-							}else{
-								var lunch_name = jsonData[i].lunch_name;
-							}
-							$("#order_list_item").append(
-								'<li>'+
-									'<a href="#" class="linkAct order-item-link" id="orderLink'+(parseInt(data.info)+i)+'">'+
-										'<input type="hidden" value="'+jsonData[i].code+'" id="code"/>'+
-										'<input type="hidden" value="'+createTime+'" id="create_time"/>'+
-										'<input type="hidden" value="'+order_time+'&nbsp;'+is_lunch+'" id="order_time"/>'+
-										'<input type="hidden" value="'+status+'" id="status"/>'+
-										'<div class="lunch-photo">'+photo+'</div>'+
-										'<div class="lunch-title"><h2>'+order_time+is_lunch+'</h2></div>'+
-										'<div class="lunch-info">'+
-											'<p class="lunch-info-name">'+
-											'<em class="left">'+lunch_name+'</em>'+
-											'<span class="gray6 right">'+status+'</span>'+
-											'</p><br/>'+
-											'<p><span>总量：'+jsonData[i].num+'</span><span class="m5-l">总价：<font class="red">'+jsonData[i].real_price+'</font></span></p>'+
-										'</div>'+
-									'</a>'+
-								'</li>');
-				      	} 
+							orderName += detail.name;
+							orderNums += detail.fruit_count;
+						} 
+						if(orderName.length > 30){
+							orderName = orderName.substr(0,30)+"...";
+						}
+						$("#order_list_item").append(
+							'<li>'+
+								'<a href="javascript:void(0)" orderId="' + order.order_id + '" class="linkAct order-item-link">'+
+									'<input type="hidden" name="orderId" value="' + order.order_id + '"/>' +
+									'<input type="hidden" name="statusStr" value="'+ statusStr +'"/>' + 
+									'<input type="hidden" name="status" value="' + status + '"/>' +
+									'<input type="hidden" name="createTime" value="'+ createTime +'"/>' +
+									'<input type="hidden" name="deliveryTime" value="'+ deliveryTime +'"/>'+
+									'<div class="lunch-photo">'+photo+'</div>'+
+									'<div class="lunch-info">'+
+										'<p class="lunch-info-name">'+
+										'<em class="left">' + orderName +'</em>'+
+										'<span class="gray6 right">'+statusStr+'</span>'+
+										'</p><br/>'+
+										'<p>' + 
+											'<span>总量：'+ orderNums +'</span>'+ 
+											totalcostStr + 
+										'</p>'+
+									'</div>'+
+								'</a>'+
+							'</li>');
+			      	} 
+				    if(haveOrders) {
 				      	$("#pageNo").val(parseInt($("#pageNo").val()) + 1);
 						$(".loader-box").hide();
 						$(".more").html("加载更多");
@@ -172,34 +193,55 @@
 				$(".order-dialog-box").hide();
 				$(".order-list-box").show();
 			});
+			
 			//打开订单详情
 			$(".order-item-link").live('click',function() {
-				$(".order-dialog-box").find("a.close-order-dialog").attr("href",'#'+$(this).attr("id"));
+				//$(".order-dialog-box").find("a.close-order-dialog").attr("href",'#'+$(this).attr("orderId"));
+				var orderId = $(this).attr("orderId");
 				$t = $(this);
 				$.ajax({
-					url:"/haosi/index.php/weixin/order/getOrderInfo",
-					type:'post',
-					data:{code:$(this).children('#code').val()},
-					success:function(data){
-						var data = eval("("+data+")");
-						if(data.status == 1){
-							//更改订单信息
-							$("#order-item-code").html($t.children("#code").val());
-							$("#order-item-status").html($t.children("#status").val());
-							$("#order-item-create-time").html($t.children("#create_time").val());
-							$("#order-item-order-time").html($t.children("#order_time").val());
-							var jsonData = data.data;//获取json数据
-							$("ul#order-list").empty('li');
-							for(var i=0; i<jsonData.length; i++)  
-						  	{  
-							  	var dish = jsonData[i].main_dish+","+jsonData[i].side_dish;
-							  	if(dish.length > 30){
-									dish = dish.substr(0,30)+"...";
-								}
-								$("ul#order-list").append('<li><a href="javascript:void(0)"><div class="lunch-photo"><img width="85" height="85" alt="" src="http://www.mrhaosi.com/haosi'+jsonData[i].mob_img+'"></div><div class="lunch-info" style="margin-top:-4px;"><p>'+jsonData[i].lunch_name+'</p><p class="gray6">'+dish+'</p><p><span>数量：'+jsonData[i].num+'</span><span class="m5-l">单价：<font class="red">'+jsonData[i].flexible_price+'</font></span></p></div></a></li>');
-					      	}  
-						}else{
-							alert(data.info);
+					url:"/order/detail",
+					data:{
+						orderId:orderId
+					},
+					success:function(detailInfos){
+						//更改订单信息
+						$("#order-item-code").html($t.children("input[name='orderId']").val());
+						$("#order-item-status").html($t.children("input[name='statusStr']").val());
+						$("#order-item-create-time").html($t.children("input[name='createTime']").val());
+						var status = $t.children("input[name='status']").val();
+						status = parseInt(status);
+						if(4 == status ) {
+							$("#order-item-order-time").html($t.children("input[name='deliveryTime']").val());
+						} else {
+							$("#order-item-order-time").parents("p").hide();
+						}
+						$("ul#order-list").empty('li');
+						for(var i=0, len = detailInfos.length; i < len ; i++) {  
+							var detailInfo = detailInfos[i];
+							var fruit = detailInfo.fruit;
+							var detail = detailInfo.detail;
+						  	if(fruit.remark.length > 30){
+								fruit.remark = fruit.desc.substr(0,30)+"...";
+							}
+							$("ul#order-list").append(
+								'<li>'+
+									'<a href="javascript:void(0)">'+
+										'<div class="lunch-photo">'+ 
+											'<img width="85" height="85" src="'+ fruit.photos +'">' + 
+										'</div>'+
+										'<div class="lunch-info" style="margin-top:-4px;">'+
+											'<p>'+ fruit.name +'</p>' + 
+											'<p class="gray6">'+ fruit.remark +'</p>'+
+											'<p><span>数量：'+ detail.fruit_count+'</span><span class="m5-l">单价：<font class="red">'+ fruit.display_price + '</font></span></p>'+
+										'</div>'+
+									'</a>'+
+								'</li>');
+				      	}  
+						
+						if($("#order_list_item").find("li").length < 1){
+							$(".more").hide();
+							$("#order-b1box").append('<p class="notfound-order-tips">没有找到订单~</p>');
 						}
 					},
 					error:function(){
@@ -235,18 +277,6 @@
 		   		$(".loader-box").show();
 		   		screenClose();
 		   	});
-			if ( $("#someID").length > 0 ) {
-		
-			}
-			if($("#order_list_item").find("li").length < 1){
-				$(".more").hide();
-				$("#order-b1box").append('<p class="notfound-order-tips">没有找到订单~</p>');
-			}
-			//初始化分页参数
-			var page_start = 5;
-			if(parseInt(page_start)){
-				$("#pageNo").val(page_start);
-			}
 		});
 	</script>
 </html>

@@ -2,12 +2,12 @@ package com.xdarkdog.dao;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import com.xdarkdog.dbutil.DaoSupport;
 import com.xdarkdog.pojo.Fruit;
 
-@Service
+@Repository
 public class FruitDao extends DaoSupport{
 	// 根据社区的id获取所有的水果
 	public List<Fruit> getFruitsByCommId(int comm_id){

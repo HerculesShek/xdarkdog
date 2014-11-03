@@ -1,13 +1,13 @@
 package com.xdarkdog.dao;
 
+import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
 import com.xdarkdog.dbutil.DaoSupport;
 import com.xdarkdog.pojo.Order;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
-@Service
+@Repository
 public class OrderDao extends DaoSupport {
 
 	// 生成一份订单

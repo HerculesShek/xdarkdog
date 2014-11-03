@@ -27,12 +27,12 @@
 	<body>
 		<div class="container">
 			<div class="header" id="header1" style="display:none;"> 
-				<a href="javascript:void(0)" class="historyBack left linkAct ok-icon"><font>完成</font></a>
+				<a href="/user/profile" class="left linkAct ok-icon"><font>完成</font></a>
 		    	<h2>配送地址</h2>
 		    	<a href="/shipping/create" class="right linkAct"><img src="/pro/images/plus-icon.png" width="27"/></a> 
 		    </div>
 		  	<div class="header" id="header2"> 
-		  		<a href="javascript:void(0)" class="historyBack left linkAct"><img class="m-t-4" src="/pro/images/arrow-left.png" width="30"/></a>
+		  		<a href="/user/profile" class="left linkAct"><img class="m-t-4" src="/pro/images/arrow-left.png" width="30"/></a>
 		    	<h2>配送地址</h2>
 		    	<a href="/shipping/create" class="right linkAct"><img src="/pro/images/plus-icon.png" width="27"/></a> 
 		    </div>
@@ -52,6 +52,9 @@
 					    var url = '<img src="/pro/images/success-icon.png" height="20">';
 					    if (i > 0) {
 					    	url = '';
+					    }
+					    if(0 ==i) {
+						    address.location += '&nbsp;(默认地址)'; 
 					    }
 			    		$(".content").append(
 			    			'<div class="addr-box">'+

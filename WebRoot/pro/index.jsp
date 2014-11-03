@@ -46,17 +46,17 @@
                 </div>
             </div>
             <div class="index-content">
-                <a class="linkActImg" id="lunch" href="/fruit">
-                    <img src="/pro/images/index1.jpg"/>
+                <a class="linkActImg" href="/fruit">
+                	<img src="/pro/images/fruit_order.jpg"/>
                 </a>
-                <a class="linkActImg" href="/user/profile">
-                    <img src="/pro/images/index3.jpg"/>
+                <a class="linkActImg" href="/community">
+                    <img src="/pro/images/fruit_subscribe.jpg"/>
                 </a>
-                <a class="linkActImg" id="subscribe" href="/community">
-                    <img src="/pro/images/index1.jpg"/>
+                 <a class="linkActImg" href="/user/profile">
+                    <img src="/pro/images/user_profile.jpg"/>
                 </a>
-                <a class="linkActImg" href="tel:13806101602">
-                    <img src="/pro/images/index-tel.png"/>
+                <a class="linkActImg" href="tel:${orderPhone}">
+                    <img src="/pro/images/index-tel.jpg"/>
                 </a>
             </div>
             <div class="down-box" style="display:none;">
@@ -81,8 +81,6 @@
             if (!$.cookie(GPS_LOCATION_LNG)) {
                 var date = new Date();
                 date.setTime(date.getTime() + (30 * 60 * 1000));
-                $.cookie(GPS_LOCATION_LNG, 120.2, { path: '/', expires: date });
-                $.cookie(GPS_LOCATION_LAT, 30.33, { path: '/', expires: date });
                 if (window.navigator.geolocation) {
                     var options = {
                         enableHighAccuracy: true
@@ -93,10 +91,13 @@
                 }
 
                 function handleSuccess(position) {
-                	console.dir(position);
                     // 获取到当前位置经纬度  本例中是chrome浏览器取到的是google地图中的经纬度
                     var lng = position.coords.longitude;
                     var lat = position.coords.latitude;
+                    
+                    $.cookie(GPS_LOCATION_LNG, lng, { path: '/', expires: date });
+                	$.cookie(GPS_LOCATION_LAT, lat, { path: '/', expires: date });
+                    
                     // 调用百度地图api显示
                     var ggPoint = new BMap.Point(lng, lat);
                     // 将google地图中的经纬度转化为百度地图的经纬度
@@ -105,7 +106,6 @@
                         var date = new Date();
                         date.setTime(date.getTime() + (30 * 60 * 1000));
                         $.cookie(COOKIE_GPS_NAME, point, { path: '/', expires: date });
-                        //alert(point.lng + "," + point.lat);
                     });
                 }
 

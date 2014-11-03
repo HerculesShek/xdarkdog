@@ -65,6 +65,7 @@ public class ShippingControler extends Controller {
 		shippingAddress.setPhone(phone);
 		shippingAddress.setGender(gender);
 		shippingAddress.setUsername(user.getUsername());
+		shippingAddress.setUserid(user.getId());
 		
 		int res = shippingAddressDao.addUserShippingAddress(shippingAddress);
 		if( res == 1 ) {

@@ -41,7 +41,7 @@ public class FruitServlet extends HttpServlet {
 		FormUtil fu = new FormUtil();
 		List<FileItem> items = fu.getFileList(request, "data_tmp");
 		if (items == null || items.size() == 0) // 如果表单的数据是空的，直接跳转到显示页面
-			request.getRequestDispatcher("/manager/fruits.jsp").forward(request, response);
+			request.getRequestDispatcher("/admin/fruits.jsp").forward(request, response);
 		
 		Iterator<FileItem> it = items.iterator();
 		// 首先判断是什么方法 要删除的照片 原来的照片
@@ -130,7 +130,7 @@ public class FruitServlet extends HttpServlet {
 		// 需要把社区的信息放进去，表明当前的水果管理是哪个社区的
 		request.setAttribute("comm", comm);
 		request.setAttribute("fruits", fruits);
-		request.getRequestDispatcher("/manager/fruits.jsp").forward(request, response);
+		request.getRequestDispatcher("/admin/fruits.jsp").forward(request, response);
 	}
 	
 	// 删除一个水果
@@ -169,9 +169,9 @@ public class FruitServlet extends HttpServlet {
 			Fruit f = new FruitDao().getFruitById(id);
 			if (f != null) {
 				request.setAttribute("fruit", f);
-				request.getRequestDispatcher("/manager/fruitinfo.jsp").forward(request, response);
+				request.getRequestDispatcher("/admin/fruitinfo.jsp").forward(request, response);
 			} else {
-				request.getRequestDispatcher("/manager/manager.jsp").forward(request, response);
+				request.getRequestDispatcher("/admin/manager.jsp").forward(request, response);
 			}
 		}
 	}

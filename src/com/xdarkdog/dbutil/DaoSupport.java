@@ -1,9 +1,5 @@
 package com.xdarkdog.dbutil;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -16,9 +12,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.beanutils.BeanUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class DaoSupport {
 
-	private final Logger logger = LoggerFactory.getLogger(DaoSupport.class);
+	private static final Logger logger = LoggerFactory.getLogger(DaoSupport.class);
 	// 三大核心接口
 	private static Connection conn = null;
 
@@ -42,9 +42,9 @@ public class DaoSupport {
 						Config.PASSWORD);
 			}
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 	}
 
@@ -67,14 +67,14 @@ public class DaoSupport {
 			// 6、返回结果
 			return affectedRows;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 			return -1;
 		} finally {
 			try {
 				if (pstmt != null)
 					pstmt.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}
 		}
 	}
@@ -97,7 +97,7 @@ public class DaoSupport {
 			// 6、返回结果
 			return rs;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 			return null;
 		}
 		// TODO 这里必须使用框架来解决资源没法释放的问题!!!!!
@@ -148,7 +148,7 @@ public class DaoSupport {
 				if (rs != null)
 					rs.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}
 		}
 		return null;
@@ -234,7 +234,7 @@ public class DaoSupport {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 	}
 

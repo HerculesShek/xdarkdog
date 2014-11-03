@@ -8,7 +8,7 @@ public class Fruit {
 	private double price; // 在售价格
 	private String measurement_type = "斤"; // 计量单位 是按斤卖还是按个卖 或者其他
 	private int points; // 一个单位的水果会获得多少的积分
-	private int communityid; // 这个水鬼所属的社区id
+	private int communityid; // 这个水果所属的社区id
 	private double original_price; // 进货价
 	private double display_price; // 展示价格
 	private int hot_tag; // 是否热卖 1表示热卖 0表示不热卖

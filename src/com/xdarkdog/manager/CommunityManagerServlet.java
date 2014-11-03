@@ -2,7 +2,6 @@ package com.xdarkdog.manager;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.List;
 
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItem;
 
-import com.alibaba.fastjson.JSON;
 import com.xdarkdog.dao.CommunityDao;
 import com.xdarkdog.dao.FruitDao;
 import com.xdarkdog.pojo.Community;
@@ -137,7 +135,7 @@ public class CommunityManagerServlet extends HttpServlet {
 		CommunityDao dao = new CommunityDao();
 		List<Community> comms = dao.getAllCommunitiesByKey(null);
 		req.setAttribute("comms", comms);
-		req.getRequestDispatcher("/manager/allComms.jsp").forward(req, resp);
+		req.getRequestDispatcher("/admin/allComms.jsp").forward(req, resp);
 	}
 
 	// 显示一个社区的信息
@@ -150,7 +148,7 @@ public class CommunityManagerServlet extends HttpServlet {
 			req.getRequestDispatcher("/servlet/comm.do?method=show").forward(req, resp);
 		} else {
 			req.setAttribute("comm", comm);
-			req.getRequestDispatcher("/manager/comminfo.jsp").forward(req, resp);
+			req.getRequestDispatcher("/admin/comminfo.jsp").forward(req, resp);
 		}
 	}
 
@@ -220,7 +218,7 @@ public class CommunityManagerServlet extends HttpServlet {
 		int totalPages = pb.getTotalRows()%pagesize==0?pb.getTotalRows()/pagesize:pb.getTotalRows()/pagesize+1;
 		pb.setTotalPages(totalPages);
 		req.setAttribute("pb", pb);
-		req.getRequestDispatcher("/manager/showCommsByPage.jsp").forward(req, resp);
+		req.getRequestDispatcher("/admin/showCommsByPage.jsp").forward(req, resp);
 	}
 	
 }

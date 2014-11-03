@@ -2,23 +2,36 @@ package com.xdarkdog.web.controller.front;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.spring.Inject;
 import com.jfinal.plugin.spring.IocInterceptor;
 import com.xdarkdog.config.Constants;
+import com.xdarkdog.dao.FruitDao;
 import com.xdarkdog.dao.OrderDao;
 import com.xdarkdog.dao.OrderDetailDao;
-import com.xdarkdog.dao.Order_InfoDao;
+import com.xdarkdog.dao.OrderInfoDao;
+import com.xdarkdog.pojo.Fruit;
 import com.xdarkdog.pojo.Order;
 import com.xdarkdog.pojo.OrderDetail;
 import com.xdarkdog.pojo.User;
 import com.xdarkdog.web.controller.interceptor.Sessionful;
+import com.xdarkdog.web.util.OrderDetailInfo;
+import com.xdarkdog.web.util.OrderInfo;
 import com.xdarkdog.web.util.UUIDSeria;
 
 @Sessionful
@@ -30,7 +43,11 @@ public class OrderController extends Controller {
 	@Inject.BY_TYPE
 	private OrderDao orderDao;
 	@Inject.BY_TYPE
-	private Order_InfoDao orderInfoDao;
+	private OrderInfoDao orderInfoDao;
+	@Inject.BY_TYPE
+	private OrderDetailDao orderDetailDao;
+	@Inject.BY_TYPE
+	private FruitDao fruitDao;
 
 	public void index() {
 		renderJsp("/pro/person/order/index.jsp");
@@ -48,11 +65,57 @@ public class OrderController extends Controller {
 		
 		User user = getSessionAttr(Constants.SESSION_USER);
 		
-		Integer status = getParaToInt("status", 1);
+		Integer status = null;
+		if(StringUtils.isNotEmpty(getPara("status"))) {
+			status = getParaToInt("status", 1);
+		}
 		Integer pageNo = getParaToInt("pageNo", 1);
 		Integer pageSize = getParaToInt("pageSize", 5);
 		
-		renderJson(orderInfoDao.getByPaging(user.getUsername(), pageNo, pageSize, status));
+		List<OrderInfo> order_infos = orderInfoDao.getByPaging(user.getUsername(), pageNo, pageSize, status);
+		
+		HashMap<String, JSONObject> infos = new LinkedHashMap<String, JSONObject>();
+		for (OrderInfo i : order_infos) {
+			JSONObject json_obj_detail = new JSONObject();
+			json_obj_detail.put("name", i.getName());
+			json_obj_detail.put("photos", i.getPhotos());
+			json_obj_detail.put("fruit_count", i.getFruit_count());
+			if (infos.containsKey(i.getOrder_id())) { // 已有 增加订单详情
+				infos.get(i.getOrder_id()).getJSONArray("details").add(json_obj_detail);
+			} else { // 还没有这个订单
+				JSONObject json_obj = JSON.parseObject(JSON.toJSONString(i));
+				json_obj.remove("name");
+				json_obj.remove("photos");
+				json_obj.remove("fruit_count");
+				JSONArray arr = new JSONArray();
+				arr.add(json_obj_detail);
+				json_obj.put("details", arr);
+				infos.put(i.getOrder_id(), json_obj);
+			}
+		};
+		
+		renderJson(infos);
+	}
+	
+	public void detail() {
+		String orderId = getPara("orderId");
+		
+		List<OrderDetailInfo> detailInfos = new ArrayList<OrderDetailInfo>(); 
+		List<OrderDetail> orderDetails = orderDetailDao.getDetailsByOrder_id(orderId);
+		if(CollectionUtils.isNotEmpty(orderDetails)) {
+			for( OrderDetail detail :orderDetails ) {
+				
+				OrderDetailInfo detailInfo = new OrderDetailInfo();
+				Integer fruidId = detail.getFruit_id();
+				
+				Fruit fruit = fruitDao.getFruitById(fruidId);
+				detailInfo.setFruit(fruit);
+				detailInfo.setDetail(detail);
+				
+				detailInfos.add(detailInfo);
+			}
+		}
+		renderJson(detailInfos);
 	}
 
 	public void create() {
