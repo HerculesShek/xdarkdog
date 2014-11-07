@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -23,10 +24,14 @@ import com.alibaba.fastjson.JSONObject;
 import com.xdarkdog.dao.OrderDao;
 import com.xdarkdog.dao.OrderDetailDao;
 import com.xdarkdog.dao.OrderInfoDao;
+import com.xdarkdog.dao.OrderInformationDao;
 import com.xdarkdog.pojo.Order;
 import com.xdarkdog.pojo.OrderDetail;
 import com.xdarkdog.web.util.OrderInfo;
+import com.xdarkdog.web.util.OrderInformation;
 import com.xdarkdog.web.util.UUIDSeria;
+import com.xdarkdog.web.util.data.OrderData;
+import com.xdarkdog.web.util.data.OrderDataUtil;
 
 
 // "/servlet/order.do"
@@ -40,7 +45,7 @@ public class OrderServlet extends HttpServlet {
 			generateOrder(request, response);
 		} else if ("getOrdersByUsername".equalsIgnoreCase(method)) {
 			getOrdersByUsername(request, response);
-		} else if ("getUnauditedOrder".equalsIgnoreCase(method)) {
+		} else if ("getUnauditedOrder".equalsIgnoreCase(method)) { // 查看所有的未审核订单
 			getUnauditedOrder(request, response);
 		} else if ("cancelOrder".equalsIgnoreCase(method)) {
 			cancelOrder(request, response);
@@ -50,6 +55,10 @@ public class OrderServlet extends HttpServlet {
 			auditOrder(request, response);
 		} else if ("finishOrder".equalsIgnoreCase(method)) {
 			finishOrder(request, response);
+		} else if ("getSubscribeOrders".equalsIgnoreCase(method)) { // 预约订单
+			getSubscribeOrders(request, response);
+		} else if ("getOrderDataByOrderId".equalsIgnoreCase(method)) { // 预约订单
+			getOrderDataByOrderId(request, response);
 		}
 	}
 
@@ -104,6 +113,7 @@ public class OrderServlet extends HttpServlet {
 		// 把订单的详细信息存入数据库 
 		String[] idarr = ids.split(",");
 		String[] countarr = counts.split(",");
+		String[] levelarr = levels.split(",");
 		OrderDetailDao detailDao = new OrderDetailDao();
 		for (int idx = 0; idx < idarr.length; idx++) {
 			int id = Integer.parseInt(idarr[idx]);
@@ -112,6 +122,7 @@ public class OrderServlet extends HttpServlet {
 			detail.setOrder_id(order_id);
 			detail.setFruit_id(id);
 			detail.setFruit_count(count);
+			//detail.setLevel(level);
 			affectaRows = detailDao.addOrderDatail(detail);
 			if (affectaRows != 1) {
 				out.println("{\"success\":\"0\"}");
@@ -159,12 +170,27 @@ public class OrderServlet extends HttpServlet {
 	
 	// TODO 获取所有的未审核的订单
 	public void getUnauditedOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		List<OrderInformation> infos = new OrderInformationDao().getUnauditedOrderInfos();
+		List<OrderData> datas = OrderDataUtil.parseOrderInformationToOrderData(infos);
+		request.setAttribute("datas", datas);
+		request.getRequestDispatcher("/customer_service/unaudited_orders.jsp").forward(request, response);
 	}
 		
 	// TODO 取消订单
 	public void cancelOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+	}
+	// TODO 根据订单号取得订单的详细信息
+	public void getOrderDataByOrderId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String orderid = request.getParameter("orderid");
+		OrderInformation info = new OrderInformationDao().getOrderInfoByOrderid(orderid);
+		List<OrderInformation> infos = new ArrayList<OrderInformation>();
+		infos.add(info);
+		List<OrderData> datas = OrderDataUtil.parseOrderInformationToOrderData(infos);
+		if(datas != null && datas.size()>0){
+			request.setAttribute("info", datas.get(0));
+		}
+		request.getRequestDispatcher("/customer_service/order_info.jsp").forward(request, response);
 	}
 	
 	// TODO 获取所有的在配送的订单
@@ -172,9 +198,29 @@ public class OrderServlet extends HttpServlet {
 		
 	}
 
-	// TODO 审核订单
+	//  审核订单 
 	public void auditOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String res = request.getParameter("res");
+		String orderid = request.getParameter("orderid");
+		OrderDao odao = new OrderDao();
+		int affectRows = 0;
+		if ("1".equalsIgnoreCase(res)) { // 通过审核
+			affectRows = odao.auditOrder(orderid, 3);
+		} else if ("0".equalsIgnoreCase(res)) { // 未通过审核
+			affectRows = odao.auditOrder(orderid, 2);
+		}
 		
+		if(affectRows == 0){
+			request.setAttribute("operation_res", "fail");
+		} else if(affectRows == 1){
+			request.setAttribute("operation_res", "ok");
+		}
+		request.getRequestDispatcher("/customer_service/operation_res.jsp").forward(request, response);
+	}
+	
+	// TODO 查看预约订单
+	public void getSubscribeOrders(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 	}
 	
 	// 订单成功完成

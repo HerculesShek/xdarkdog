@@ -1,5 +1,6 @@
 package com.xdarkdog.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -57,7 +58,9 @@ public class OrderDao extends DaoSupport {
 
 	// 客服 审核订单
 	public int auditOrder(String order_id, int status) {
-		return dealOrder(order_id, status);
+		String sql = "update ddcommunity.tbl_order set status=?, audit_time=? where order_id=?";
+		Object[] params = { status, new Date(System.currentTimeMillis()), order_id };
+		return execOther(sql, params);
 	}
 
 	// 使订单完成 并且填写交易金额
@@ -69,7 +72,7 @@ public class OrderDao extends DaoSupport {
 
 	// 私有方法 处理订单 将订单置为某个状态
 	private int dealOrder(String order_id, int status) {
-		String sql = "update ddcommunity.tbl_order set status=? where order_id = ?";
+		String sql = "update ddcommunity.tbl_order set status=? where order_id=?";
 		Object[] params = { status, order_id };
 		return execOther(sql, params);
 	}
@@ -91,5 +94,11 @@ public class OrderDao extends DaoSupport {
 			return executeQuery(sql, Order.class, new Object[]{userName,status, offset, rows});
 		}
 	}
+	
+	public static void main(String[] args) {
+		OrderDao dao = new OrderDao();
+		System.out.println(dao.auditOrder("xingzhef44a6a1bd93e417384be9391562eb8a6", 2));
+	}
+	
 
 }

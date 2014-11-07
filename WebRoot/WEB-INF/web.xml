@@ -82,6 +82,11 @@
 		<servlet-name>OrderServlet</servlet-name>
 		<servlet-class>com.xdarkdog.weixin.servlet.OrderServlet</servlet-class>
 	</servlet>
+  <servlet>
+    <servlet-name>CSSigninServlet</servlet-name>
+    <servlet-class>com.xdarkdog.manager.customer.service.CSSigninServlet</servlet-class>
+  </servlet>
+
 	<servlet-mapping>
 		<servlet-name>WeixinServlet</servlet-name>
 		<url-pattern>/weixin.do</url-pattern>
@@ -118,6 +123,10 @@
 		<servlet-name>OrderServlet</servlet-name>
 		<url-pattern>/servlet/order.do</url-pattern>
 	</servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>CSSigninServlet</servlet-name>
+    <url-pattern>/servlet/cssign.do</url-pattern>
+  </servlet-mapping>
 
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>

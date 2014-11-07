@@ -116,7 +116,7 @@
 			    			${community.comm_name}
 			    		</c:when>
 			    		<c:otherwise>
-							会员订餐			    		
+							点水果			    		
 			    		</c:otherwise>
 			    	</c:choose>
 			   	</h2>

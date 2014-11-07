@@ -44,8 +44,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		<td>社区名字</td>
   		<td>店主名字</td>
   		<td>店主电话</td>
-  		<td>地址</td>
-  		<td>纬度</td>
+  		<td>水果店名字</td>
+  		<td>社区名字</td>
   		<td>经度</td>
   		<td>图片</td>
   		<td align="center">管理</td>
