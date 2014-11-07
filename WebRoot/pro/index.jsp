@@ -9,7 +9,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta name="keywords" content="嘿狗社区"/>
-        <meta name="description" content="嘿狗社区。"/>
+        <meta name="description" content="嘿狗社区服务平台"/>
         <title>嘿狗社区服务平台</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0">
         <link type="text/css" rel="stylesheet" href="/pro/css/common.css"/>
@@ -31,7 +31,7 @@
             <div class="header">
                 <div class="logo">
                     <img width="35" src="/pro/images/logo.png"/>
-                    <h1>嘿狗社区</h1>
+                    <h1 style="font-family:Arial,Verdana,Sans-serif">嘿狗社区</h1>
                 </div>
                 <div class="header-login">
                 	<c:choose>

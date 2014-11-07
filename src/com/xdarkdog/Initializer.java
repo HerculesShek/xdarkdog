@@ -22,7 +22,7 @@ public class Initializer extends HttpServlet {
 		ServletContext context = config.getServletContext();
 
 		// 设置全局配置
-		context.setAttribute(Constants.ORDER_PHONE, "0571 28975698");
+		context.setAttribute(Constants.ORDER_PHONE, "057128975698");
 	}
 
 }

@@ -29,7 +29,7 @@
 		<div class="container">
 			<div class="header" id="header2">
 				<a href="/" class="left linkAct"><img class="m-t-4" src="/pro/images/arrow-left.png" width="30"/></a>
-		    	<h2>社区列表</h2>
+		    	<h2>附近的社区</h2>
 		    </div>
 		  	<div class="content"></div>
 		</div>

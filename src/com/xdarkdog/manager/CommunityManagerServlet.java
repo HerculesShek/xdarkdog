@@ -79,8 +79,9 @@ public class CommunityManagerServlet extends HttpServlet {
 		if (method.equalsIgnoreCase("addComm")) {
 			Community comm = (Community)fu.getInstanceByAdvanceForm(req, items, Community.class, "img/community");
 			new CommunityDao().addCommunity(comm);
-			showComms(req, resp);           
+			showComms(req, resp);
 		} else if (method.equalsIgnoreCase("modifyComm")) { // 修改一个社区的信息，有可能会有要删除的照片的信息
+			// 这里仅仅是打印一下而已
 			if (photostodelete.length() > 0) { // 要删除一些照片
 				// "http://localhost:8080/xdarkdog/img/1413805214235Koala.jpg,"
 				System.out.println("要删除的照片是：" + photostodelete);
@@ -95,8 +96,12 @@ public class CommunityManagerServlet extends HttpServlet {
 			if (photostodelete.length() > 0) {
 				String p2delete[] = photostodelete.split(",");
 				for (String p : p2delete) {
-					String p_postfix = p.substring(p.indexOf("xdarkdog") + "xdarkdog".length() + 1, p.length());
-					String fileRpath = req.getSession().getServletContext().getRealPath("/")+p_postfix.replace('/', File.separatorChar);
+					//String p_postfix = p.substring(p.indexOf("xdarkdog") + "xdarkdog".length() + 1, p.length());
+					//String fileRpath = req.getSession().getServletContext().getRealPath("/")+p_postfix.replace('/', File.separatorChar);
+					
+					String p_postfix = p.substring(p.indexOf("img") + "img".length() + 1, p.length());
+					String fileRpath = req.getSession().getServletContext().getRealPath("/")+"img"+File.separatorChar+p_postfix.replace('/', File.separatorChar);
+					System.out.println("要删除的图片的物理路径是："+fileRpath);
 					File f = new File(fileRpath);
 					if (f.exists()) {
 						f.delete();
