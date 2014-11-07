@@ -1,7 +1,7 @@
 @charset "utf-8";
 /* CSS Document */
 body {
-	font: 100%/1.5 "Helvetica Neue", "Microsoft Yahei", sans-serif;
+	font: 100%/1.0 "Helvetica Neue", "Microsoft Yahei", sans-serif;
 	min-height: 100%;
 	width: 100%;
 }
@@ -15,6 +15,7 @@ table {
 }
 fieldset, img {
 	border: 0;
+	padding: 0;
 }
 address, caption, cite, code, dfn, em, strong, th, var, i {
 	font-style: normal;
@@ -73,7 +74,7 @@ input, textarea, select {
 	color: #0f74a8;
 }
 .org, .org a, .org a:hover, .a.org, a:hover.org {
-	color: #ff7700;
+	color: #f39c33;
 }
 .dark_grey, .dark_grey a, .dark_grey a:hover, .a.dark_grey, a:hover.dark_grey {
 	color: #3b3b3b;
@@ -121,7 +122,7 @@ a:hover {
 .input-box-on {
 	width: 100%;
 	height: 2.4em;
-	border: 1px solid #ff7700;
+	border: 1px solid #f39c33;
 	border-radius: 0.2em;
 	overflow: hidden;
 	position: relative;
@@ -158,7 +159,7 @@ a:hover {
 	-webkit-appearance: none;
 }
 .btn-org {
-	background: #ff7700;
+	background: #f39c33;
 	color: #fff;
 	font-size: 1em;
 }
@@ -179,7 +180,7 @@ a:hover {
 }
 .btn-org:active {
 	background: rgba(255,119,0,0.7) none repeat scroll !important;
-	background: #ff7700;
+	background: #f39c33;
 	filter: Alpha(opacity=70);
 }
 /* content configurations. */
@@ -233,7 +234,7 @@ margin-left:.3125em;
 	height: 46px;
 	line-height: 46px;
 	width: 100%;
-	background: #ff7700;
+	background: #f39c33;
 	position: relative;
 }
 .header a {

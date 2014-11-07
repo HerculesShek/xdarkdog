@@ -47,18 +47,22 @@
             </div>
             <div class="index-content">
                 <a class="linkActImg" href="/fruit">
-                	<img src="/pro/images/fruit_order.jpg"/>
+                	<img src="/pro/images/fruit_order.png"/>
                 </a>
                 <a class="linkActImg" href="/community">
-                    <img src="/pro/images/fruit_subscribe.jpg"/>
+                    <img src="/pro/images/fruit_subscribe.png"/>
                 </a>
                  <a class="linkActImg" href="/user/profile">
-                    <img src="/pro/images/user_profile.jpg"/>
+                    <img src="/pro/images/user_profile.png"/>
                 </a>
                 <a class="linkActImg" href="tel:${orderPhone}">
-                    <img src="/pro/images/index-tel.jpg"/>
+                    <img src="/pro/images/index-tel.png"/>
+                </a>
+                <a class="linkActImg" href="tel:${orderPhone}">
+                    <img src="/pro/images/fruit_passageway.png"/>
                 </a>
             </div>
+            <!-- 
             <div class="down-box" style="display:none;">
                 <div class="ui-grid-a">
                     <div class="ui-block-a">
@@ -71,6 +75,7 @@
                     </div>
                 </div>
             </div>
+             -->
         </div>
     </body>
     <script type="text/javascript">
@@ -110,19 +115,18 @@
                 }
 
                 function handleError(error) {
-                	console.dir(error);
                     switch (error.code) {
                         case error.PERMISSION_DENIED:
-                            alert("User denied the request for Geolocation.");
+                            //alert("User denied the request for Geolocation.");
                             break;
                         case error.POSITION_UNAVAILABLE:
-                            alert("Location information is unavailable.");
+                            //alert("Location information is unavailable.");
                             break;
                         case error.TIMEOUT:
-                            alert("The request to get user location timed out.");
+                            //alert("The request to get user location timed out.");
                             break;
                         case error.UNKNOWN_ERROR:
-                            alert("An unknown error occurred.");
+                            //alert("An unknown error occurred.");
                             break;
                     }
                 }

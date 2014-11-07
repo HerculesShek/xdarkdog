@@ -8,16 +8,16 @@ body{ background:#fff;}
 .menu .ui-grid-b div{ margin-left:1px; margin-right:-1px;}
 .menu .ui-grid-b a{ width:100%; text-align:center; height:2.2em; border-left:1px solid #ddd; border-bottom:1px solid #ddd; float:left; position:relative;}
 .menu .ui-grid-b a font{ line-height:2.2em;}
-.menu .ui-grid-b a b{ position:absolute; right:0.2em; top:0.1em; font-size:12px; height:1.3em; line-height:1.3em; padding:0 0.4em; background:#ff7700; color:#fff; float:left; border-radius:8px; font-weight:normal;}
-.menu .ui-grid-b a.on{ color:#ff7700; border-bottom:0px;}
+.menu .ui-grid-b a b{ position:absolute; right:0.2em; top:0.1em; font-size:12px; height:1.3em; line-height:1.3em; padding:0 0.4em; background:#f39c33; color:#fff; float:left; border-radius:8px; font-weight:normal;}
+.menu .ui-grid-b a.on{ color:#f39c33; border-bottom:0px;}
 .lunch-banner-box{ margin-top:52px; text-align:center;}
 .lunch-banner-box img{height:auto; width：auto\9; max-width:100%;}
 
 
 .menu .ui-grid-a a{ width:100%; text-align:center; height:2.2em; border-left:1px solid #ddd; border-bottom:1px solid #ddd; float:left; position:relative;}
 .menu .ui-grid-a a font{ line-height:2.2em;}
-.menu .ui-grid-a a b{ position:absolute; right:0.2em; top:0.1em; font-size:12px; height:1.3em; line-height:1.3em; padding:0 0.4em; background:#ff7700; color:#fff; float:left; border-radius:8px; font-weight:normal;}
-.menu .ui-grid-a a.on{ color:#ff7700; border-bottom:0px;}
+.menu .ui-grid-a a b{ position:absolute; right:0.2em; top:0.1em; font-size:12px; height:1.3em; line-height:1.3em; padding:0 0.4em; background:#f39c33; color:#fff; float:left; border-radius:8px; font-weight:normal;}
+.menu .ui-grid-a a.on{ color:#f39c33; border-bottom:0px;}
 
 .lunch-photo{ float:left; margin-right:0.4em;}
 .lunch-font12{ font-size:12px;}

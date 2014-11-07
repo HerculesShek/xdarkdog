@@ -129,8 +129,7 @@ public class OrderController extends Controller {
 		int shipid = Integer.parseInt(addr_id);
 		String ids = getPara("ids"); // 所有的水果id， 逗号隔开
 		String counts = getPara("counts"); // 水果对应的数量，逗号隔开
-		// TODO 后期加入水果的等级
-		// String levels = getPara("levels"); // 水果对应的大小等级，逗号隔开
+		String levels = getPara("levels"); // 水果对应的大小等级，逗号隔开
 		String order_time = getPara("order_time"); // 预约配送时间
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		Date create_time = new Date(System.currentTimeMillis());
@@ -163,13 +162,16 @@ public class OrderController extends Controller {
 		// 把订单的详细信息存入数据库
 		String[] idarr = ids.split(",");
 		String[] countarr = counts.split(",");
+		String[] levelsarr = levels.split(",");
 		OrderDetailDao detailDao = new OrderDetailDao();
 		for (int idx = 0; idx < idarr.length; idx++) {
 			int id = Integer.parseInt(idarr[idx]);
 			double count = Double.parseDouble(countarr[idx]);
+			int level = Integer.parseInt(levelsarr[idx]);
 			OrderDetail detail = new OrderDetail();
 			detail.setOrder_id(order_id);
 			detail.setFruit_id(id);
+			detail.setLevel(level);
 			detail.setFruit_count(count);
 			affectaRows = detailDao.addOrderDatail(detail);
 			if (affectaRows != 1) {

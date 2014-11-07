@@ -125,7 +125,7 @@
 							case 6:var statusStr = '订单失效';break;
 						}
 						if(order.photos != ''){
-							var photo = '<img width="85" height="85" src="' + order.details[0].photos + '"/>';
+							var photo = '<img width="85" height="85" src="' + order.details[0].photos.split(",")[0] + '"/>';
 						}
 						var totalcostStr = '';
 						if(status == 4 || status == 5) {
@@ -206,7 +206,9 @@
 					},
 					success:function(detailInfos){
 						//更改订单信息
-						$("#order-item-code").html($t.children("input[name='orderId']").val());
+						var orderId = $t.children("input[name='orderId']").val();
+						orderId = "***" + orderId.substr(orderId.length - 10);
+						$("#order-item-code").html(orderId);
 						$("#order-item-status").html($t.children("input[name='statusStr']").val());
 						$("#order-item-create-time").html($t.children("input[name='createTime']").val());
 						var status = $t.children("input[name='status']").val();
@@ -233,7 +235,7 @@
 										'<div class="lunch-info" style="margin-top:-4px;">'+
 											'<p>'+ fruit.name +'</p>' + 
 											'<p class="gray6">'+ fruit.remark +'</p>'+
-											'<p><span>数量：'+ detail.fruit_count+'</span><span class="m5-l">单价：<font class="red">'+ fruit.display_price + '</font></span></p>'+
+											'<p><span>数量：'+ detail.fruit_count+'</span><span class="m5-l">单价：<font class="red">'+ fruit.display_price + '(' + fruit.measurement_type +')</font></span></p>'+
 										'</div>'+
 									'</a>'+
 								'</li>');

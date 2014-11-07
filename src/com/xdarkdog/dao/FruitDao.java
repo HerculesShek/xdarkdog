@@ -17,11 +17,19 @@ public class FruitDao extends DaoSupport{
 		return fruits;
 	}
 	
+	public List<Fruit> getAllFruits() {
+		String sql = "SELECT * FROM ddcommunity.tbl_fruit";
+		Object[] params = {};
+		List<Fruit> fruits = executeQuery(sql, Fruit.class, params);
+		return fruits;
+	}
+	
 	public int addFruit(Fruit f) {
 		String sql = "INSERT INTO `ddcommunity`.`tbl_fruit` "
 				+ "(`name`, "
 				+ "`price`, "
 				+ "`points`, "
+				+ "`measurement_type`, "
 				+ "`communityid`, "
 				+ "`original_price`, "
 				+ "`display_price`, "
@@ -29,10 +37,11 @@ public class FruitDao extends DaoSupport{
 				+ "`commend_tag`, "
 				+ "`remark`, "
 				+ "`introduce`, "
-				+ "`photos`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+				+ "`photos`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 		Object[] params = {f.getName(),
 				f.getPrice(),
 				f.getPoints(),
+				f.getMeasurement_type(),
 				f.getCommunityid(),
 				f.getOriginal_price(),
 				f.getDisplay_price(),

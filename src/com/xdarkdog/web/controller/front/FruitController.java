@@ -43,9 +43,10 @@ public class FruitController extends Controller {
 		List<Fruit> fruits = new ArrayList<Fruit>();
 		if (StringUtils.isNotEmpty(commId)) {
 			fruits = getFruitsOfCommunity(Integer.valueOf(commId));
-			
 		} else if (StringUtils.isNotEmpty(locLon) && StringUtils.isNotEmpty(locLat)) {
 			fruits = getFruitsByGPS(Double.valueOf(locLon), Double.valueOf(locLat));
+		} else {
+			fruits = fruitDao.getAllFruits();
 		}
 		renderJson(fruits);
 	}

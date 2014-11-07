@@ -48,9 +48,9 @@ body{ background:#f7f7f7;}
 .favorable-50{ width:50%; float:left;}
 .favorable-100{ width:100%; float:left;}
 .order-pay-time-select-left,.order-pay-time-select-right{ padding:0.5em 0.5em 0.5em 0; font-size:0.9em;}
-.order-pay-time-select-left{ width:35%; border-right:1px solid #cccccc; float:left;}
-.order-pay-time-select-left select,.order-pay-time-select-right select{ width:100%; border:0; background:url(../images/triangle.png) no-repeat right; border-radius:0; padding-right:1.4em;}
-.order-pay-time-select-right select.order-pay-select-off{background:url(../images/triangle-gray.png) no-repeat right;}
+.order-pay-time-select-left{ width:30%; border-right:1px solid #cccccc; float:left;}
+.order-pay-time-select-left select,.order-pay-time-select-right select{ width:100%; border:0; background:url(/pro/images/triangle.png) no-repeat right; border-radius:0; padding-right:1.4em;}
+.order-pay-time-select-right select.order-pay-select-off{background:url(/pro/images/triangle-gray.png) no-repeat right;}
 .order-pay-time-select-right{ float:left; width:30%; }
 .order-pay-time-default{ padding-left:0.8em;}
 
@@ -78,7 +78,7 @@ body{ background:#f7f7f7;}
 .payment-choose{ float:right; padding-right:0.8em; position:relative;}
 .payment-choose .cashier-radio{ margin-top:1em; position:absolute; right:0.8em; z-index:1; width:12px; height:12px; display:none;}
 .payment-choose b{ width:14px; height:14px; float:left; border-radius:50%; background:#cccccc; margin-top:1em; position:absolute; right:0.8em; z-index:2;}
-.payment-choose b.on{ background:#ff7700;}
+.payment-choose b.on{ background:#f39c33;}
 .payment-btn-box{ padding:0 0.8em}
 .payment-btn{ margin:0.8em 0;}
 .face-price-font{ font-size:0.8em;}
@@ -92,10 +92,10 @@ body{ background:#f7f7f7;}
 .account-pay-password-box{ width:100%; padding:0.8em 0; font-size:0.9em; color:#888;}
 .account-pay-password-box span{ padding-left:0.8em;}
 .pay-pwd-input{ border:1px solid #cccccc; -webkit-appearance:none; padding:0.2em 0.3em; border-radius:0.2em; width:10em;}
-.pay-pwd-input:focus{ border:1px solid #ff7700;}
+.pay-pwd-input:focus{ border:1px solid #f39c33;}
 
 .addAddrBox{ top:0; width:100%; height:100%; position:absolute; z-index:99;}
-.orderpay-success-tips{ margin:0 0.5em; border-bottom:1px solid #ff7700; text-align:center; height:40px; line-height:40px; color:#888; font-size:1.2em; padding:1em 0;}
+.orderpay-success-tips{ margin:0 0.5em; border-bottom:1px solid #f39c33; text-align:center; height:40px; line-height:40px; color:#888; font-size:1.2em; padding:1em 0;}
 .orderpay-success-tips img{ padding-right:0.5em;}
 .orderpay-success-info{ padding:0 2em;}
 .orderpay-success-info p{ color:#888; border-bottom:1px solid #cccccc; padding:0.5em 0; text-align:center;}

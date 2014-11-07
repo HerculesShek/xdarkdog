@@ -59,28 +59,38 @@
 			<div class="order-pay-box-display">
 			    <div class="manage-title"><h2>选择送餐时间</h2></div>
 			    <div class="order-pay-time-wrap">
-			    	<div class="order-pay-time">
+			    	<div class="order-pay-time" style="border-bottom: none;">
 			    		<div class="order-time-box">
-			    			<div class="order-pay-time-select-left">
-								<select class="order-pay-select select" id="order-pay-day" name="order_time">
-							   		<option value="0">今天</option>
-							   		<option value="1">明天</option>
-							   		<option value="2">后天</option>
+			    			<div class="order-pay-time-select-left" style="width:50%;">
+								<select id="order-pay-day" class="order-pay-select select"  name="order_time">
 							   	</select>
 					   	  	</div>
-					   	  	<div class="order-pay-time-select-right">
+					   	  	<div class="order-pay-time-select-left" style="width:20%;">
 						   	  	<select class="order-pay-select select" id="order-pay-hour">
-						   	  		
+						   	  		<option value="08">08点</option>
+							   		<option value="09">09点</option>
+							   		<option value="10">10点</option>
+							   		<option value="11">11点</option>
+							   		<option value="12">12点</option>
+							   		<option value="13">13点</option>
+							   		<option value="14">14点</option>
+							   		<option value="15">15点</option>
+							   		<option value="16">16点</option>
+							   		<option value="17">17点</option>
+							   		<option value="18">18点</option>
+							   		<option value="19">19点</option>
+							   		<option value="20">20点</option>
+							   		<option value="21">21点</option>
 							   	</select>
 						   	</div>
-						   	<div class="order-pay-time-select-right">
+						   	<div class="order-pay-time-select-right" style="width:20%;">
 						   	  	<select class="order-pay-select select" id="order-pay-min">
-							   		<option value="00">00</option>
-							   		<option value="10">10</option>
-							   		<option value="20">20</option>
-							   		<option value="30">30</option>
-							   		<option value="40">40</option>
-							   		<option value="50">50</option>
+							   		<option value="00">00分</option>
+							   		<option value="10">10分</option>
+							   		<option value="20">20分</option>
+							   		<option value="30">30分</option>
+							   		<option value="40">40分</option>
+							   		<option value="50">50分</option>
 							   	</select>
 						   	</div>
 			    		</div>
@@ -116,12 +126,15 @@
 			                </div>
 				        </li>		    
 		     		</ul>
-				    <strong class="order-pay-tips red">注：请确认您的订单信息。</strong>
+		     		<div style="display:inline-block;margin:10px;">
+				    	<strong class="order-pay-tips red">注：请确认您的订单信息。</strong>
+				    </div>
 				</div>
 			</div>
 			<div class="clr"></div>
 			<input type="hidden" class="order-pay-order-id" id="order_id" value="" />
 			<input type="hidden" class="order-pay-order-count" id="order_count" value="" />
+			<input type="hidden" class="order-pay-order-level" id="order_level" value="" />
 			<input type="hidden" id="order-pay-yhInput" value="0" />
 		    <div class="order-count-box">
 				<div class="order-count-text left">实付款:<span class="org">￥<font class="toTalPrice">0.00</font></span></div>
@@ -173,6 +186,7 @@
 				var $param = eval($.cookie(COOKIE_NAME));
 					$($param).each(
 						function() {
+							var photo = this.photos.split(",")[0];
 							$(".lunch-box.order-pay-lunch-box ul").append(
 								'<li>' + 
 									'<div class="lunch-photo">' + 
@@ -194,19 +208,35 @@
 												'</b>' +
 											'<div class="item-btn-box" style="display:none;">' + 
 												'<font class="item-text">'+this.count+'</font>' + 
-												'<input type="hidden" class="order-pay-type" />' +
+												'<input type="hidden" class="order-pay-type" value="'+ this.id +'"/>' +
 												'<b class="item-btn item-minus"><img height="28" src="/pro/images/minus.png"/></b>' + 
 											'</div>' + 
 										'</div>' + 
-									'</div>' + 
+									'</div>' +
+									'<div class="lunch-info">' +
+            	                   		'<div class="ui-grid-a">'+
+            	                   			'<div class="ui-block-b" style="float:right;">'+
+            	                   				'<select name="level" style="float:right;">'+
+            	                   					'<option value="1" '+ (this.level == 1 ? 'selected' : '') +'>小个</option>' +
+            	                   					'<option value="2" '+ (this.level == 2 ? 'selected' : '') +'>中个</option>' +
+            	                   					'<option value="3" '+ (this.level == 3 ? 'selected' : '') +'>大个</option>' +
+            	                   				'</select>' +
+            	                   			'</div>' + 
+            	                   		'</div>' +
+            	                   	'</div>' + 
 								'</div>' + 
 							'</li>');
 							var ids = ($("#order_id").val() && $("#order_id").val().split(",")) || [];
 							ids.push(this.id);
 							$("#order_id").val(ids.join(","));
+							
 							var counts = ($("#order_count").val() && $("#order_count").val().split(",")) || [];
 							counts.push(this.count);
 						   	$("#order_count").val(counts.join(","));
+						   	
+						   	var levels = ($("#order_level").val() && $("#order_level").val().split(",")) || [];
+							levels.push(this.level);
+						   	$("#order_level").val(levels.join(","));
 						}
 					);
 			}
@@ -230,9 +260,7 @@
 			}
 	
 			$("#noadd").find("a").click(function() {
-				$(".addAddrBox").find("iframe").attr("src","/shipping/create");
-				$(".order-pay-box-display").hide();
-				$(".addAddrBox").show();
+				window.location.href= "/shipping/create?fromUrl=/order/confirm";
 			});
 			
 			//会话框动态垂直居中
@@ -258,32 +286,22 @@
 			
 			//获得用户选择时间
 			var $d = new Date();
-			$d.setTime($d.getTime() - 24*60*60*1000 - $d.getHours() * 60*60*1000 - $d.getMinutes() *60*1000 - $d.getSeconds() * 1000);
+			$d.setTime($d.getTime() - $d.getHours() * 60*60*1000 - $d.getMinutes() *60*1000 - $d.getSeconds() * 1000);
 			var day = new Date();
 			var hour = 0;
 			var min = 0;
-			$("#order-pay-day").change(
-				function() {
-					$selDay = $("#order-pay-day").find("option:selected").text().val();
-					if ($selDay == 1) {
-						day.setTime($d.getTime() + 24*60*60*1000);
-					} else if ($selDay == 2){
-						day.setTime($d.getTime() + 48*60*60*1000);
-					}
+			var html;
+			for(var i = 0; i < 7; i++) {
+				var _day = new Date();
+				_day.setTime($d.getTime() + i * 24 * 60 * 60 * 1000 - $d.getHours() * 60*60*1000 - $d.getMinutes() *60*1000 - $d.getSeconds() * 1000);
+				var _date = _day.getDate();
+				if(_date < 10) {
+					_date = "0" + _date;
 				}
-			);
-			$("#order-pay-hour").change(
-				function() {
-					$selHour = $("#order-pay-hour").find("option:selected").text().val();
-					hour = $selHour;
-				}
-			);
-			$("#order-pay-min").change(
-				function() {
-					$selMin = $("#order-pay-min").find("option:selected").text().val();
-					min = $selMin;
-				}
-			);
+				var date = _day.getFullYear() +'-'+ _day.getMonth() + '-' + _date;
+				html += '<option value="' + date +'">'+ date +'&nbsp;' + getWeek(_day) +'</option>';
+			}
+			$("#order-pay-day").html(html);
 			
 			var $plus = $(".item-plus");
 			var $minus = $(".item-minus");
@@ -299,8 +317,23 @@
 				var $priceNum = $(this).parents(".item-btn-box").find(".item-text");
 				if(parseFloat($priceNum.html()) > 0){
 					var $toTalNum = parseFloat($priceNum.html()) - 1;
+					if($toTalNum<=0) 
+					return;
 					$priceNum.html($toTalNum);
 					countPrices();
+				}
+			});
+			
+			$(".lunch-box.order-pay-lunch-box ul select[name='level']").change(function() {
+				var $idParams = $("#order_id").val().split(',');
+				var $levelParams = $("#order_level").val().split(',');
+				var $thisOrderId = $(this).parents(".order-pay-lunch-box").find(".order-pay-type").val();
+				for(var i = 0; i<$idParams.length; i++){
+					if($idParams[i] == $thisOrderId){
+						$levelParams[i] = $(this).val();
+						var newarry = $levelParams.join(',');
+						$("#order_level").val(newarry);
+					}
 				}
 			});
 	
@@ -370,29 +403,15 @@
 			    } else {
 			    	$ordertype = 1;
 			    }
-	
+			    
 				var $comm_id = 0;
 			    var COMM_ID = 'comm_id';
 			    if($.cookie(COMM_ID)){  
 			        $comm_id = $.cookie(COMM_ID);
 			    }
-	
-				var $order_time,hhhh,mmmm;
-				var $timestr = "";
-	
-				// 若果是立即的不显示这个，无需设计时间。
-			    if ($(".order-pay-box-display").is(":visible")) {
-			    	$order_time = new Date(day.setTime(day.getTime() + hour * 60 * 60 * 1000 + min * 60 * 1000));
-			    	hhhh = $order_time.getHours();
-				    if ($order_time.getHours() < 10) {
-						hhhh = "0" + $order_time.getHours();
-				    }
-				    mmmm = $order_time.getMinutes();
-				    if ($order_time.getMinutes() < 10) {
-						mmmm = "0" + $order_time.getMinutes();
-				    }
-				    $timestr = $order_time.getFullYear() + "-" + ($order_time.getMonth() + 1) + "-" + $order_time.getDate() +  " " + "-" + mmmm;	
-			    } 
+			    
+			    var deliveryTime;
+			    deliveryTime = $("#order-pay-day").val() + " " + $("#order-pay-hour").val() + ":" + $("#order-pay-min").val() + ":00";
 		    	$.ajax({	
 					url:" /order/create",
 					type:"post",
@@ -400,7 +419,8 @@
 						addr_id:$("#addr_id").val(),
 						ids:$(".order-pay-order-id").val(),
 						counts:$(".order-pay-order-count").val(),
-						order_time:$timestr,
+						levels: $(".order-pay-order-level").val(),
+						order_time:deliveryTime,
 						order_type:$ordertype,
 						commid:$comm_id
 					},

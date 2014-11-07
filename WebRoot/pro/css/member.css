@@ -70,7 +70,7 @@ body {
 /*
 .addr-gender-box span{ float:left; line-height:1.2em; font-size:0.8em; margin:0.1em 0 0 0.3em;}
 .addr-gender-radio{ -webkit-appearance:none; background:#cccccc; border:0; float:left; margin:0.1em 0.2em 0 1.2em; width:8px; height:8px;}
-.addr-gender-radio:checked{ background:#ff7700;}
+.addr-gender-radio:checked{ background:#f39c33;}
 .addr-gender-box label{ width:100%; float:left; height:1.8em; padding-top:0.6em;}
 */
 
@@ -201,7 +201,7 @@ body {
 }
 .person-welcome {
 	padding-top: 0.5em;
-	color: #ff7700;
+	color: #f39c33;
 	text-align: center;
 }
 .person-logout {
@@ -256,7 +256,7 @@ body {
 	margin-bottom: 0.5em;
 	float: left;
 	text-align: center;
-	color: #ff7700;
+	color: #f39c33;
 }
 .more-off {
 	color: #999;
@@ -303,5 +303,5 @@ body {
 /*
 .addr-gender-box div{ position:relative;}
 .addr-gender-box b{ width:16px; height:16px; float:left; border-radius:50%; background:#cccccc; margin-top:1em; position:absolute; left:1em; top:-0.4em; z-index:2;}
-.addr-gender-box b.on{ background:#ff7700;}
+.addr-gender-box b.on{ background:#f39c33;}
 */

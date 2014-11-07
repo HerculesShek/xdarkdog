@@ -31,7 +31,7 @@
 	<body>
 		<div class="container">
 			<div class="header"> 
-				<a href="/shipping" class="left linkAct"><img class="m-t-4" src="/pro/images/arrow-left.png" width="30"/></a>
+				<a href='<c:choose><c:when test="${fromUrl ne null}">${fromUrl}</c:when><c:otherwise>/shipping</c:otherwise></c:choose>' class="left linkAct"><img class="m-t-4" src="/pro/images/arrow-left.png" width="30"/></a>
 		    	<h2>新增地址</h2>
 		  	</div>
 		  	<div class="content">
