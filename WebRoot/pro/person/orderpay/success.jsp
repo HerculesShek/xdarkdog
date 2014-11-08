@@ -31,9 +31,9 @@
 			    <!-- <a href="javascript:void(0)" class="left linkAct"><i></i></a> --> 
 		  	</div>
 		  	<div class="orderpay-success-tips"> 
-			  	<img align="middle" src="/pro/images/green-success-icon.png" height="40"/> 恭喜您！订单成功 </div>
+			  	<img align="middle" src="/pro/images/green-success-icon.png" height="40"/> 恭喜！下单成功 </div>
 		  	<div class="orderpay-success-info">
-			    <p class="red">您的订单已生成，稍后嘿狗社区客服会与您联系确认订单信息，请保持手机畅通，祝您工作愉快！</p>
+			    <p class="red">您的订单已生成，稍后嘿狗社区客服会与您联系确认订单信息，请保持手机畅通，祝您生活愉快！</p>
 		    	<div class="orderpay-success-btn">
 		      	<div class="ui-grid-a">
 			        <div class="ui-block-a"> <a href="/order" class="button btn-green">查看订单</a> </div>

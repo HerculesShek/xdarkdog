@@ -68,6 +68,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	</tr>
   	</c:forEach>
 </table>  
-  
+<a href="/customer_service/manager.jsp">返回管理主页面</a>
 </body>
 </html>

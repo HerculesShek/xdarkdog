@@ -84,7 +84,7 @@ public class OrderInformationDao extends DaoSupport {
 	// TODO 应该再加入一个查询 预约的订单 审核通过但是还没有配送的 接口
 	
 	// 获取指定order_id的订单详情
-	public OrderInformation getOrderInfoByOrderid(String order_id){
+	public List<OrderInformation> getOrderInfoByOrderid(String order_id){
 		String sql = "select o.order_id order_id, " +
 				"o.order_type order_type, " +
 				"o.subscribe_delivery_time subscribe_delivery_time, " +
@@ -105,11 +105,7 @@ public class OrderInformationDao extends DaoSupport {
 				"where o.order_id = d.order_id and o.commid = c.id and d.fruit_id = f.id and o.shipid = a.id " +
 				"and o.order_id=?";
 		List<OrderInformation> infos = executeQuery(sql, OrderInformation.class, new Object[]{order_id});
-		if(infos!=null && infos.size()>0){
-			return infos.get(0);
-		} else {
-			return null;
-		}
+		return infos;
 	}
 	
 	public static void main(String[] args) {

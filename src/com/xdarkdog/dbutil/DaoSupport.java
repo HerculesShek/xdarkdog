@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -51,7 +52,7 @@ public class DaoSupport {
 	// method3: 专门用于发送增删改语句的方法
 	public int execOther(final String strSQL, final Object[] params) {
 		// 2、预先打印出即将执行的SQL语句(便于项目测试，仿Hibernate框架)
-		System.out.println("SQL:> " + strSQL);
+		logger.debug("SQL:> " + strSQL);
 		PreparedStatement pstmt = null;
 		try {
 			// 3、创建Statement接口对象
@@ -82,7 +83,7 @@ public class DaoSupport {
 	// method4: 专门用于发送查询语句
 	public ResultSet execQuery(final String strSQL, final Object[] params) {
 		// 2、预先打印出即将执行的SQL语句(便于项目测试，仿Hibernate框架)
-		System.out.println("SQL:> " + strSQL);
+		logger.debug("SQL:> " + strSQL);
 		try {
 			// 3、创建PreparedStatement接口对象
 			PreparedStatement pstmt = conn.prepareStatement(strSQL);
@@ -110,7 +111,7 @@ public class DaoSupport {
 	public <T> List<T> executeQuery(String sql, Class<T> clazz,
 			Object... objects) {
 		// 打印当前SQL语句。
-		System.out.println("SQL:> " + sql);
+		System.out.println("["+new Date(System.currentTimeMillis())+"] SQL:> " + sql);
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
 		try {

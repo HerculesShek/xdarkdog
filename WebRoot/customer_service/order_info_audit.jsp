@@ -101,17 +101,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		<td>订单的详细信息</td>
     		<td>
 				<c:forEach var="detail" items="${info.details}">
-				${ detail.name}&nbsp;${ detail.fruit_count}(份)&nbsp;x&nbsp;${ detail.price}/${ detail.measurement_type}&nbsp;
-				<c:if test="${detail.level eq 1}">
-  		    	小个
-  				</c:if>
-  				<c:if test="${detail.level eq 2}">
-  		    	中个
-  				</c:if>
-  				<c:if test="${detail.level eq 3}">
-  		    	大个
-  				</c:if>
-  				<br>
+					${ detail.name}&nbsp;${ detail.fruit_count}(份)&nbsp;x&nbsp;${ detail.price}/${ detail.measurement_type}&nbsp;
+					<c:if test="${detail.level eq 1}">小个</c:if>
+	  				<c:if test="${detail.level eq 2}">中个</c:if>
+	  				<c:if test="${detail.level eq 3}">大个</c:if>
+	  				<br>
 				</c:forEach>
 			</td>
     	</tr>
@@ -124,5 +118,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		</td>
     	</tr>
 	</table>    
+	<a href="/customer_service/manager.jsp">返回管理主页面</a>
   </body>
 </html>

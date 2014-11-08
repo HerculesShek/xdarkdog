@@ -50,14 +50,14 @@
 		   	<div class="dialog-wrap" style="display:none;">
 			    <div class="dialog-shade"></div>
 				<div class="dialog-box">
-					<h3>选择送餐地址<a href="javascript:void(0)" class="dialog-close-btn linkAct"><img src="/pro/images/close.png" width="20"/></a></h3>
+					<h3>选择配送地址<a href="javascript:void(0)" class="dialog-close-btn linkAct"><img src="/pro/images/close.png" width="20"/></a></h3>
 					<div class="dialog-content">
 						<ul class="order-other-address"></ul>
 					</div>
 				</div>
 			</div>
 			<div class="order-pay-box-display">
-			    <div class="manage-title"><h2>选择送餐时间</h2></div>
+			    <div class="manage-title"><h2>选择送水果时间</h2></div>
 			    <div class="order-pay-time-wrap">
 			    	<div class="order-pay-time" style="border-bottom: none;">
 			    		<div class="order-time-box">
@@ -100,7 +100,7 @@
 			    <div class="clr"></div>
 				 <!-- 选择地址会话框 结束 -->
 			    <input type="hidden" value="">
-			    <div class="manage-title"><h2>确认餐品信息</h2></div>
+			    <div class="manage-title"><h2>确认鲜果信息</h2></div>
 			    <div class="lunch-box order-pay-lunch-box">
 				    <ul>
 				    	<!-- 遍历订单 -->
