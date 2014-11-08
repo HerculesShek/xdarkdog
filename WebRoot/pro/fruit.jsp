@@ -511,7 +511,7 @@
 						$("#order_data").val(JSON.stringify($param));//json数据解析，表单提交
 					}
 					if($("#order-tip1").html() == "0") {
-						alert("请至少选择一中鲜果");
+						alert("请至少选择一种鲜果");
 						return  false;
 					}
 					return true;
