@@ -16,13 +16,6 @@ public class CSSigninServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -9076360480663296265L;
 
-	/**
-	 * Constructor of the object.
-	 */
-	public CSSigninServlet() {
-		super();
-	}
-
 	public void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String username = request.getParameter("username");

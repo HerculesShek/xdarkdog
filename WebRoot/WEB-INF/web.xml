@@ -6,6 +6,7 @@
 
 	<display-name>xdarkdog</display-name>
 
+	<!-- 编码过滤器 -->
 	<filter>
 		<filter-name>coding</filter-name>
 		<filter-class>com.xdarkdog.filter.EncodingFilter</filter-class>
@@ -20,10 +21,17 @@
 			</param-value>
 		</init-param>
 	</filter>
+	<!-- 管理员安全过滤器 -->
 	<filter>
 		<filter-name>managerSecurity</filter-name>
 		<filter-class>com.xdarkdog.filter.SecurityFilter</filter-class>
 	</filter>
+	<!-- 客服安全过滤器 -->
+	<filter>
+		<filter-name>CSSecurity</filter-name>
+		<filter-class>com.xdarkdog.filter.CSSecurityFilter</filter-class>
+	</filter>
+	
 	<filter-mapping>
 		<filter-name>coding</filter-name>
 		<url-pattern>/*</url-pattern>
@@ -38,6 +46,12 @@
 		<url-pattern>/admin/*</url-pattern>
 		<url-pattern>/servlet/comm.do</url-pattern>
 		<url-pattern>/servlet/fruit.do</url-pattern>
+	</filter-mapping>
+	<!-- 客服安全过滤器 -->
+	<filter-mapping>
+		<filter-name>CSSecurity</filter-name>
+		<url-pattern>/customer_service/*</url-pattern>
+		<url-pattern>/servlet/csorder.do</url-pattern>
 	</filter-mapping>
 
 	<!-- 初始化器 -->
@@ -86,6 +100,10 @@
     <servlet-name>CSSigninServlet</servlet-name>
     <servlet-class>com.xdarkdog.manager.customer.service.CSSigninServlet</servlet-class>
   </servlet>
+  	<servlet>
+		<servlet-name>CSOrderServlet</servlet-name>
+		<servlet-class>com.xdarkdog.manager.customer.service.OrderServlet</servlet-class>
+	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>WeixinServlet</servlet-name>
@@ -122,6 +140,10 @@
 	<servlet-mapping>
 		<servlet-name>OrderServlet</servlet-name>
 		<url-pattern>/servlet/order.do</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>CSOrderServlet</servlet-name>
+		<url-pattern>/servlet/csorder.do</url-pattern>
 	</servlet-mapping>
   <servlet-mapping>
     <servlet-name>CSSigninServlet</servlet-name>

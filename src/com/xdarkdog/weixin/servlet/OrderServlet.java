@@ -34,30 +34,20 @@ import com.xdarkdog.web.util.data.OrderData;
 import com.xdarkdog.web.util.data.OrderDataUtil;
 
 
-// "/servlet/order.do"
+// "/servlet/order.do" 这个关于订单的servlet只能是用户使用的
 public class OrderServlet extends HttpServlet {
 	private static final long serialVersionUID = -8516907758118741896L;
 	private final Logger logger = LoggerFactory.getLogger(OrderServlet.class);
 
 	public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String method = request.getParameter("method");
-		if ("generate".equalsIgnoreCase(method)) {
+		if ("generate".equalsIgnoreCase(method)) { // 用户下单
 			generateOrder(request, response);
-		} else if ("getOrdersByUsername".equalsIgnoreCase(method)) {
+		} else if ("getOrdersByUsername".equalsIgnoreCase(method)) { // 用户查看自己的所有订单
 			getOrdersByUsername(request, response);
-		} else if ("getUnauditedOrder".equalsIgnoreCase(method)) { // 查看所有的未审核订单
-			getUnauditedOrder(request, response);
-		} else if ("cancelOrder".equalsIgnoreCase(method)) {
+		}  else if ("cancelOrder".equalsIgnoreCase(method)) { // TODO 用户取消订单 
 			cancelOrder(request, response);
-		} else if ("getShippingOrders".equalsIgnoreCase(method)) {
-			getShippingOrders(request, response);
-		} else if ("auditOrder".equalsIgnoreCase(method)) {
-			auditOrder(request, response);
-		} else if ("finishOrder".equalsIgnoreCase(method)) {
-			finishOrder(request, response);
-		} else if ("getSubscribeOrders".equalsIgnoreCase(method)) { // 预约订单
-			getSubscribeOrders(request, response);
-		} else if ("getOrderDataByOrderId".equalsIgnoreCase(method)) { // 预约订单
+		}  else if ("getOrderDataByOrderId".equalsIgnoreCase(method)) { // 根据订单id获取订单的详细信息
 			getOrderDataByOrderId(request, response);
 		}
 	}
@@ -167,19 +157,12 @@ public class OrderServlet extends HttpServlet {
 		out.flush();
 		out.close();
 	}
-	
-	// TODO 获取所有的未审核的订单
-	public void getUnauditedOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<OrderInformation> infos = new OrderInformationDao().getUnauditedOrderInfos();
-		List<OrderData> datas = OrderDataUtil.parseOrderInformationToOrderData(infos);
-		request.setAttribute("datas", datas);
-		request.getRequestDispatcher("/customer_service/unaudited_orders.jsp").forward(request, response);
-	}
 		
 	// TODO 取消订单
 	public void cancelOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 	}
+	
 	// TODO 根据订单号取得订单的详细信息
 	public void getOrderDataByOrderId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String orderid = request.getParameter("orderid");
@@ -190,59 +173,12 @@ public class OrderServlet extends HttpServlet {
 		if(datas != null && datas.size()>0){
 			request.setAttribute("info", datas.get(0));
 		}
-		request.getRequestDispatcher("/customer_service/order_info.jsp").forward(request, response);
-	}
-	
-	// TODO 获取所有的在配送的订单
-	public void getShippingOrders(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	}
-
-	//  审核订单 
-	public void auditOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String res = request.getParameter("res");
-		String orderid = request.getParameter("orderid");
-		OrderDao odao = new OrderDao();
-		int affectRows = 0;
-		if ("1".equalsIgnoreCase(res)) { // 通过审核
-			affectRows = odao.auditOrder(orderid, 3);
-		} else if ("0".equalsIgnoreCase(res)) { // 未通过审核
-			affectRows = odao.auditOrder(orderid, 2);
+		String next = request.getParameter("next");
+		if("audit".equalsIgnoreCase(next)){
+		request.getRequestDispatcher("/customer_service/order_info_audit.jsp").forward(request, response);
+		} else { // checkout
+			request.getRequestDispatcher("/customer_service/order_info_checkout.jsp").forward(request, response);
 		}
-		
-		if(affectRows == 0){
-			request.setAttribute("operation_res", "fail");
-		} else if(affectRows == 1){
-			request.setAttribute("operation_res", "ok");
-		}
-		request.getRequestDispatcher("/customer_service/operation_res.jsp").forward(request, response);
-	}
-	
-	// TODO 查看预约订单
-	public void getSubscribeOrders(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-	}
-	
-	// 订单成功完成
-	public void finishOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String order_id = request.getParameter("order_id"); // 订单id
-		String cost = request.getParameter("cost"); // 此次账单的花费
-		Order o = new Order();
-		o.setOrder_id(order_id);
-		o.setTotalcost(Double.parseDouble(cost));
-		o.setStatus(4);
-		int res = new OrderDao().finishOrder(o);
-		// TODO 客服的界面 完成之后应该跳转还是使用ajax
-		response.setContentType("application/json;charset=utf-8");
-		response.setCharacterEncoding("utf-8");
-		PrintWriter out = response.getWriter();
-		if (res == 1) {
-			out.println("{\"success\":\"1\"}");
-		} else {
-			out.println("{\"success\":\"0\"}");
-		}
-		out.flush();
-		out.close();
 	}
 	
 	public static void main(String[] args) {

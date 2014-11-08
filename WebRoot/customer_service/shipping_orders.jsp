@@ -11,21 +11,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
     <base href="<%=basePath%>">
-    <title>所有未审核的订单</title>
+    <title>所有正在配送的订单</title>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">  
+	<meta http-equiv="expires" content="0">   
 	<script>
 	// setTimeout("location.href='url'",2000);
 	setTimeout("self.location.reload();",60000);
-	</script>  
+	</script>   
   </head>
+  
 <%
 	List<OrderData> datas = (List<OrderData>)request.getAttribute("datas");
 %>
 <body>
 <table border="1" align="center">
-<tr><th colspan="8"><h3>未审核的订单</h3></th></tr>
+<tr><th colspan="8"><h3>正在配送的订单</h3></th></tr>
   	<tr>
   		<th>订单创建时间</th>
   		<th>订单类型</th>
@@ -39,8 +40,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	
   	<c:forEach var="orderData" items="${datas}">
   	<tr>
-  		<fmt:setLocale value="zh_CN"/>
-  		<td><fmt:formatDate value="${orderData.create_time}" type="both" dateStyle="default" timeStyle="default"/>
+  	    <fmt:setLocale value="zh_CN"/>
+  		<td>
+  		<fmt:formatDate value="${orderData.create_time}" type="both" dateStyle="default" timeStyle="default"/>
   		</td>
   		<td>
   			<c:if test="${orderData.order_type eq 1}">
@@ -63,7 +65,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		<td>${orderData.fruit_shop_name}</td>
   		<td>${orderData.comm_name}</td>
   		<td align="center">
-  			<a href="/servlet/csorder.do?method=getOrderDataByOrderId&next=audit&orderid=${orderData.order_id }" target="view_window">进行审核</a>
+  			<a href="/servlet/csorder.do?method=getOrderDataByOrderId&next=checkout&orderid=${orderData.order_id }" target="view_window">配送完成去结账！</a>
   		</td>
   	</tr>
   	</c:forEach>

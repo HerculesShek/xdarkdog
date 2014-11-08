@@ -15,11 +15,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    <table align="center">
+    <table align="center"> 
   	<tr><th align="center"><h3>嘿狗社区客服系统</h3></th></tr>
-  	<tr><td><a href="/servlet/order.do?method=getUnauditedOrder">查看所有的未审核订单</a></td></tr>
-  	<tr><td><a href="/servlet/order.do?method=getShippingOrders">查看正在配送的订单</a></td></tr>
-  	<tr><td><a href="/servlet/order.do?method=getShippingOrders">查看预约的订单</a></td></tr>
+  	<tr><td><a href="/servlet/csorder.do?method=getUnauditedOrder">查看所有的未审核订单</a></td></tr>
+  	<tr><td><a href="/servlet/csorder.do?method=getShippingOrders">查看正在配送的订单</a></td></tr>
+  	<tr><td><a href="/servlet/csorder.do?method=getShippingOrders">查看预约的订单</a></td></tr>
   </table>
   </body>
 </html>

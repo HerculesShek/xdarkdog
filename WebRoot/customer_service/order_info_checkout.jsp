@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*, com.xdarkdog.web.util.data.*" pageEncoding="UTF-8"%>
 <%-- 导入标记库 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -27,6 +28,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		<td>订单号</td>
     		<td>${ info.order_id}</td>
     	</tr>
+    	<fmt:setLocale value="zh_CN"/>
+    	<tr>
+    		<td>订单创建时间</td>
+    		<td><fmt:formatDate value="${info.create_time}" type="both" dateStyle="default" timeStyle="default"/></td>
+    	</tr>
     	<tr>
     		<td>订单类型</td>
     		<td>
@@ -40,12 +46,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	</tr>
     	<tr>
     		<td>预约订单的配送时间</td>
-    		<td>${ info.subscribe_delivery_time}</td>
+    		<td><fmt:formatDate value="${info.subscribe_delivery_time}" type="both" dateStyle="default" timeStyle="default"/></td>
     	</tr>
-    	<tr>
-    		<td>订单创建时间</td>
-    		<td>${ info.create_time}</td>
-    	</tr>
+    	
     	<tr>
     		<td>订单的状态</td>
     		<td>
@@ -111,14 +114,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</c:forEach>
 			</td>
     	</tr>
-    	<tr>
-    		<td align="center">
-    		<a href="/servlet/order.do?method=auditOrder&res=1&orderid=${info.order_id }">审核通过</a>
-    		</td>
-    		<td align="center">
-    		<a href="/servlet/order.do?method=auditOrder&res=0&orderid=${info.order_id }">审核不通过</a>
-    		</td>
-    	</tr>
+   
+   	<form action="/servlet/csorder.do" method="post">  
+   		<input type="hidden" name="method" value="finishOrder">	
+   		<input type="hidden" name="order_id" value="${ info.order_id}">	
+		<tr style="background-color: gray">
+		<td>用户实付款</td>
+		<td><input type="text" name="totalcost"/></td>
+		</tr>
+		<tr><td colspan="2" align="center"><input type="submit" value="结算" /></td></tr>
+	</form>
+   
 	</table>    
   </body>
 </html>
