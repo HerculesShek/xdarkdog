@@ -166,9 +166,7 @@ public class OrderServlet extends HttpServlet {
 	// TODO 根据订单号取得订单的详细信息
 	public void getOrderDataByOrderId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String orderid = request.getParameter("orderid");
-		OrderInformation info = new OrderInformationDao().getOrderInfoByOrderid(orderid);
-		List<OrderInformation> infos = new ArrayList<OrderInformation>();
-		infos.add(info);
+		List<OrderInformation> infos = new OrderInformationDao().getOrderInfoByOrderid(orderid);
 		List<OrderData> datas = OrderDataUtil.parseOrderInformationToOrderData(infos);
 		if(datas != null && datas.size()>0){
 			request.setAttribute("info", datas.get(0));
