@@ -129,9 +129,13 @@ public class WeixinServlet extends HttpServlet {
 		String event = getMiddle("Event><![CDATA[", "]]></Event", xmlmsg);
 		if (event.equals("subscribe")) { // TODO 用户订阅了公众号 
 			// 获取用户的OpenID
+<<<<<<< HEAD
 			
 			String fromUserName = getMiddle("FromUserName><![CDATA[", "]]></FromUserName", xmlmsg);
 			System.out.println("用户"+fromUserName+"关注了我们的公众账号！");
+=======
+			String fromUserName = getMiddle("FromUserName><![CDATA[", "]]></FromUserName", xmlmsg);
+>>>>>>> branch 'master' of git@github.com:HerculesShek/xdarkdog.git
 			response.setContentType("text/html");
 			response.setCharacterEncoding("utf-8");
 			PrintWriter out;
