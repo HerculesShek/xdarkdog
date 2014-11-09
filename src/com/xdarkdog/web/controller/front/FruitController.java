@@ -40,6 +40,7 @@ public class FruitController extends Controller {
 		String locLon = getPara("lon");	// 经度
 		String locLat = getPara("lat");	// 纬度
 
+		System.out.println("用户传入的经纬度信息:[lon: " + locLon +", lat: " + locLat + "]");
 		List<Fruit> fruits = new ArrayList<Fruit>();
 		if (StringUtils.isNotEmpty(commId)) {
 			fruits = getFruitsOfCommunity(Integer.valueOf(commId));
