@@ -235,7 +235,7 @@
 										'<div class="lunch-info" style="margin-top:-4px;">'+
 											'<p>'+ fruit.name +'</p>' + 
 											'<p class="gray6">'+ fruit.remark +'</p>'+
-											'<p><span>数量：'+ detail.fruit_count+'</span><span class="m5-l">单价：<font class="red">'+ fruit.display_price + '(' + fruit.measurement_type +')</font></span></p>'+
+											'<p><span>数量：'+ detail.fruit_count+'</span><span class="m5-l">单价：<font class="red">'+ fruit.price + '(' + fruit.measurement_type +')</font></span></p>'+
 										'</div>'+
 									'</a>'+
 								'</li>');

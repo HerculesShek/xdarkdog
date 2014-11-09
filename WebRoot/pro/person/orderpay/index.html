@@ -113,7 +113,7 @@
 	<input type="hidden" class="order-pay-order-count" id="order_count" value="" />
 	<input type="hidden" id="order-pay-yhInput" value="0" />
     <div class="order-count-box">
-		<div class="order-count-text left">实付款:<span class="org">￥<font class="toTalPrice">0.00</font></span></div>
+		<div class="order-count-text left">预计总计:<span class="org">￥<font class="toTalPrice">0.00</font></span></div>
 		<div class="settlement-box"><input type="button" id="settlement" class="button btn-org order-payment-btn" value="确认下单"/></div>
    	</div>
 </div>
@@ -152,7 +152,7 @@
 
 
 		$(".lunch-box.order-pay-lunch-box ul").empty('li');
-		//如果有餐车记录进行回显
+		//如果有购物车记录进行回显
 		if( $.cookie(COOKIE_NAME) ){
 			var $param = eval($.cookie(COOKIE_NAME));
 				$($param).each(

@@ -45,7 +45,7 @@
                     </div>
                     <div class="login-btn">
                         <input type="button" class="button btn-org" id="btn" value="登 录" class="submit-btn"/>
-                        <a href="tel:${orderPhone}" class="forget-pwd linkAct left">电话点餐</a>
+                        <a href="tel:${orderPhone}" class="forget-pwd linkAct left">电话订购鲜果</a>
                         <a href="tel:${orderPhone}" class="forget-pwd linkAct right">忘记密码？</a>
                     </div>
                 </form>

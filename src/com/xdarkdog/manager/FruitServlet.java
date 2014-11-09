@@ -67,6 +67,7 @@ public class FruitServlet extends HttpServlet {
 		Fruit fruit = null;
 		if (method.equalsIgnoreCase("add")) {
 			fruit = (Fruit) fu.getInstanceByAdvanceForm(request, items, Fruit.class, "img/fruits");
+			fruit.setValid_tag(1);
 			new FruitDao().addFruit(fruit);
 		} else if (method.equalsIgnoreCase("modifyFruit")) { // 修改一个水果的信息，有可能会有要删除的照片的信息
 			if (photostodelete.length() > 0) { // 要删除一些照片
@@ -83,10 +84,12 @@ public class FruitServlet extends HttpServlet {
 			if (photostodelete.length() > 0) {
 				String p2delete[] = photostodelete.split(",");
 				for (String p : p2delete) {
-					String p_postfix = p.substring(p.indexOf("xdarkdog") + "xdarkdog".length() + 1, p.length());
-					String fileRpath = request.getSession().getServletContext().getRealPath("/") + p_postfix.replace('/', File.separatorChar);
+					// String p_postfix = p.substring(p.indexOf("xdarkdog") + "xdarkdog".length() + 1, p.length());
+					String p_postfix = p.substring(p.indexOf("img") + "img".length() + 1, p.length());
+					String fileRpath = request.getSession().getServletContext().getRealPath("/") +"img/"+ p_postfix.replace('/', File.separatorChar);
 					File f = new File(fileRpath);
 					if (f.exists()) {
+						System.out.println("要删除的图片的物理路径是"+fileRpath);
 						f.delete();
 					}
 					// 把这个图片的url从原来的url里删除

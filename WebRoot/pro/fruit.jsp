@@ -153,7 +153,7 @@
 		  	<div class="order-count-box">
 		    	<form action="/order/confirm" method="post" id="order_pay">
 		      		<a class="waste-icon left" href="javascript:void(0)"><img height="25" src="/pro/images/waste.png"/></a>
-		      		<div class="order-count-text left">总计:<span class="org">￥<font class="toTalPrice">0</font></span></div>
+		      		<div class="order-count-text left">预计总价:<span class="org">￥<font class="toTalPrice">0</font></span></div>
 		      		<input type="hidden" name="data" value="" id="order_data">
 		      		<div class="settlement-box">
 		        		<input type="submit" id="settlement" class="button btn-gray" value="选好了"/>
@@ -225,7 +225,7 @@
 	                	            '</li>');
 		        			}
 			    			var COOKIE_NAME = 'mobileCart';
-				    		//如果有餐车记录进行回显
+				    		//如果有购物车记录进行回显
 				    		if( $.cookie(COOKIE_NAME) ){
 				    			var $param = eval($.cookie(COOKIE_NAME));
 				    			$(".item-id").each(function() {
@@ -294,7 +294,7 @@
 	                               '</li>');
 								$.cookie(COMM_ID, typeData[i].communityid);
 			    	        }
-			    			//如果有餐车记录进行回显
+			    			//如果有购物车记录进行回显
 			    			if( $.cookie(COOKIE_NAME) ){
 			    				var $param = eval($.cookie(COOKIE_NAME));
 			    				$(".item-id").each(function() {
@@ -375,7 +375,7 @@
 	
 				//清空套餐
 				$(".waste-icon").click(function() {
-					if (confirm('是否要清空餐车？')){
+					if (confirm('是否要清空果篮？')){
 						$(".item-text").each(function() {
 							$(this).html("0");
 						});
