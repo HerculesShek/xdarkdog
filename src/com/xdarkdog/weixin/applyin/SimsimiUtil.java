@@ -18,6 +18,6 @@ public class SimsimiUtil {
 		if ("100".equals(result)) {
 			return msg.getString("response");
 		}
-		return "暗黑无边，你我并肩！";
+		return "您好，感谢您使用嘿狗社区服务平台！想了解更多信息，请<a href=\"http://mp.weixin.qq.com/s?__biz=MzAwMzA0NDQ5MQ==&mid=201196564&idx=1&sn=ee1969116f74d0c01f3f30b209a3f203#rd\">点击这里</a>，或致电0571 28975698";
 	}
 }
