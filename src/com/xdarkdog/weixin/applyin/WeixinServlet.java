@@ -61,8 +61,9 @@ public class WeixinServlet extends HttpServlet {
 		out.close();
 	}
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	// 微信将用户发送的内容会发送到这里！
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 首先是把微信服务器发送额XML格式的字符串接受
 		request.setCharacterEncoding("utf-8");
 		BufferedReader br = request.getReader();
 		char[] buf = new char[1024];
@@ -71,8 +72,8 @@ public class WeixinServlet extends HttpServlet {
 		while ((len = br.read(buf)) != -1) {
 			buffer.append(buf, 0, len);
 		}
-		
 		String xmlmsg = buffer.toString();
+		// 获取消息的类型
 		String msgType = msgType(xmlmsg);
 		if (msgType.equalsIgnoreCase("event")) {
 			processEvent(xmlmsg, response);
@@ -80,20 +81,20 @@ public class WeixinServlet extends HttpServlet {
 			processText(xmlmsg, response);
 		}
 
-		response.setContentType("text/html");
-		response.setCharacterEncoding("utf-8");
-		PrintWriter out = response.getWriter();
-		out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
-		out.println("<HTML>");
-		out.println("  <HEAD><TITLE>A Servlet</TITLE></HEAD>");
-		out.println("  <BODY>");
-		out.print("    This is ");
-		out.print(this.getClass());
-		out.println(", using the POST method----杭州暗黑狗网络技术有限公司");
-		out.println("  </BODY>");
-		out.println("</HTML>");
-		out.flush();
-		out.close();
+//		response.setContentType("text/html");
+//		response.setCharacterEncoding("utf-8");
+//		PrintWriter out = response.getWriter();
+//		out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
+//		out.println("<HTML>");
+//		out.println("  <HEAD><TITLE>A Servlet</TITLE></HEAD>");
+//		out.println("  <BODY>");
+//		out.print("    This is ");
+//		out.print(this.getClass());
+//		out.println(", using the POST method----杭州暗黑狗网络技术有限公司");
+//		out.println("  </BODY>");
+//		out.println("</HTML>");
+//		out.flush();
+//		out.close();
 	}
 
 	// 使用小黄鸡和用户对话 
@@ -127,7 +128,26 @@ public class WeixinServlet extends HttpServlet {
 	private void processEvent(String xmlmsg, HttpServletResponse response) {
 		String event = getMiddle("Event><![CDATA[", "]]></Event", xmlmsg);
 		if (event.equals("subscribe")) { // TODO 用户订阅了公众号 
-
+			// 获取用户的OpenID
+			String fromUserName = getMiddle("FromUserName><![CDATA[", "]]></FromUserName", xmlmsg);
+			response.setContentType("text/html");
+			response.setCharacterEncoding("utf-8");
+			PrintWriter out;
+			try {
+				out = response.getWriter();
+			} catch (IOException e) {
+				e.printStackTrace();
+				return;
+			}
+			String res = "您好！感谢关注嘿狗社区服务平台！了解更过信息，请<a href=\"http://mp.weixin.qq.com/s?__biz=MzAwMzA0NDQ5MQ==&mid=201196564&idx=1&sn=ee1969116f74d0c01f3f30b209a3f203#rd\">点击这里</a>";
+			out.println("<xml>");
+			out.println("<ToUserName><![CDATA[" + fromUserName + "]]></ToUserName>");
+			out.println("<FromUserName><![CDATA[" + weixinid + "]]></FromUserName>");
+			out.println("<CreateTime>" + System.currentTimeMillis() + "</CreateTime>");
+			out.println("<MsgType><![CDATA[text]]></MsgType>");
+			out.println("<Content><![CDATA[" + res + "]]></Content></xml>");
+			out.flush();
+			out.close();
 		} else if (event.equals("unsubscribe")) { // TODO 用户取消订阅公众号 
 
 		}

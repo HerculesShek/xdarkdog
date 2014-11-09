@@ -18,6 +18,6 @@ public class SimsimiUtil {
 		if ("100".equals(result)) {
 			return msg.getString("response");
 		}
-		return "暗黑无边，你我并肩！";
+		return "如果想了解更过信息，<a href=\"http://mp.weixin.qq.com/s?__biz=MzAwMzA0NDQ5MQ==&mid=201196564&idx=1&sn=ee1969116f74d0c01f3f30b209a3f203#rd\">点击这里</a>";
 	}
 }
