@@ -102,6 +102,15 @@ public class ShippingControler extends Controller {
 		User user = getSessionAttr(Constants.SESSION_USER);
 		Integer addrId = Integer.parseInt(getPara("addrId"));
 		int res = shippingAddressDao.removeShippingAddr(user.getUsername(),addrId);
+		
+		// 获取当前用户的配送地址，当且仅当只有一个配送地址的时候将其设置为默认
+		List<UserShippingAddress> addersses = shippingAddressDao.getAddrsByUsername(user.getUsername());
+		
+		if( addersses.size() == 1 ) {
+			UserShippingAddress address = addersses.get(0);
+			shippingAddressDao.setDefault(address.getId());
+		}
+		
 		if (res == 1) {
 			renderJson(true);
 		} else {

@@ -84,15 +84,16 @@ public class OrderDao extends DaoSupport {
 		Integer rows = pageSize;
 
 		String sql = "SELECT o.* FROM ddcommunity.tbl_order o, ddcommunity.tbl_user u "
-				+ "WHERE o.`username`= u.username and u.`username`= ? "
+				+ "WHERE o.`username`= u.username " + 
+				( userName == null ? "" : " and u.`username`= ? ")
 				+ (status == null ? "" : " and o.`status` = ? ")
 				+ "ORDER BY create_time desc LIMIT ?,?";
 
-		if(null == status) {
-			return executeQuery(sql, Order.class, new Object[]{userName,offset, rows});
-		} else {
 			return executeQuery(sql, Order.class, new Object[]{userName,status, offset, rows});
-		}
+	}
+	
+	public List<Order> getByPaging(Integer pageNo, Integer pageSize, Integer status) {
+		return getByPaging(null, pageNo, pageSize, status);
 	}
 	
 	public static void main(String[] args) {
